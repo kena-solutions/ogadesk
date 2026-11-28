@@ -33,7 +33,7 @@ const USE_CASE_ICONS: Record<UseCase, LucideIcon> = {
  */
 export function OnboardingDialog() {
   const t = useTranslations('Onboarding')
-  const { accountId, accountStatus, isOwner } = useAuth()
+  const { accountId, accountStatus, isOwner, refreshProfile } = useAuth()
   const [needed, setNeeded] = useState(false)
   const [step, setStep] = useState<1 | 2>(1)
   const [useCases, setUseCases] = useState<UseCase[]>([])
@@ -85,6 +85,7 @@ export function OnboardingDialog() {
       const saved = (await res.json().catch(() => null)) as { trial?: { planName: string; days: number } | null } | null
       if (saved?.trial) toast.success(t('trialStarted', { days: saved.trial.days, plan: saved.trial.planName }))
       setNeeded(false)
+      void refreshProfile()
       window.dispatchEvent(new Event(ONBOARDED_EVENT))
     } catch {
       toast.error(t('error'))

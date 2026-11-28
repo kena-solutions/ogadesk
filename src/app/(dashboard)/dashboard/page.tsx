@@ -31,7 +31,8 @@ import {
   type OverviewRange,
 } from '@/lib/dashboard/overview'
 import { derivePresence } from '@/lib/presence'
-import { isWidgetId, visibleWidgets, type WidgetId } from '@/lib/dashboard/layout'
+import { isWidgetId, visibleWidgets, WIDGET_FEATURE, WIDGET_IDS, type WidgetId } from '@/lib/dashboard/layout'
+import { isFeatureEnabled } from '@/lib/features/use-cases'
 import { useDashboardLayout } from '@/hooks/use-dashboard-layout'
 import { WidgetFrame } from '@/components/dashboard/widget-frame'
 
@@ -64,7 +65,7 @@ function DashboardPageInner() {
   const searchParams = useSearchParams()
   const range = parseOverviewRange(searchParams.get('range'))
   const tl = useTranslations('Dashboard.overview.layout')
-  const { defaultCurrency, profile, user } = useAuth()
+  const { defaultCurrency, profile, user, useCases } = useAuth()
   const { layout, move, hide, show, reset } = useDashboardLayout(user?.id)
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
@@ -161,7 +162,8 @@ function DashboardPageInner() {
   )
 
   const showLayout = !(data && needsSetup(data.setup))
-  const visible = visibleWidgets(layout)
+  const enabled = (id: WidgetId) => isFeatureEnabled(WIDGET_FEATURE[id], useCases)
+  const visible = visibleWidgets(layout).filter(enabled)
   const widgets: Record<WidgetId, () => ReactNode> = {
     attention: () => <AttentionRow data={data} now={now} onlineCount={onlineCount} />,
     kpis: () => <KpiRow data={data} currency={defaultCurrency} />,
@@ -195,6 +197,7 @@ function DashboardPageInner() {
         {...(showLayout
           ? {
               layout,
+              availableWidgets: WIDGET_IDS.filter(enabled),
               onToggleWidget: (id: WidgetId, on: boolean) => (on ? show(id) : hide(id)),
               onResetLayout: reset,
             }

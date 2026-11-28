@@ -26,13 +26,15 @@ interface Props {
   contacts: { id: string; name?: string | null; phone: string }[];
   onClose: () => void;
   onDone: () => void;
+  /** 'support' = create tickets (support pipelines only); 'sales' = deals. Omitted = every pipeline. */
+  kind?: 'sales' | 'support';
 }
 
 /**
  * Create one open deal per selected contact in a chosen pipeline stage.
  * Also used by the contact detail "Add deal" button with a single contact.
  */
-export function BulkDealDialog({ contacts, onClose, onDone }: Props) {
+export function BulkDealDialog({ contacts, onClose, onDone, kind }: Props) {
   const t = useTranslations('Contacts.page.bulk');
   const supabase = createClient();
   const { accountId, user, defaultCurrency } = useAuth();
@@ -50,11 +52,14 @@ export function BulkDealDialog({ contacts, onClose, onDone }: Props) {
   const [outcome, setOutcome] = useState<BulkOutcome | null>(null);
 
   const single = contacts.length === 1;
+  const ticket = kind === 'support';
 
   useEffect(() => {
     let cancelled = false;
     void (async () => {
-      const { data } = await supabase.from('pipelines').select('*').order('created_at');
+      let q = supabase.from('pipelines').select('*');
+      if (kind) q = q.eq('kind', kind);
+      const { data } = await q.order('created_at');
       if (cancelled) return;
       const list = (data as Pipeline[] | null) ?? [];
       setPipelines(list);
@@ -64,7 +69,7 @@ export function BulkDealDialog({ contacts, onClose, onDone }: Props) {
     return () => {
       cancelled = true;
     };
-  }, [supabase]);
+  }, [supabase, kind]);
 
   useEffect(() => {
     if (!pipelineId) return;
@@ -120,7 +125,7 @@ export function BulkDealDialog({ contacts, onClose, onDone }: Props) {
     <Dialog open onOpenChange={(o) => !o && !running && onClose()}>
       <DialogContent className="border-border bg-popover text-popover-foreground sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>{t('addDealTitle')}</DialogTitle>
+          <DialogTitle>{ticket ? t('addTicketTitle') : t('addDealTitle')}</DialogTitle>
           <DialogDescription>{single ? t('forOneContact') : t('forContacts', { count: contacts.length })}</DialogDescription>
         </DialogHeader>
 
@@ -133,7 +138,7 @@ export function BulkDealDialog({ contacts, onClose, onDone }: Props) {
         ) : outcome ? (
           <BulkResultBlock
             outcome={outcome}
-            okLabel={t('dealsCreated', { count: outcome.ok })}
+            okLabel={ticket ? t('ticketsCreated', { count: outcome.ok }) : t('dealsCreated', { count: outcome.ok })}
             nameById={Object.fromEntries(contacts.map((c) => [c.id, c.name || c.phone]))}
           />
         ) : (
@@ -171,7 +176,7 @@ export function BulkDealDialog({ contacts, onClose, onDone }: Props) {
               </div>
             </div>
             <div className="space-y-1.5">
-              <Label className="text-xs text-muted-foreground">{t('dealTitle')}</Label>
+              <Label className="text-xs text-muted-foreground">{ticket ? t('ticketTitle') : t('dealTitle')}</Label>
               <Input value={title} onChange={(e) => setTitle(e.target.value)} disabled={running} className="bg-muted" />
               {!single && <p className="text-[11px] text-muted-foreground">{t('dealTitleHint')}</p>}
             </div>
@@ -218,7 +223,7 @@ export function BulkDealDialog({ contacts, onClose, onDone }: Props) {
               </Button>
               <Button onClick={run} disabled={running || loading || !pipelineId || !stageId || pipelines.length === 0}>
                 {running && <Loader2 className="size-4 animate-spin" />}
-                {t('addDealRun', { count: contacts.length })}
+                {ticket ? t('addTicketRun', { count: contacts.length }) : t('addDealRun', { count: contacts.length })}
               </Button>
             </>
           )}

@@ -13,6 +13,7 @@ import {
 import { createClient } from "@/lib/supabase/client";
 import type { User } from "@supabase/supabase-js";
 import { DEFAULT_CURRENCY } from "@/lib/currency";
+
 import {
   canEditSettings as canEditSettingsFor,
   canManageMembers as canManageMembersFor,
@@ -39,6 +40,8 @@ interface Profile {
   account_role: AccountRole | null;
 }
 
+const EMPTY_USE_CASES: string[] = [];
+
 interface AccountSummary {
   id: string;
   name: string;
@@ -47,6 +50,8 @@ interface AccountSummary {
   default_currency: string;
   /** IANA time zone the account's relative dates resolve in (migration 071). */
   timezone: string;
+  /** Use cases picked at onboarding (migration 078). Empty = show everything. */
+  use_cases: string[];
 }
 
 /**
@@ -122,6 +127,8 @@ interface AuthContextValue {
   defaultCurrency: string;
   /** Account time zone (IANA). 'UTC' while loading. */
   accountTimezone: string;
+  /** Use cases the workspace picked. Empty while loading or unset: show everything. */
+  useCases: string[];
   /** True if `accountRole === 'owner'`. */
   isOwner: boolean;
   /** True if `accountRole === 'admin'` (does NOT include owner - use canManageMembers for "admin or above"). */
@@ -246,7 +253,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             .from("accounts")
             // default_currency added in migration 021; narrowed to the
             // USD fallback below for older schemas where it reads null.
-            .select("id, name, default_currency, timezone")
+            .select("id, name, default_currency, timezone, use_cases")
             .eq("id", data.account_id)
             .maybeSingle();
           if (accountErr) {
@@ -262,6 +269,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
               name: account.name,
               default_currency: account.default_currency ?? DEFAULT_CURRENCY,
               timezone: account.timezone ?? "UTC",
+              use_cases: (account.use_cases as string[] | null) ?? [],
             };
           }
         }
@@ -474,6 +482,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         account,
         defaultCurrency: account?.default_currency ?? DEFAULT_CURRENCY,
         accountTimezone: account?.timezone ?? "UTC",
+        useCases: account?.use_cases ?? EMPTY_USE_CASES,
         accountStatus,
         accountStatusDetail: statusDetail,
         ...derived,
@@ -507,6 +516,7 @@ export function useAuth(): AuthContextValue {
       account: null,
       defaultCurrency: DEFAULT_CURRENCY,
       accountTimezone: "UTC",
+      useCases: EMPTY_USE_CASES,
       // Outside the provider there is nothing to resolve yet - 'loading'
       // keeps the access alert from firing on, say, the login page.
       accountStatus: "loading",

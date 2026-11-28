@@ -1,3 +1,4 @@
+import type { FeatureId } from "@/lib/features/use-cases";
 import {
   Bot,
   ClipboardList,
@@ -25,18 +26,20 @@ export interface NavItem {
    * Purely informational - doesn't affect routing or access.
    */
   beta?: boolean;
+  /** Use-case gate (src/lib/features/use-cases.ts). Omitted = always shown. */
+  feature?: FeatureId;
 }
 
 export const navItems: NavItem[] = [
   { href: "/dashboard", labelKey: "dashboard", icon: LayoutDashboard },
   { href: "/inbox", labelKey: "inbox", icon: MessageSquare },
   { href: "/contacts", labelKey: "contacts", icon: Users },
-  { href: "/forms", labelKey: "forms", icon: ClipboardList },
-  { href: "/pipelines", labelKey: "pipelines", icon: GitBranch },
-  { href: "/broadcasts", labelKey: "broadcasts", icon: Radio },
-  { href: "/automations", labelKey: "automations", icon: Zap },
+  { href: "/forms", labelKey: "forms", icon: ClipboardList, feature: "nav.forms" },
+  { href: "/pipelines", labelKey: "pipelines", icon: GitBranch, feature: "nav.pipelines" },
+  { href: "/broadcasts", labelKey: "broadcasts", icon: Radio, feature: "nav.broadcasts" },
+  { href: "/automations", labelKey: "automations", icon: Zap, feature: "nav.automations" },
   { href: "/flows", labelKey: "flows", icon: Workflow, beta: true },
-  { href: "/agents", labelKey: "aiAgents", icon: Bot },
+  { href: "/agents", labelKey: "aiAgents", icon: Bot, feature: "nav.aiAgents" },
 ];
 
 export const bottomNavItems: NavItem[] = [

@@ -202,7 +202,7 @@ function ContactsPageInner() {
   const [fieldsRefreshKey, setFieldsRefreshKey] = useState(0);
   // One contact's Block / Unblock from the row menu (reuses the bulk dialog).
   const [singleBlock, setSingleBlock] = useState<{ contact: ContactWithTags; mode: 'block' | 'unblock' } | null>(null);
-  const [bulkAction, setBulkAction] = useState<'add-tag' | 'remove-tag' | 'add-deal' | 'block' | 'unblock' | null>(null);
+  const [bulkAction, setBulkAction] = useState<'add-tag' | 'remove-tag' | 'add-deal' | 'create-ticket' | 'block' | 'unblock' | null>(null);
   // After a refresh or a bulk action the selection should survive: when this
   // timestamp is in the future the next fetches keep (and prune) the selection.
   const keepSelectionUntil = useRef(0);
@@ -1719,7 +1719,10 @@ function ContactsPageInner() {
         />
       )}
       {bulkAction === 'add-deal' && (
-        <BulkDealDialog contacts={selectedContacts} onClose={() => setBulkAction(null)} onDone={() => undefined} />
+        <BulkDealDialog kind="sales" contacts={selectedContacts} onClose={() => setBulkAction(null)} onDone={() => undefined} />
+      )}
+      {bulkAction === 'create-ticket' && (
+        <BulkDealDialog kind="support" contacts={selectedContacts} onClose={() => setBulkAction(null)} onDone={() => undefined} />
       )}
 
       {/* Contact Form Dialog */}

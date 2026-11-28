@@ -17,7 +17,7 @@ const ICONS: Record<UseCase, LucideIcon> = { developer: Code2, support: Headset,
 export function UseCaseCard({ className }: { className?: string }) {
   const t = useTranslations('Settings.useCases');
   const tu = useTranslations('Onboarding');
-  const { isOwner } = useAuth();
+  const { isOwner, refreshProfile } = useAuth();
   const [saved, setSaved] = useState<UseCase[] | null>(null);
   const [picked, setPicked] = useState<UseCase[]>([]);
   const [saving, setSaving] = useState(false);
@@ -47,6 +47,7 @@ export function UseCaseCard({ className }: { className?: string }) {
       const res = await fetch('/api/onboarding', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ use_cases: picked }) });
       if (!res.ok) throw new Error('save failed');
       setSaved(picked);
+      void refreshProfile();
       toast.success(t('saved'));
     } catch {
       toast.error(t('error'));

@@ -52,6 +52,7 @@ export function OverviewHeader({
   range,
   onRangeChange,
   layout,
+  availableWidgets,
   onToggleWidget,
   onResetLayout,
 }: {
@@ -62,6 +63,8 @@ export function OverviewHeader({
   onRangeChange: (range: OverviewRange) => void
   /** Card layout controls; omitted while the setup checklist shows. */
   layout?: DashboardLayout
+  /** Widgets the workspace's use cases surface; others are not offered. */
+  availableWidgets?: readonly WidgetId[]
   onToggleWidget?: (id: WidgetId, visible: boolean) => void
   onResetLayout?: () => void
 }) {
@@ -120,7 +123,7 @@ export function OverviewHeader({
               {tl('widgets')}
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
-              {WIDGET_IDS.map((id) => (
+              {(availableWidgets ?? WIDGET_IDS).map((id) => (
                 <DropdownMenuCheckboxItem
                   key={id}
                   checked={!layout.hidden.includes(id)}

@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
+import { isFeatureEnabled } from "@/lib/features/use-cases";
 import { WorkspaceSwitcher } from "@/components/layout/workspace-switcher";
 import {
   Crown,
@@ -68,7 +69,7 @@ import { useTranslations } from "next-intl";
 export function Sidebar({ open = false, onClose, totalUnread = 0 }: SidebarProps) {
   const t = useTranslations("Sidebar");
   const pathname = usePathname();
-  const { profileLoading, accountRole } = useAuth();
+  const { profileLoading, accountRole, useCases } = useAuth();
 
   // Close the drawer when route changes - users opened it to navigate,
   // so once they pick a destination the drawer should get out of the way.
@@ -141,7 +142,7 @@ export function Sidebar({ open = false, onClose, totalUnread = 0 }: SidebarProps
         {/* Main navigation */}
         <nav className="flex-1 overflow-y-auto px-3 py-4">
           <ul className="flex flex-col gap-1">
-            {navItems.map((item) => {
+            {navItems.filter((item) => isFeatureEnabled(item.feature, useCases)).map((item) => {
               const isActive =
                 pathname === item.href ||
                 (item.href !== "/dashboard" && pathname.startsWith(item.href));

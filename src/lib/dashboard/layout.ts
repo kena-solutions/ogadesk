@@ -4,6 +4,8 @@
  * (see src/hooks/use-dashboard-layout.ts). Pure, unit-tested.
  */
 
+import type { FeatureId } from '@/lib/features/use-cases'
+
 export const WIDGET_IDS = [
   'attention',
   'kpis',
@@ -15,6 +17,13 @@ export const WIDGET_IDS = [
   'activity',
 ] as const
 export type WidgetId = (typeof WIDGET_IDS)[number]
+
+/** Use-case gate per widget (src/lib/features/use-cases.ts); unlisted = always shown. */
+export const WIDGET_FEATURE: Partial<Record<WidgetId, FeatureId>> = {
+  replyQueue: 'widget.replyQueue',
+  pipeline: 'widget.pipeline',
+  campaigns: 'widget.campaigns',
+}
 
 /** Width on the 6-column xl grid; narrower screens collapse (see WIDGET_SPAN). */
 export type WidgetSize = 'full' | 'wide' | 'narrow' | 'third'

@@ -7,6 +7,8 @@ import { LifeBuoy } from "lucide-react";
 
 import { createClient } from "@/lib/supabase/client";
 import { useCan } from "@/hooks/use-can";
+import { useAuth } from "@/hooks/use-auth";
+import { isFeatureEnabled } from "@/lib/features/use-cases";
 import { DealForm } from "@/components/pipelines/deal-form";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
@@ -30,6 +32,7 @@ export function CreateTicketButton({
 }) {
   const t = useTranslations("Inbox.ticket");
   const canCreate = useCan("send-messages");
+  const { useCases } = useAuth();
   const [pipelines, setPipelines] = useState<SupportPipeline[] | null>(null);
   const [ticket, setTicket] = useState<Deal | null>(null);
   const [open, setOpen] = useState(false);
@@ -82,6 +85,8 @@ export function CreateTicketButton({
   const ticketStage = ticket ? active?.stages.find((s) => s.id === ticket.stage_id) : null;
 
   if (pipelines === null) return null;
+  // Only hide the entry point for workspaces without the support use case; an existing ticket stays reachable.
+  if (!ticket && !isFeatureEnabled("action.createTicket", useCases)) return null;
 
   if (pipelines.length === 0) {
     return (

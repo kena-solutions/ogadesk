@@ -2,7 +2,9 @@
 
 import { useFormatter, useTranslations } from 'next-intl'
 
+import { useAuth } from '@/hooks/use-auth'
 import { formatCurrency } from '@/lib/currency'
+import { isFeatureEnabled } from '@/lib/features/use-cases'
 import {
   compare,
   ratio,
@@ -23,6 +25,11 @@ export function KpiRow({
   const t = useTranslations('Dashboard.overview.kpi')
   const format = useFormatter()
   const formatDuration = useFormatDuration()
+  const { useCases } = useAuth()
+  const showDeals = isFeatureEnabled('kpi.dealsWon', useCases)
+  const showBroadcasts = isFeatureEnabled('kpi.broadcasts', useCases)
+  const cols = 3 + (showDeals ? 1 : 0) + (showBroadcasts ? 1 : 0)
+  const gridCols = cols === 5 ? 'xl:grid-cols-5' : cols === 4 ? 'xl:grid-cols-4' : 'xl:grid-cols-3'
 
   if (!data) {
     return (
@@ -41,7 +48,7 @@ export function KpiRow({
   const percent = (v: number) => format.number(v, { style: 'percent', maximumFractionDigits: 0 })
 
   return (
-    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
+    <div className={`grid grid-cols-1 gap-3 sm:grid-cols-2 ${gridCols}`}>
       <KpiTile
         title={t('newConversations')}
         info={t('newConversationsInfo')}
@@ -66,7 +73,7 @@ export function KpiRow({
         comparisonLabel={comparisonLabel}
         footer={<Sparkline values={seriesValues(volume.series, 'resolved')} />}
       />
-      <KpiTile
+      {showDeals && <KpiTile
         title={t('dealsWon')}
         info={t('dealsWonInfo')}
         value={format.number(kpis.dealsWon)}
@@ -74,8 +81,8 @@ export function KpiRow({
         change={compare(kpis.dealsWon, kpis.dealsWonPrevious)}
         comparisonLabel={comparisonLabel}
         footer={<Sparkline values={seriesValues(volume.series, 'dealsWon')} />}
-      />
-      <KpiTile
+      />}
+      {showBroadcasts && <KpiTile
         title={t('readRate')}
         info={t('readRateInfo')}
         value={readRate == null ? t('none') : percent(readRate)}
@@ -91,7 +98,7 @@ export function KpiRow({
               : t('noBroadcasts')}
           </p>
         }
-      />
+      />}
     </div>
   )
 }

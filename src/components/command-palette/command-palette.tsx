@@ -18,6 +18,7 @@ import { ArrowRightLeft, ClipboardList, CornerDownLeft, Plus, Search, User, type
 
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { useAuth } from '@/hooks/use-auth';
+import { isFeatureEnabled } from '@/lib/features/use-cases';
 import { useCan } from '@/hooks/use-can';
 import { cn } from '@/lib/utils';
 import { createClient } from '@/lib/supabase/client';
@@ -71,7 +72,7 @@ export function CommandPalette() {
   const tNav = useTranslations('Sidebar');
   const tSettings = useTranslations('Settings');
   const router = useRouter();
-  const { accountId, user } = useAuth();
+  const { accountId, user, useCases } = useAuth();
   // The workspaces this person belongs to (their own memberships), loaded when the palette opens.
   const [workspaces, setWorkspaces] = useState<{ id: string; name: string; role: string }[]>([]);
   const canSend = useCan('send-messages');
@@ -139,7 +140,7 @@ export function CommandPalette() {
         href: a.href,
       });
     }
-    for (const n of [...navItems, ...bottomNavItems]) {
+    for (const n of [...navItems, ...bottomNavItems].filter((i) => isFeatureEnabled(i.feature, useCases))) {
       out.push({ id: `page:${n.href}`, group: 'pages', label: tNav(n.labelKey), icon: n.icon, href: n.href });
     }
     for (const p of EXTRA_PAGES) {
@@ -189,7 +190,7 @@ export function CommandPalette() {
       run: () => window.dispatchEvent(new Event(NEW_WORKSPACE_EVENT)),
     });
     return out;
-  }, [t, tNav, tSettings, can, workspaces, accountId]);
+  }, [t, tNav, tSettings, can, workspaces, accountId, useCases]);
 
   useEffect(() => {
     if (!open || !user?.id) return;

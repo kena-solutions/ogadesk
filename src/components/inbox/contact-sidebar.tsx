@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { canSendMessages } from "@/lib/auth/roles";
+import { isFeatureEnabled } from "@/lib/features/use-cases";
 import { cn } from "@/lib/utils";
 import type { Contact, Deal, ContactNote, Tag } from "@/types";
 import {
@@ -36,6 +37,7 @@ import { getDateLocale } from "@/i18n/date-locale";
 import { contactHandle } from "@/lib/whatsapp/wa-identity";
 import { addContactTag, deleteContactTag } from "@/lib/contacts/tag-api";
 import { BulkBlockDialog } from "@/components/contacts/bulk-block-dialog";
+import { BulkDealDialog } from "@/components/contacts/bulk-deal-dialog";
 
 interface ContactSidebarProps {
   contact: Contact | null;
@@ -46,7 +48,7 @@ export function ContactSidebar({ contact }: ContactSidebarProps) {
   const dateLocale = getDateLocale(useLocale());
   const tThread = useTranslations("Inbox.messageThread");
 
-  const { accountId, accountRole } = useAuth();
+  const { accountId, accountRole, useCases } = useAuth();
   const canManageContactTags = accountRole ? canSendMessages(accountRole) : false;
   const [copied, setCopied] = useState(false);
   const [deals, setDeals] = useState<Deal[]>([]);
@@ -58,6 +60,7 @@ export function ContactSidebar({ contact }: ContactSidebarProps) {
   // result immediately without refetching the conversation.
   const [blockDialog, setBlockDialog] = useState<'block' | 'unblock' | null>(null);
   const [blockedOverride, setBlockedOverride] = useState<{ id: string; blocked: boolean } | null>(null);
+  const [dealDialogOpen, setDealDialogOpen] = useState(false);
   const [newNote, setNewNote] = useState("");
   const [addingNote, setAddingNote] = useState(false);
 
@@ -241,6 +244,15 @@ export function ContactSidebar({ contact }: ContactSidebarProps) {
             />
           )}
 
+          {dealDialogOpen && (
+            <BulkDealDialog
+              kind="sales"
+              contacts={[{ id: contact.id, name: contact.name, phone: contact.phone }]}
+              onClose={() => setDealDialogOpen(false)}
+              onDone={() => void fetchContactData()}
+            />
+          )}
+
           {/* Phone */}
           <div className="mt-4 space-y-2">
             <button
@@ -360,6 +372,17 @@ export function ContactSidebar({ contact }: ContactSidebarProps) {
             <div className="flex items-center gap-2 px-1 text-xs font-medium uppercase tracking-wider text-muted-foreground">
               <DollarSign className="h-3 w-3" />
               {tSidebar("deals")}
+              {canManageContactTags && isFeatureEnabled("action.createDeal", useCases) && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="ml-auto h-6 gap-1 px-1.5 text-xs normal-case tracking-normal text-primary"
+                  onClick={() => setDealDialogOpen(true)}
+                >
+                  <Plus className="h-3 w-3" />
+                  {tSidebar("newDeal")}
+                </Button>
+              )}
             </div>
             <div className="mt-2 space-y-2">
               {deals.length === 0 ? (
