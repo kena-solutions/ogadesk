@@ -76,10 +76,13 @@ function SignedInShell({
   const totalUnread = useTotalUnread();
   useUnreadTitle(totalUnread);
 
-  // overflow-clip, not hidden: the shell must never move. `hidden` still lets focus / scrollIntoView slide the whole
-  // app up (sidebar included); `clip` forbids that. Only <main> scrolls.
+  // The shell must never move; only <main> scrolls. Two things keep it that way:
+  //  - overflow-clip (not hidden): `hidden` still lets focus / scrollIntoView slide the whole app up.
+  //  - `relative` on the shell, the content column and <main>: an `absolute` element anywhere in a page (a hidden form
+  //    input, a badge) is clipped and scrolled by its nearest *positioned* ancestor. Without one it escapes <main>, makes
+  //    the whole document scrollable and the sidebar slides away (seen on Settings → Billing).
   return (
-    <div className="flex h-screen overflow-clip bg-background">
+    <div className="relative flex h-screen overflow-clip bg-background">
       {/* Reports this tab's online/away presence once we know a user is
           signed in. Headless, renders nothing. */}
       <PresenceHeartbeat />
@@ -98,11 +101,11 @@ function SignedInShell({
       <CommandPalette />
       <UpgradeHost />
       <Sidebar open={sidebarOpen} onClose={closeSidebar} totalUnread={totalUnread} />
-      <div className="flex flex-1 flex-col overflow-clip">
+      <div className="relative flex flex-1 flex-col overflow-clip">
         <SupportSessionBanner />
         <Header onOpenSidebar={() => setSidebarOpen(true)} />
         {/* Thinner horizontal padding on mobile so cards have room to breathe. */}
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6">
+        <main className="relative flex-1 overflow-y-auto p-4 sm:p-6">
           {/* Above every page: writes are being rejected and here's why.
               Renders nothing unless the account/role failed to resolve. */}
           <AccountAccessAlert />
