@@ -76,8 +76,10 @@ function SignedInShell({
   const totalUnread = useTotalUnread();
   useUnreadTitle(totalUnread);
 
+  // overflow-clip, not hidden: the shell must never move. `hidden` still lets focus / scrollIntoView slide the whole
+  // app up (sidebar included); `clip` forbids that. Only <main> scrolls.
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
+    <div className="flex h-screen overflow-clip bg-background">
       {/* Reports this tab's online/away presence once we know a user is
           signed in. Headless, renders nothing. */}
       <PresenceHeartbeat />
@@ -96,7 +98,7 @@ function SignedInShell({
       <CommandPalette />
       <UpgradeHost />
       <Sidebar open={sidebarOpen} onClose={closeSidebar} totalUnread={totalUnread} />
-      <div className="flex flex-1 flex-col overflow-hidden">
+      <div className="flex flex-1 flex-col overflow-clip">
         <SupportSessionBanner />
         <Header onOpenSidebar={() => setSidebarOpen(true)} />
         {/* Thinner horizontal padding on mobile so cards have room to breathe. */}
