@@ -11,6 +11,7 @@ import { loadToolRuntime } from './tools/registry'
 import { buildRetrievalQuery, latestUserMessage } from './query'
 import type { AiConfig, ChatMessage, KnowledgeHit } from './types'
 import { assignHandoff } from './handoff-pool'
+import { checkGrounding } from './grounding'
 import { loadRoutingContext } from './routing-context'
 import { hasReplySince, inboundArrivedAt, logAiReply, type HandoffReason } from './reply-log'
 import {
@@ -171,7 +172,7 @@ export async function dispatchInboundToAiReply(
 
     // One entry point: the business's own key, or the platform's provider chain with failover and plan credits.
     // Token spend is logged inside (regardless of handoff - the provider call happened either way).
-    const { text, handoff, pendingApproval } = await runGeneration(db, {
+    const { text, handoff, pendingApproval, toolsExecuted } = await runGeneration(db, {
       config, systemPrompt, messages, accountId, conversationId, mode: 'auto_reply', agentId: config.agentId ?? null, tools,
     })
 
@@ -188,6 +189,22 @@ export async function dispatchInboundToAiReply(
     if (handoff || !text) {
       // The model can't (or shouldn't) answer.
       await handOff(!!pendingApproval, pendingApproval ? 'tool_approval' : 'model')
+      return
+    }
+
+    // Don't send a fact nobody gave the AI (an invented price, date or link): a person answers instead. Skipped when
+    // tools ran (their results are the evidence); never blocks on a bug in the check itself.
+    let unsupported: string[] = []
+    if (!toolsExecuted) {
+      try {
+        unsupported = checkGrounding(text, [systemPrompt, ...messages.map((m) => m.content)]).unsupported
+      } catch (err) {
+        console.error('[ai auto-reply] grounding check failed, sending anyway:', err)
+      }
+    }
+    if (unsupported.length > 0) {
+      console.warn(`[ai auto-reply] not sent, unsupported facts: ${unsupported.join(', ')}`)
+      await handOff(!!pendingApproval, 'ungrounded')
       return
     }
 

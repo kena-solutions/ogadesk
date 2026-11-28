@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { requireRole, toErrorResponse } from '@/lib/auth/account'
 import { checkRateLimit, rateLimitResponse, RATE_LIMITS } from '@/lib/rate-limit'
 import { loadAgentConfig } from '@/lib/ai/config'
+import { checkGrounding } from '@/lib/ai/grounding'
 import { loadRoutingContext } from '@/lib/ai/routing-context'
 import { buildConversationContext } from '@/lib/ai/context'
 import { retrieveKnowledge, sourceRefs } from '@/lib/ai/knowledge'
@@ -124,11 +125,22 @@ export async function POST(request: Request) {
     const tools = await loadToolRuntime(supabaseAdmin(), {
       accountId, conversationId, agentId: config.agentId ?? null, mode: 'draft', allowedIntegrations: config.toolIntegrations ?? null,
     })
-    const { text } = await runGeneration(supabaseAdmin(), {
+    const { text, toolsExecuted } = await runGeneration(supabaseAdmin(), {
       config, systemPrompt, messages, accountId, conversationId, mode: 'draft', agentId: config.agentId ?? null, tools,
     })
 
-    return NextResponse.json({ draft: text, agent: config.agentName ?? null, sources: sourceRefs(knowledge) })
+    // Facts in the draft that nothing backs up (a price, date or link the AI wasn't given): the teammate checks them
+    // before sending. Never blocks a draft.
+    let unsupported: string[] = []
+    if (!toolsExecuted) {
+      try {
+        unsupported = checkGrounding(text, [systemPrompt, ...messages.map((m) => m.content)]).unsupported
+      } catch (err) {
+        console.error('[ai/draft] grounding check failed:', err)
+      }
+    }
+
+    return NextResponse.json({ draft: text, agent: config.agentName ?? null, sources: sourceRefs(knowledge), unsupported })
   } catch (err) {
     if (err instanceof AiError) {
       return NextResponse.json(

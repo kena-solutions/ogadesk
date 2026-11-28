@@ -44,7 +44,19 @@ const STOPWORDS = new Set(
     'le la les un une des et ou de du au aux en est sont que qui quoi pour par avec sans se sa son ses mon ma mes ' +
     'ton ta tes il elle ils elles nous vous je tu ce cet cette ces comment quand où pas plus mais oui bonjour merci ' +
     'o a os as um uma uns umas e ou de do da dos das no na nos nas em é são que por para com sem se seu sua seus ' +
-    'suas meu minha eu você vocês ele ela eles elas isso isto como quando onde não mais mas sim olá obrigado obrigada'
+    'suas meu minha eu você vocês ele ela eles elas isso isto como quando onde não mais mas sim olá obrigado obrigada ' +
+    // Indonesian
+    'yang dan di ke dari untuk dengan pada ini itu ada adalah saya aku kamu anda kami kita mereka apa siapa kapan dimana ' +
+    'bagaimana kenapa mengapa tidak bisa akan sudah belum juga atau tetapi sama saja halo terima kasih ' +
+    // Swahili
+    'na ya wa kwa ni katika la za kuna hii huu hiki hizi yangu yako wetu wao mimi wewe sisi ninyi nini lini wapi vipi ' +
+    'gani sio bado pia au lakini habari asante tafadhali ' +
+    // Hindi
+    'का की के में से को पर और या है हैं था थे हो क्या कैसे कब कहाँ क्यों मैं हम आप वह यह ये वे नहीं भी तो ही एक कृपया धन्यवाद नमस्ते ' +
+    // Arabic
+    'في من على إلى عن مع هل ما ماذا كيف متى أين لماذا هذا هذه ذلك التي الذي أنا نحن أنت هو هي لا نعم أو و ثم كان يكون شكرا مرحبا من فضلك ' +
+    // Korean (common particles/function words)
+    '이 그 저 은 는 이가 가 을 를 의 에 에서 으로 로 와 과 도 만 요 네 아니요 안녕하세요 감사합니다 어떻게 언제 어디 무엇 왜 있나요'
   ).split(/\s+/),
 )
 
@@ -52,7 +64,7 @@ const STOPWORDS = new Set(
 export function keywordQuery(text: string): string {
   const seen = new Set<string>()
   const terms: string[] = []
-  for (const raw of text.toLowerCase().split(/[^\p{L}\p{N}]+/u)) {
+  for (const raw of text.toLowerCase().split(/[^\p{L}\p{N}\p{M}]+/u)) {
     if (raw.length < 2 || STOPWORDS.has(raw) || seen.has(raw)) continue
     seen.add(raw)
     terms.push(raw)

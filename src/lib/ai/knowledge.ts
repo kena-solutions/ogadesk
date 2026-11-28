@@ -133,7 +133,32 @@ const CANDIDATE_FACTOR = 3
  * by both meaning and keywords outranks one found by either alone.
  * Each list must already be best-first.
  */
-export function fuseRankings(semantic: KnowledgeHit[], keyword: KnowledgeHit[], k: number): KnowledgeHit[] {
+/** How much re-ranking can move a chunk: about the gap between ranks 1 and 2 in one list, so it breaks near-ties
+ *  (the chunk that really contains the question's words wins) without overturning a clear winner. */
+const COVERAGE_WEIGHT = 0.012
+const TITLE_WEIGHT = 0.006
+
+/** Words of the question that count for matching (stopwords removed); [] when there are none. */
+function queryTerms(query: string | undefined): string[] {
+  return query ? keywordQuery(query).split(' ').filter(Boolean) : []
+}
+
+/**
+ * Re-rank candidates (already fused) by how well they match the question's own words, cheaply and the same way
+ * every time: the share of the question's terms that appear in the chunk, plus a bonus when the title does.
+ * No model call. With no usable terms the order is unchanged.
+ */
+export function rerankScore(hit: KnowledgeHit, terms: string[]): number {
+  if (terms.length === 0) return 0
+  const body = hit.content.toLowerCase()
+  const title = (hit.title ?? '').toLowerCase()
+  const inBody = terms.filter((t) => body.includes(t)).length
+  const inTitle = terms.some((t) => title.includes(t))
+  return (inBody / terms.length) * COVERAGE_WEIGHT + (inTitle ? TITLE_WEIGHT : 0)
+}
+
+export function fuseRankings(semantic: KnowledgeHit[], keyword: KnowledgeHit[], k: number, query?: string): KnowledgeHit[] {
+  const terms = queryTerms(query)
   const fused = new Map<string, { hit: KnowledgeHit; rrf: number }>()
   const add = (list: KnowledgeHit[]) =>
     list.forEach((hit, rank) => {
@@ -150,7 +175,8 @@ export function fuseRankings(semantic: KnowledgeHit[], keyword: KnowledgeHit[], 
   add(semantic)
   add(keyword)
   return [...fused.values()]
-    .sort((a, b) => b.rrf - a.rrf)
+    .map((f) => ({ hit: f.hit, score: f.rrf + rerankScore(f.hit, terms) }))
+    .sort((a, b) => b.score - a.score)
     .slice(0, k)
     .map((f) => f.hit)
 }
@@ -241,7 +267,7 @@ export async function retrieveKnowledge(
   }
 
   const [semantic, keyword] = await Promise.all([semanticSearch(), keywordSearch()])
-  return fuseRankings(semantic, keyword, k)
+  return fuseRankings(semantic, keyword, k, query)
 }
 
 function toHit(row: MatchRow, matchedBy: KnowledgeHit['matchedBy']): KnowledgeHit {

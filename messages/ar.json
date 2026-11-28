@@ -1043,7 +1043,8 @@
         "audio": "الصوت"
       },
       "uploadFailed": "فشل الرفع.",
-      "draftBasedOn": "استنادًا إلى: {sources}"
+      "draftBasedOn": "استنادًا إلى: {sources}",
+      "draftUnsupported": "تحقق قبل الإرسال: {facts} غير موجود في معرفتك"
     },
     "bubble": {
       "photo": "صورة",

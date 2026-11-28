@@ -7,7 +7,7 @@ vi.mock('./embeddings', () => ({
   toVectorLiteral: (v: number[]) => `[${v.join(',')}]`,
 }))
 
-import { retrieveKnowledge, ingestDocument, sourceRefs } from './knowledge'
+import { retrieveKnowledge, ingestDocument, sourceRefs, fuseRankings } from './knowledge'
 
 interface FakeState {
   semantic: { id: string; content: string }[]
@@ -240,6 +240,38 @@ describe('retrieveKnowledge with a platform embedder', () => {
     expect(embedder).toHaveBeenCalledWith(['FAQ\n\nhello world'])
     expect(result.keywordOnly).toBe(false)
     expect(state.inserted![0].embedding).toBe('[1,2]')
+  })
+})
+
+describe('re-ranking', () => {
+  const hit = (chunkId: string, content: string, title: string | null = null) => ({
+    chunkId, documentId: 'd', sourceId: 's', title, content, score: 0.5, matchedBy: 'semantic' as const,
+  })
+
+  it('breaks a near-tie in favour of the chunk that contains the question words', () => {
+    // Semantic ranks the vague chunk first, but only the second one answers a question about refund timing.
+    const vague = hit('vague', 'We care about every customer and want you to be happy.')
+    const exact = hit('exact', 'Refunds take 5 business days to reach your account.')
+    const out = fuseRankings([vague, exact], [], 2, 'how long do refunds take')
+    expect(out.map((h) => h.chunkId)).toEqual(['exact', 'vague'])
+  })
+
+  it('rewards a title that mentions the question', () => {
+    const a = hit('a', 'Our hours are 9 to 5.', 'Opening hours')
+    const b = hit('b', 'Our hours are 9 to 5.', 'About us')
+    expect(fuseRankings([b, a], [], 2, 'what are your opening hours').map((h) => h.chunkId)[0]).toBe('a')
+  })
+
+  it('does not overturn a clear winner found by both searches', () => {
+    const both = hit('both', 'Unrelated words here.')
+    const lexical = hit('lex', 'refund refund timing')
+    const out = fuseRankings([both, hit('x', 'q')], [both, lexical], 3, 'refund timing')
+    expect(out[0].chunkId).toBe('both')
+  })
+
+  it('keeps the order when the question has no usable words', () => {
+    const out = fuseRankings([hit('a', 'one'), hit('b', 'two')], [], 2, 'is it the one?')
+    expect(out.map((h) => h.chunkId)).toEqual(['a', 'b'])
   })
 })
 

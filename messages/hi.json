@@ -1043,7 +1043,8 @@
         "audio": "ऑडियो"
       },
       "uploadFailed": "अपलोड विफल।",
-      "draftBasedOn": "आधार: {sources}"
+      "draftBasedOn": "आधार: {sources}",
+      "draftUnsupported": "भेजने से पहले जाँचें: {facts} आपके ज्ञान में नहीं है"
     },
     "bubble": {
       "photo": "फ़ोटो",

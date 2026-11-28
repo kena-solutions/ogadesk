@@ -21,6 +21,7 @@ import {
   Loader2,
   Sparkles,
   BookOpen,
+  TriangleAlert,
   Plus,
   MessageSquareDashed,
   Zap,
@@ -154,6 +155,8 @@ export function MessageComposer({
   const [drafting, setDrafting] = useState(false);
   // Titles of the knowledge the last AI draft was based on.
   const [draftSources, setDraftSources] = useState<string[]>([]);
+  // Facts in the last AI draft that nothing in the knowledge backs up (a price, date or link).
+  const [draftUnsupported, setDraftUnsupported] = useState<string[]>([]);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Enter-to-send only on devices with a mouse/keyboard (fine pointer).
@@ -252,6 +255,7 @@ export function MessageComposer({
       onSend(trimmed, replyTo?.id);
       setText("");
       setDraftSources([]);
+      setDraftUnsupported([]);
       if (textareaRef.current) {
         textareaRef.current.style.height = "auto";
       }
@@ -273,7 +277,10 @@ export function MessageComposer({
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       setText(e.target.value);
-      if (!e.target.value.trim()) setDraftSources([]);
+      if (!e.target.value.trim()) {
+        setDraftSources([]);
+        setDraftUnsupported([]);
+      }
       adjustHeight();
     },
     [adjustHeight]
@@ -306,6 +313,9 @@ export function MessageComposer({
         return;
       }
       setText(draftText);
+      setDraftUnsupported(
+        Array.isArray(data.unsupported) ? (data.unsupported as unknown[]).filter((x): x is string => typeof x === "string").slice(0, 4) : [],
+      );
       setDraftSources(
         Array.isArray(data.sources)
           ? (data.sources as { title?: string | null }[])
@@ -664,6 +674,12 @@ export function MessageComposer({
         </div>
       ) : (
         <div className="flex flex-wrap items-end gap-2">
+          {draftUnsupported.length > 0 && text.trim() && (
+            <p className="order-first flex basis-full items-center gap-1 text-xs text-amber-600 dark:text-amber-400">
+              <TriangleAlert className="h-3 w-3 shrink-0" />
+              <span className="truncate">{t("draftUnsupported", { facts: draftUnsupported.join(", ") })}</span>
+            </p>
+          )}
           {draftSources.length > 0 && text.trim() && (
             <p
               className="order-first flex basis-full items-center gap-1 truncate text-xs text-muted-foreground"

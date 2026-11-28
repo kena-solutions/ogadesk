@@ -487,7 +487,8 @@
         "audio": "les fichiers audio"
       },
       "uploadFailed": "Échec du téléversement.",
-      "draftBasedOn": "Basé sur : {sources}"
+      "draftBasedOn": "Basé sur : {sources}",
+      "draftUnsupported": "À vérifier avant l'envoi : {facts} ne figure pas dans vos connaissances"
     },
     "bubble": {
       "photo": "Photo",

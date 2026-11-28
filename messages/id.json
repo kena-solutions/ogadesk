@@ -1043,7 +1043,8 @@
         "audio": "audio"
       },
       "uploadFailed": "Unggahan gagal.",
-      "draftBasedOn": "Berdasarkan: {sources}"
+      "draftBasedOn": "Berdasarkan: {sources}",
+      "draftUnsupported": "Periksa sebelum mengirim: {facts} tidak ada di pengetahuan Anda"
     },
     "bubble": {
       "photo": "Foto",

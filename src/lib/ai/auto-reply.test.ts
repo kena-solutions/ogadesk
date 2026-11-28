@@ -431,6 +431,43 @@ describe('dispatchInboundToAiReply, typing indicator (#527)', () => {
   })
 })
 
+describe('dispatchInboundToAiReply, grounding', () => {
+  it('does not send a price nobody gave it: hands off with reason ungrounded, burning no reply slot', async () => {
+    h.generateReply.mockResolvedValue({ text: 'That costs ₦4,500.', handoff: false })
+    await dispatchInboundToAiReply(ARGS)
+    expect(h.engineSendText).not.toHaveBeenCalled()
+    expect(h.state.rpcCalls).toHaveLength(0)
+    expect(h.state.updatePayload).toMatchObject({ ai_autoreply_disabled: true })
+    expect(String(h.state.updatePayload?.ai_handoff_summary)).toContain("couldn't verify")
+    expect(h.logAiReply).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({ outcome: 'handoff', handoffReason: 'ungrounded' }),
+    )
+  })
+
+  it('sends a price that is in the retrieved knowledge', async () => {
+    h.retrieveKnowledge.mockResolvedValue([
+      { chunkId: 'c1', sourceId: 's1', documentId: 'd1', title: 'Pricing', content: 'Delivery costs ₦4,500.', score: 0.8, matchedBy: 'semantic' },
+    ])
+    h.generateReply.mockResolvedValue({ text: 'Delivery is ₦4,500.', handoff: false })
+    await dispatchInboundToAiReply(ARGS)
+    expect(h.engineSendText).toHaveBeenCalledWith(expect.objectContaining({ text: 'Delivery is ₦4,500.' }))
+  })
+
+  it('sends a price the customer gave in the conversation', async () => {
+    h.buildConversationContext.mockResolvedValue([{ role: 'user', content: 'I paid 4500 yesterday' }])
+    h.generateReply.mockResolvedValue({ text: 'Thanks, I see your 4,500 payment.', handoff: false })
+    await dispatchInboundToAiReply(ARGS)
+    expect(h.engineSendText).toHaveBeenCalled()
+  })
+
+  it('does not second-guess a reply built from tool results', async () => {
+    h.runOverride = async () => ({ text: 'Your order total is ₦9,999.', handoff: false, usage: null, source: 'own', instanceId: null, attempts: [], toolsExecuted: 1 }) as never
+    await dispatchInboundToAiReply(ARGS)
+    expect(h.engineSendText).toHaveBeenCalled()
+  })
+})
+
 describe('dispatchInboundToAiReply, handoff', () => {
   it('disables auto-reply, writes a summary, and does not send on handoff', async () => {
     h.generateReply.mockResolvedValue({ text: '', handoff: true })

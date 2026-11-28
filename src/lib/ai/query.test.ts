@@ -56,4 +56,11 @@ describe('keywordQuery', () => {
     expect(keywordQuery('¿Cuál es el precio del envío?')).toBe('cuál precio envío')
     expect(keywordQuery('the and of')).toBe('')
   })
+
+  it('drops common words in the other app languages too', () => {
+    expect(keywordQuery('berapa harga untuk pengiriman ke Lagos?')).toBe('berapa harga pengiriman lagos')
+    expect(keywordQuery('bei gani ya usafirishaji wa Nairobi')).toBe('bei usafirishaji nairobi')
+    expect(keywordQuery('क्या डिलीवरी की कीमत है')).toBe('डिलीवरी कीमत')
+    expect(keywordQuery('ما هو سعر الشحن')).toBe('سعر الشحن')
+  })
 })

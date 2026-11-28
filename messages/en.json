@@ -487,7 +487,8 @@
         "audio": "audio"
       },
       "uploadFailed": "Upload failed.",
-      "draftBasedOn": "Based on: {sources}"
+      "draftBasedOn": "Based on: {sources}",
+      "draftUnsupported": "Check before sending: {facts} isn't in your knowledge"
     },
     "bubble": {
       "photo": "Photo",

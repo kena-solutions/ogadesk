@@ -1043,7 +1043,8 @@
         "audio": "sauti"
       },
       "uploadFailed": "Upakiaji umeshindwa.",
-      "draftBasedOn": "Kulingana na: {sources}"
+      "draftBasedOn": "Kulingana na: {sources}",
+      "draftUnsupported": "Kagua kabla ya kutuma: {facts} haipo kwenye maarifa yako"
     },
     "bubble": {
       "photo": "Picha",
