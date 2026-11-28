@@ -1964,4 +1964,98 @@ MARKETING_PAGES.push({
   related: ['whatsapp-crm', 'whatsapp-broadcast', 'shared-whatsapp-inbox'],
 })
 
+MARKETING_PAGES.push(
+  comparePage({
+    slug: 'twilio-alternative',
+    rival: 'Twilio',
+    metaDescription: 'Twilio alternative for WhatsApp without building it yourself: compare OgaDesk and Twilio on setup, team inbox, chatbot flows, AI replies and who needs a developer.',
+    lead: 'Twilio is a developer platform that offers WhatsApp through its APIs. It is flexible, but your team builds the inbox and the logic around it. OgaDesk gives you the finished inbox, flows and AI on top of the official WhatsApp API.',
+    pickThem: 'You have developers, you want to build a custom messaging product, and you need Twilio’s other channels and APIs in the same account.',
+    pickUs: 'You want a ready team inbox, contacts, broadcasts, chatbot flows and AI replies without writing code, and you want to start today, free.',
+    rows: {
+      built: 'Developers building messaging into their own products',
+      currency: 'US dollars',
+      pricing: 'Usage-based; you pay for what you build and send',
+      inbox: 'Not out of the box with the API; Twilio Flex is a separate product',
+      flows: 'Build it yourself with its tools',
+      ai: 'Build it yourself',
+      otp: 'Through its APIs',
+    },
+    faq: [
+      { question: 'Can I use OgaDesk if my developers already use Twilio?', answer: 'Yes. OgaDesk has its own API and webhooks, so developers can send messages and connect other systems, while everyone else works in the inbox.' },
+      { question: 'Do I need a developer to use OgaDesk?', answer: 'No. Connecting WhatsApp, the shared inbox, broadcasts, flows and AI replies are all set up in the app. A developer is only needed if you want to connect your own systems through the API.' },
+      { question: 'Can I move my number from Twilio?', answer: 'Your WhatsApp number belongs to your business on Meta. It can be moved to another provider through Meta’s process, and your approved templates are recreated and resubmitted.' },
+      { question: 'Do I still pay Meta?', answer: 'Yes. Meta charges for WhatsApp messages on every provider, including Twilio and OgaDesk.' },
+    ],
+    related: ['respond-io-alternative', 'wati-alternative', 'whatsapp-api-and-webhooks'],
+  }),
+  comparePage({
+    slug: '360dialog-alternative',
+    rival: '360dialog',
+    metaDescription: '360dialog alternative with a team inbox: compare OgaDesk and 360dialog on WhatsApp API access, shared inbox, broadcasts, chatbot flows and AI replies.',
+    lead: '360dialog is an official WhatsApp Business API provider that gives developers and software partners access to the API. You bring the software on top. OgaDesk is that software: inbox, broadcasts, flows and AI, ready to use.',
+    pickThem: 'You are a software company or developer that wants direct API access and plans to build or plug in your own inbox.',
+    pickUs: 'You want to serve customers as a team today, with a shared inbox, contacts, broadcasts, chatbot flows and AI replies already built.',
+    rows: {
+      built: 'Developers and software partners that need API access',
+      currency: 'Euros',
+      pricing: 'A monthly fee per WhatsApp number',
+      inbox: 'Not the focus; you bring your own software',
+      flows: 'Build it yourself or use another tool',
+      ai: 'Build it yourself or use another tool',
+      otp: 'Through the API',
+    },
+    faq: [
+      { question: 'Is OgaDesk an official WhatsApp provider?', answer: 'OgaDesk connects to the official WhatsApp Business Platform through Meta, and you sign in with Meta to link your number.' },
+      { question: 'Can I keep my number if I switch from 360dialog?', answer: 'Yes. The number belongs to your business on Meta, so it can move to another provider. Approved templates are recreated and resubmitted.' },
+      { question: 'Do I need two tools with 360dialog?', answer: 'Usually yes: 360dialog provides API access and you add an inbox or CRM on top. With OgaDesk the inbox and the connection are in one place.' },
+      { question: 'Do I still pay Meta?', answer: 'Yes. Meta charges for WhatsApp messages on every provider.' },
+    ],
+    related: ['twilio-alternative', 'wati-alternative', 'whatsapp-api-and-webhooks'],
+  }),
+  comparePage({
+    slug: 'gupshup-alternative',
+    rival: 'Gupshup',
+    metaDescription: 'Gupshup alternative for growing businesses: compare OgaDesk and Gupshup on pricing, shared inbox, broadcasts, chatbot flows and starting without a sales call.',
+    lead: 'Gupshup is a conversational messaging platform used by larger businesses and developers, with pricing arranged through sales. OgaDesk is built for small and growing teams that want to sign up and start the same day.',
+    pickThem: 'You are a large organisation with high message volumes, you want custom contracts, and you are happy to work with a sales team.',
+    pickUs: 'You want clear plans, a free way to start, and a shared inbox, broadcasts, chatbot flows and AI replies you can set up yourself.',
+    rows: {
+      built: 'Larger businesses and developers with high volumes',
+      currency: 'Set by contract',
+      pricing: 'Custom pricing arranged with sales',
+      broadcasts: 'Yes, campaigns',
+      flows: 'Yes, chatbots and automation',
+    },
+    faq: [
+      { question: 'Can a small business use OgaDesk without talking to sales?', answer: 'Yes. Sign up free, connect your number and invite your team. No sales call or card is needed to start.' },
+      { question: 'Can I move my number from Gupshup?', answer: 'Yes. Your WhatsApp number belongs to your business on Meta and can be moved to another provider. Approved templates are recreated and resubmitted.' },
+      { question: 'Do I still pay Meta?', answer: 'Yes. Meta charges for WhatsApp messages on every provider.' },
+    ],
+    related: ['twilio-alternative', 'respond-io-alternative', 'wati-alternative'],
+  }),
+  comparePage({
+    slug: 'sleekflow-alternative',
+    rival: 'SleekFlow',
+    metaDescription: 'SleekFlow alternative for African businesses: compare OgaDesk and SleekFlow on pricing currency, WhatsApp inbox, broadcasts, chatbot flows, AI replies and live chat.',
+    lead: 'SleekFlow is an omnichannel inbox that brings WhatsApp, Instagram, Messenger and other channels together, with plans that depend on features and contacts. OgaDesk focuses on WhatsApp and website chat, priced in naira for African businesses.',
+    pickThem: 'You need many social channels in one inbox, such as Instagram, Messenger and SMS, and US-dollar pricing suits you.',
+    pickUs: 'WhatsApp and your website are where customers reach you, and you want a plan in naira, free to start, with broadcasts, flows and AI included.',
+    rows: {
+      built: 'Businesses that want many messaging channels in one inbox',
+      currency: 'US dollars, with some regional pricing',
+      pricing: 'Plans by features and contacts, with WhatsApp number fees on top',
+      inbox: 'Yes, across many channels',
+      broadcasts: 'Yes, on higher plans',
+      ai: 'Yes, AI features on its plans',
+    },
+    faq: [
+      { question: 'Does OgaDesk support Instagram and Messenger?', answer: 'OgaDesk focuses on WhatsApp and website live chat. If Instagram or Messenger are essential to you, check that before switching.' },
+      { question: 'Can I import my contacts from SleekFlow?', answer: 'Yes. Export your contacts as a CSV and import them into OgaDesk. Your WhatsApp number can move to a new provider through Meta, and templates are recreated and resubmitted.' },
+      { question: 'Do I still pay Meta?', answer: 'Yes. Meta charges for WhatsApp messages on every provider.' },
+    ],
+    related: ['respond-io-alternative', 'trengo-alternative', 'wati-alternative'],
+  }),
+)
+
 export const getMarketingPage = (kind: MarketingPage['kind'], slug: string) => MARKETING_PAGES.find((p) => p.kind === kind && p.slug === slug)
