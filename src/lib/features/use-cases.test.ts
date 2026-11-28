@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { isFeatureEnabled } from './use-cases'
+import { isFeatureEnabled, pipelineKindsFor } from './use-cases'
 
 describe('isFeatureEnabled', () => {
   it('shows everything when no use case is picked', () => {
@@ -15,5 +15,15 @@ describe('isFeatureEnabled', () => {
     expect(isFeatureEnabled('action.createTicket', ['support'])).toBe(true)
     expect(isFeatureEnabled('nav.aiAgents', ['developer'])).toBe(false)
     expect(isFeatureEnabled('nav.forms', ['developer'])).toBe(true)
+  })
+})
+
+describe('pipelineKindsFor', () => {
+  it('filters by sales-only or support-only, otherwise all', () => {
+    expect(pipelineKindsFor(['sales'])).toEqual(['sales'])
+    expect(pipelineKindsFor(['support', 'developer'])).toEqual(['support'])
+    expect(pipelineKindsFor(['sales', 'support'])).toBeNull()
+    expect(pipelineKindsFor([])).toBeNull()
+    expect(pipelineKindsFor(['marketing'])).toBeNull()
   })
 })
