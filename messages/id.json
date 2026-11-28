@@ -2626,7 +2626,11 @@
       "matchSemantic": "makna",
       "matchKeyword": "kata kunci",
       "matchBoth": "makna + kata kunci",
-      "toolsUsed": "{count} alat dipakai"
+      "toolsUsed": "{count} alat dipakai",
+      "saveAsCheck": "Simpan sebagai pemeriksaan",
+      "checkSaved": "Disimpan sebagai pemeriksaan",
+      "checkSavedShort": "Tersimpan",
+      "checkFailed": "Gagal menyimpan pemeriksaan."
     },
     "usage": {
       "title": "Penggunaan token",
@@ -2972,6 +2976,35 @@
         "out_of_date": "Kedaluwarsa",
         "tone": "Nada salah",
         "other": "Lainnya"
+      },
+      "checksPassing": "Pemeriksaan: {ok} dari {total} sama",
+      "goodReplies": "Balasan yang disukai tim",
+      "saveAsCheck": "Simpan sebagai pemeriksaan",
+      "checkSaved": "Tersimpan"
+    },
+    "checks": {
+      "title": "Pemeriksaan",
+      "passing": "{ok} dari {total} sama",
+      "runAll": "Jalankan pemeriksaan",
+      "empty": "Belum ada pemeriksaan. Di chat uji, tekan \"Simpan sebagai pemeriksaan\" di bawah balasan yang Anda suka.",
+      "notRun": "Belum dijalankan",
+      "runOne": "Jalankan pemeriksaan ini",
+      "delete": "Hapus",
+      "runFailed": "Gagal menjalankan pemeriksaan.",
+      "deleteFailed": "Gagal memperbarui pemeriksaan.",
+      "accepted": "Jawaban baru diterima",
+      "accept": "Terima jawaban baru",
+      "before": "Sebelum",
+      "now": "Sekarang",
+      "handedOff": "Meneruskan ke orang",
+      "noReply": "(tanpa balasan)",
+      "usedSources": "Memakai: {titles}",
+      "noSources": "Tidak memakai pengetahuan",
+      "status": {
+        "same": "Sama",
+        "changed": "Berubah",
+        "now_handoff": "Kini meneruskan",
+        "now_answers": "Kini menjawab"
       }
     }
   },
@@ -5593,6 +5626,13 @@
       "feedback": {
         "notRateable": "Hanya balasan AI yang bisa dinilai",
         "saveFailed": "Gagal menyimpan penilaian"
+      },
+      "evals": {
+        "loadFailed": "Gagal memuat pemeriksaan",
+        "saveFailed": "Gagal menyimpan pemeriksaan",
+        "limitReached": "Satu agen bisa punya hingga {max} pemeriksaan",
+        "notFound": "Pemeriksaan tidak ditemukan",
+        "nothingToAccept": "Jalankan pemeriksaan dulu"
       }
     },
     "automations": {

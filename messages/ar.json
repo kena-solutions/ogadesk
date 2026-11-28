@@ -2626,7 +2626,11 @@
       "matchSemantic": "المعنى",
       "matchKeyword": "الكلمات المفتاحية",
       "matchBoth": "المعنى + الكلمات المفتاحية",
-      "toolsUsed": "{count, plural, one {أداة واحدة مستخدمة} other {# أدوات مستخدمة}}"
+      "toolsUsed": "{count, plural, one {أداة واحدة مستخدمة} other {# أدوات مستخدمة}}",
+      "saveAsCheck": "حفظ كفحص",
+      "checkSaved": "تم الحفظ كفحص",
+      "checkSavedShort": "تم الحفظ",
+      "checkFailed": "تعذر حفظ الفحص."
     },
     "usage": {
       "title": "استهلاك الرموز",
@@ -2972,6 +2976,35 @@
         "out_of_date": "قديمة",
         "tone": "نبرة غير مناسبة",
         "other": "شيء آخر"
+      },
+      "checksPassing": "الفحوصات: {ok} من {total} كما هي",
+      "goodReplies": "ردود أعجبت الفريق",
+      "saveAsCheck": "حفظ كفحص",
+      "checkSaved": "تم الحفظ"
+    },
+    "checks": {
+      "title": "الفحوصات",
+      "passing": "{ok} من {total} كما هي",
+      "runAll": "تشغيل الفحوصات",
+      "empty": "لا توجد فحوصات بعد. في محادثة تجريبية اضغط \"حفظ كفحص\" تحت رد يعجبك.",
+      "notRun": "لم تُشغَّل",
+      "runOne": "تشغيل هذا الفحص",
+      "delete": "حذف",
+      "runFailed": "تعذر تشغيل الفحص.",
+      "deleteFailed": "تعذر تحديث الفحص.",
+      "accepted": "تم قبول الإجابة الجديدة",
+      "accept": "قبول الإجابة الجديدة",
+      "before": "قبل",
+      "now": "الآن",
+      "handedOff": "يحوّل إلى شخص",
+      "noReply": "(بلا رد)",
+      "usedSources": "استخدم: {titles}",
+      "noSources": "لم يستخدم معرفة",
+      "status": {
+        "same": "كما هي",
+        "changed": "تغيّرت",
+        "now_handoff": "يحوّل الآن",
+        "now_answers": "يجيب الآن"
       }
     }
   },
@@ -5593,6 +5626,13 @@
       "feedback": {
         "notRateable": "يمكن تقييم ردود الذكاء الاصطناعي فقط",
         "saveFailed": "تعذر حفظ التقييم"
+      },
+      "evals": {
+        "loadFailed": "تعذر تحميل الفحوصات",
+        "saveFailed": "تعذر حفظ الفحص",
+        "limitReached": "يمكن أن يكون للوكيل حتى {max} فحصًا",
+        "notFound": "الفحص غير موجود",
+        "nothingToAccept": "شغّل الفحص أولًا"
       }
     },
     "automations": {

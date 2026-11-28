@@ -2626,7 +2626,11 @@
       "matchSemantic": "अर्थ",
       "matchKeyword": "कीवर्ड",
       "matchBoth": "अर्थ + कीवर्ड",
-      "toolsUsed": "{count} टूल इस्तेमाल हुए"
+      "toolsUsed": "{count} टूल इस्तेमाल हुए",
+      "saveAsCheck": "जाँच के रूप में सेव करें",
+      "checkSaved": "जाँच के रूप में सेव हुआ",
+      "checkSavedShort": "सेव हुआ",
+      "checkFailed": "जाँच सेव नहीं हो सकी।"
     },
     "usage": {
       "title": "टोकन उपयोग",
@@ -2972,6 +2976,35 @@
         "out_of_date": "पुरानी जानकारी",
         "tone": "गलत लहजा",
         "other": "कुछ और"
+      },
+      "checksPassing": "जाँच: {total} में से {ok} समान",
+      "goodReplies": "टीम को पसंद आए जवाब",
+      "saveAsCheck": "जाँच के रूप में सेव करें",
+      "checkSaved": "सेव हुआ"
+    },
+    "checks": {
+      "title": "जाँचें",
+      "passing": "{total} में से {ok} समान",
+      "runAll": "जाँचें चलाएँ",
+      "empty": "अभी कोई जाँच नहीं। टेस्ट चैट में पसंदीदा जवाब के नीचे \"जाँच के रूप में सेव करें\" दबाएँ।",
+      "notRun": "चलाई नहीं गई",
+      "runOne": "यह जाँच चलाएँ",
+      "delete": "हटाएँ",
+      "runFailed": "जाँच नहीं चल सकी।",
+      "deleteFailed": "जाँच अपडेट नहीं हो सकी।",
+      "accepted": "नया जवाब स्वीकार किया",
+      "accept": "नया जवाब स्वीकारें",
+      "before": "पहले",
+      "now": "अब",
+      "handedOff": "व्यक्ति को सौंपता है",
+      "noReply": "(कोई जवाब नहीं)",
+      "usedSources": "उपयोग: {titles}",
+      "noSources": "कोई ज्ञान उपयोग नहीं",
+      "status": {
+        "same": "समान",
+        "changed": "बदला",
+        "now_handoff": "अब सौंपता है",
+        "now_answers": "अब जवाब देता है"
       }
     }
   },
@@ -5593,6 +5626,13 @@
       "feedback": {
         "notRateable": "केवल AI जवाबों को रेट किया जा सकता है",
         "saveFailed": "रेटिंग सेव नहीं हो सकी"
+      },
+      "evals": {
+        "loadFailed": "जाँचें लोड नहीं हो सकीं",
+        "saveFailed": "जाँच सेव नहीं हो सकी",
+        "limitReached": "एक एजेंट की अधिकतम {max} जाँचें हो सकती हैं",
+        "notFound": "जाँच नहीं मिली",
+        "nothingToAccept": "पहले जाँच चलाएँ"
       }
     },
     "automations": {

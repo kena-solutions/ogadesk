@@ -32,10 +32,24 @@ export async function GET(request: Request) {
     }
     // Ratings are a bonus: if that function isn't there yet, the rest still shows.
     if (feedback.error) console.error('[ai/insights] feedback summary failed:', feedback.error)
+
+    // How many of each agent's saved checks passed on their last run.
+    const { data: caseRows } = await supabase.from('ai_eval_cases').select('agent_id, last_result').eq('account_id', accountId)
+    const checks = new Map<string, { passing: number; ran: number; total: number }>()
+    for (const c of (caseRows ?? []) as { agent_id: string; last_result: { status?: string } | null }[]) {
+      const row = checks.get(c.agent_id) ?? { passing: 0, ran: 0, total: 0 }
+      row.total += 1
+      if (c.last_result) {
+        row.ran += 1
+        if (c.last_result.status === 'same') row.passing += 1
+      }
+      checks.set(c.agent_id, row)
+    }
     return NextResponse.json({
       days,
       ...(stats.data as Record<string, unknown>),
       feedback: feedback.error ? { agents: [], down: [], up: [] } : feedback.data,
+      checks: Object.fromEntries(checks),
     })
   } catch (err) {
     return toErrorResponse(err)

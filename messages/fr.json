@@ -3474,7 +3474,11 @@
       "matchSemantic": "sens",
       "matchKeyword": "mots-clés",
       "matchBoth": "sens + mots-clés",
-      "toolsUsed": "{count, plural, one {# outil utilisé} other {# outils utilisés}}"
+      "toolsUsed": "{count, plural, one {# outil utilisé} other {# outils utilisés}}",
+      "saveAsCheck": "Enregistrer comme vérification",
+      "checkSaved": "Enregistrée comme vérification",
+      "checkSavedShort": "Enregistrée",
+      "checkFailed": "Impossible d'enregistrer la vérification."
     },
     "usage": {
       "title": "Utilisation des jetons",
@@ -3820,6 +3824,35 @@
         "out_of_date": "Obsolète",
         "tone": "Mauvais ton",
         "other": "Autre chose"
+      },
+      "checksPassing": "Vérifications : {ok} sur {total} identiques",
+      "goodReplies": "Réponses appréciées par l’équipe",
+      "saveAsCheck": "Enregistrer comme vérification",
+      "checkSaved": "Enregistrée"
+    },
+    "checks": {
+      "title": "Vérifications",
+      "passing": "{ok} sur {total} identiques",
+      "runAll": "Lancer les vérifications",
+      "empty": "Aucune vérification. Dans une discussion de test, appuyez sur « Enregistrer comme vérification » sous une réponse qui vous plaît.",
+      "notRun": "Non lancée",
+      "runOne": "Lancer cette vérification",
+      "delete": "Supprimer",
+      "runFailed": "Impossible de lancer la vérification.",
+      "deleteFailed": "Impossible de mettre à jour la vérification.",
+      "accepted": "Nouvelle réponse acceptée",
+      "accept": "Accepter la nouvelle réponse",
+      "before": "Avant",
+      "now": "Maintenant",
+      "handedOff": "Transfère à une personne",
+      "noReply": "(aucune réponse)",
+      "usedSources": "Utilise : {titles}",
+      "noSources": "Aucune connaissance utilisée",
+      "status": {
+        "same": "Identique",
+        "changed": "Modifiée",
+        "now_handoff": "Transfère maintenant",
+        "now_answers": "Répond maintenant"
       }
     }
   },
@@ -4355,6 +4388,13 @@
       "feedback": {
         "notRateable": "Seules les réponses IA peuvent être notées",
         "saveFailed": "Impossible d'enregistrer la note"
+      },
+      "evals": {
+        "loadFailed": "Impossible de charger les vérifications",
+        "saveFailed": "Impossible d'enregistrer la vérification",
+        "limitReached": "Un agent peut avoir jusqu'à {max} vérifications",
+        "notFound": "Vérification introuvable",
+        "nothingToAccept": "Lancez d'abord la vérification"
       }
     },
     "automations": {

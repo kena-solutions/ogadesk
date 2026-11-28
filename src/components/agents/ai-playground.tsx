@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { useTranslations } from 'next-intl';
-import { Bot, RotateCcw, Send, Loader2, UserCircle2, ArrowRight, BookOpen, Wrench } from 'lucide-react';
+import { Bot, RotateCcw, Send, Loader2, UserCircle2, ArrowRight, BookOpen, Wrench, ListChecks, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 
@@ -16,6 +16,8 @@ interface Turn {
   sources?: PlaygroundSource[];
   /** assistant-only: tools the AI called for this reply (read tools ran; actions were only described). */
   toolCalls?: PlaygroundToolCall[];
+  /** assistant-only: saved as a check. */
+  savedAsCheck?: boolean;
 }
 
 interface PlaygroundToolCall {
@@ -35,16 +37,45 @@ interface PlaygroundSource {
 export function AiPlayground({
   onGoToSetup,
   agentId,
+  onCheckSaved,
 }: {
   onGoToSetup?: () => void;
   /** Test this agent; omitted = the default agent. */
   agentId?: string;
+  /** Admins: show "Save as check" on replies; called after one is saved. */
+  onCheckSaved?: () => void;
 }) {
   const t = useTranslations('Agents.playground');
   const [turns, setTurns] = useState<Turn[]>([]);
   const [input, setInput] = useState('');
   const [sending, setSending] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Remember this question and what the agent did as the result to keep an eye on.
+  const saveCheck = async (index: number) => {
+    const turn = turns[index];
+    const question = [...turns.slice(0, index)].reverse().find((x) => x.role === 'user')?.content;
+    if (!agentId || !question || turn.role !== 'assistant') return;
+    const res = await fetch('/api/ai/evals', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        agent_id: agentId,
+        question,
+        origin: 'playground',
+        expected: {
+          handoff: Boolean(turn.handoff),
+          source_titles: (turn.sources ?? []).map((s) => s.title ?? '').filter(Boolean),
+          sample_reply: turn.content,
+        },
+      }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) return void toast.error(data.error ?? t('checkFailed'));
+    setTurns((list) => list.map((x, i) => (i === index ? { ...x, savedAsCheck: true } : x)));
+    toast.success(t('checkSaved'));
+    onCheckSaved?.();
+  };
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
@@ -189,6 +220,17 @@ export function AiPlayground({
               )}
               {turn.role === 'assistant' && turn.sources && (
                 <SourcesUsed sources={turn.sources} />
+              )}
+              {turn.role === 'assistant' && onCheckSaved && agentId && (
+                <button
+                  type="button"
+                  onClick={() => void saveCheck(i)}
+                  disabled={turn.savedAsCheck}
+                  className="mt-1.5 flex items-center gap-1 border-t border-border/50 pt-1.5 text-xs text-muted-foreground hover:text-foreground disabled:cursor-default disabled:text-primary"
+                >
+                  {turn.savedAsCheck ? <Check className="h-3.5 w-3.5" /> : <ListChecks className="h-3.5 w-3.5" />}
+                  {turn.savedAsCheck ? t('checkSavedShort') : t('saveAsCheck')}
+                </button>
               )}
             </div>
             {turn.role === 'user' && (

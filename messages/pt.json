@@ -3474,7 +3474,11 @@
       "matchSemantic": "significado",
       "matchKeyword": "palavras-chave",
       "matchBoth": "significado + palavras-chave",
-      "toolsUsed": "{count, plural, one {# ferramenta usada} other {# ferramentas usadas}}"
+      "toolsUsed": "{count, plural, one {# ferramenta usada} other {# ferramentas usadas}}",
+      "saveAsCheck": "Salvar como verificação",
+      "checkSaved": "Salva como verificação",
+      "checkSavedShort": "Salva",
+      "checkFailed": "Não foi possível salvar a verificação."
     },
     "usage": {
       "title": "Uso de tokens",
@@ -3820,6 +3824,35 @@
         "out_of_date": "Desatualizada",
         "tone": "Tom errado",
         "other": "Outra coisa"
+      },
+      "checksPassing": "Verificações: {ok} de {total} iguais",
+      "goodReplies": "Respostas que a equipe curtiu",
+      "saveAsCheck": "Salvar como verificação",
+      "checkSaved": "Salva"
+    },
+    "checks": {
+      "title": "Verificações",
+      "passing": "{ok} de {total} iguais",
+      "runAll": "Executar verificações",
+      "empty": "Nenhuma verificação ainda. Em um chat de teste, toque em \"Salvar como verificação\" sob uma resposta de que goste.",
+      "notRun": "Não executada",
+      "runOne": "Executar esta verificação",
+      "delete": "Excluir",
+      "runFailed": "Não foi possível executar a verificação.",
+      "deleteFailed": "Não foi possível atualizar a verificação.",
+      "accepted": "Nova resposta aceita",
+      "accept": "Aceitar a nova resposta",
+      "before": "Antes",
+      "now": "Agora",
+      "handedOff": "Passa para uma pessoa",
+      "noReply": "(sem resposta)",
+      "usedSources": "Usou: {titles}",
+      "noSources": "Não usou conhecimento",
+      "status": {
+        "same": "Igual",
+        "changed": "Mudou",
+        "now_handoff": "Agora transfere",
+        "now_answers": "Agora responde"
       }
     }
   },
@@ -4379,6 +4412,13 @@
       "feedback": {
         "notRateable": "Só respostas de IA podem ser avaliadas",
         "saveFailed": "Não foi possível salvar a avaliação"
+      },
+      "evals": {
+        "loadFailed": "Não foi possível carregar as verificações",
+        "saveFailed": "Não foi possível salvar a verificação",
+        "limitReached": "Um agente pode ter até {max} verificações",
+        "notFound": "Verificação não encontrada",
+        "nothingToAccept": "Execute a verificação primeiro"
       }
     },
     "automations": {

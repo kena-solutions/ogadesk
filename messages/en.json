@@ -3474,7 +3474,11 @@
       "matchSemantic": "meaning",
       "matchKeyword": "keywords",
       "matchBoth": "meaning + keywords",
-      "toolsUsed": "{count, plural, one {# tool used} other {# tools used}}"
+      "toolsUsed": "{count, plural, one {# tool used} other {# tools used}}",
+      "saveAsCheck": "Save as check",
+      "checkSaved": "Saved as a check",
+      "checkSavedShort": "Saved as check",
+      "checkFailed": "Couldn't save the check."
     },
     "usage": {
       "title": "Token usage",
@@ -3820,6 +3824,35 @@
         "out_of_date": "Out of date",
         "tone": "Wrong tone",
         "other": "Something else"
+      },
+      "checksPassing": "Checks: {ok} of {total} same",
+      "goodReplies": "Replies teammates liked",
+      "saveAsCheck": "Save as check",
+      "checkSaved": "Saved"
+    },
+    "checks": {
+      "title": "Checks",
+      "passing": "{ok} of {total} same",
+      "runAll": "Run checks",
+      "empty": "No checks yet. In a test chat, press \"Save as check\" under a reply you like.",
+      "notRun": "Not run",
+      "runOne": "Run this check",
+      "delete": "Delete",
+      "runFailed": "Couldn't run the check.",
+      "deleteFailed": "Couldn't update the check.",
+      "accepted": "New answer accepted",
+      "accept": "Accept the new answer",
+      "before": "Before",
+      "now": "Now",
+      "handedOff": "Hands off to a person",
+      "noReply": "(no reply)",
+      "usedSources": "Used: {titles}",
+      "noSources": "Used no knowledge",
+      "status": {
+        "same": "Same",
+        "changed": "Changed",
+        "now_handoff": "Now hands off",
+        "now_answers": "Now answers"
       }
     }
   },
@@ -4379,6 +4412,13 @@
       "feedback": {
         "notRateable": "Only AI replies can be rated",
         "saveFailed": "Failed to save the rating"
+      },
+      "evals": {
+        "loadFailed": "Failed to load checks",
+        "saveFailed": "Failed to save the check",
+        "limitReached": "An agent can have up to {max} checks",
+        "notFound": "Check not found",
+        "nothingToAccept": "Run the check first"
       }
     },
     "automations": {

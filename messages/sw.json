@@ -2626,7 +2626,11 @@
       "matchSemantic": "maana",
       "matchKeyword": "maneno muhimu",
       "matchBoth": "maana + maneno muhimu",
-      "toolsUsed": "{count, plural, one {Zana # imetumika} other {Zana # zimetumika}}"
+      "toolsUsed": "{count, plural, one {Zana # imetumika} other {Zana # zimetumika}}",
+      "saveAsCheck": "Hifadhi kama ukaguzi",
+      "checkSaved": "Imehifadhiwa kama ukaguzi",
+      "checkSavedShort": "Imehifadhiwa",
+      "checkFailed": "Imeshindwa kuhifadhi ukaguzi."
     },
     "usage": {
       "title": "Matumizi ya tokeni",
@@ -2972,6 +2976,35 @@
         "out_of_date": "Imepitwa na wakati",
         "tone": "Sauti isiyofaa",
         "other": "Jambo lingine"
+      },
+      "checksPassing": "Ukaguzi: {ok} kati ya {total} sawa",
+      "goodReplies": "Majibu yaliyopendwa na timu",
+      "saveAsCheck": "Hifadhi kama ukaguzi",
+      "checkSaved": "Imehifadhiwa"
+    },
+    "checks": {
+      "title": "Ukaguzi",
+      "passing": "{ok} kati ya {total} sawa",
+      "runAll": "Endesha ukaguzi",
+      "empty": "Bado hakuna ukaguzi. Kwenye gumzo la majaribio, bonyeza \"Hifadhi kama ukaguzi\" chini ya jibu unalopenda.",
+      "notRun": "Haijaendeshwa",
+      "runOne": "Endesha ukaguzi huu",
+      "delete": "Futa",
+      "runFailed": "Imeshindwa kuendesha ukaguzi.",
+      "deleteFailed": "Imeshindwa kusasisha ukaguzi.",
+      "accepted": "Jibu jipya limekubaliwa",
+      "accept": "Kubali jibu jipya",
+      "before": "Kabla",
+      "now": "Sasa",
+      "handedOff": "Anampa mtu",
+      "noReply": "(hakuna jibu)",
+      "usedSources": "Ilitumia: {titles}",
+      "noSources": "Haikutumia maarifa",
+      "status": {
+        "same": "Sawa",
+        "changed": "Imebadilika",
+        "now_handoff": "Sasa inapeleka",
+        "now_answers": "Sasa inajibu"
       }
     }
   },
@@ -5593,6 +5626,13 @@
       "feedback": {
         "notRateable": "Majibu ya AI pekee yanaweza kupimwa",
         "saveFailed": "Imeshindwa kuhifadhi tathmini"
+      },
+      "evals": {
+        "loadFailed": "Imeshindwa kupakia ukaguzi",
+        "saveFailed": "Imeshindwa kuhifadhi ukaguzi",
+        "limitReached": "Wakala anaweza kuwa na hadi ukaguzi {max}",
+        "notFound": "Ukaguzi haukupatikana",
+        "nothingToAccept": "Endesha ukaguzi kwanza"
       }
     },
     "automations": {

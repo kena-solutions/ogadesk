@@ -16,6 +16,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { AiPlayground } from './ai-playground';
+import { AgentChecks } from './agent-checks';
 import { AddSourceDialog } from './add-source-dialog';
 import { SOURCE_ICON, StatusPill } from './knowledge-library';
 import { memberLabel } from '@/lib/account/members';
@@ -114,6 +115,7 @@ export function AgentEditor({
   const [tab, setTab] = useState<SubTab>(agent ? initialTab : 'setup');
   const [form, setForm] = useState<Form>(() => toForm(agent, agent ? null : preset));
   const [saving, setSaving] = useState(false);
+  const [checksVersion, setChecksVersion] = useState(0);
   // The platform's default persona: shown as the placeholders of the optional persona fields (empty = use it).
   const [defaults, setDefaults] = useState<PersonaDefaults | null>(null);
   useEffect(() => {
@@ -428,7 +430,8 @@ export function AgentEditor({
 
         {agent && (
           <TabsContent value="playground" className="mt-4">
-            <AiPlayground agentId={agent.id} />
+            <AiPlayground agentId={agent.id} onCheckSaved={canEdit ? () => setChecksVersion((v) => v + 1) : undefined} />
+            <AgentChecks agentId={agent.id} canEdit={canEdit} refreshKey={checksVersion} />
           </TabsContent>
         )}
       </Tabs>

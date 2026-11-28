@@ -3474,7 +3474,11 @@
       "matchSemantic": "significado",
       "matchKeyword": "palabras clave",
       "matchBoth": "significado + palabras clave",
-      "toolsUsed": "{count, plural, one {# herramienta usada} other {# herramientas usadas}}"
+      "toolsUsed": "{count, plural, one {# herramienta usada} other {# herramientas usadas}}",
+      "saveAsCheck": "Guardar como comprobación",
+      "checkSaved": "Guardada como comprobación",
+      "checkSavedShort": "Guardada",
+      "checkFailed": "No se pudo guardar la comprobación."
     },
     "usage": {
       "title": "Uso de tokens",
@@ -3820,6 +3824,35 @@
         "out_of_date": "Desactualizada",
         "tone": "Tono equivocado",
         "other": "Otra cosa"
+      },
+      "checksPassing": "Comprobaciones: {ok} de {total} iguales",
+      "goodReplies": "Respuestas que gustaron al equipo",
+      "saveAsCheck": "Guardar como comprobación",
+      "checkSaved": "Guardada"
+    },
+    "checks": {
+      "title": "Comprobaciones",
+      "passing": "{ok} de {total} iguales",
+      "runAll": "Ejecutar comprobaciones",
+      "empty": "Aún no hay comprobaciones. En un chat de prueba, pulsa \"Guardar como comprobación\" bajo una respuesta que te guste.",
+      "notRun": "Sin ejecutar",
+      "runOne": "Ejecutar esta comprobación",
+      "delete": "Eliminar",
+      "runFailed": "No se pudo ejecutar la comprobación.",
+      "deleteFailed": "No se pudo actualizar la comprobación.",
+      "accepted": "Nueva respuesta aceptada",
+      "accept": "Aceptar la nueva respuesta",
+      "before": "Antes",
+      "now": "Ahora",
+      "handedOff": "Pasa a una persona",
+      "noReply": "(sin respuesta)",
+      "usedSources": "Usó: {titles}",
+      "noSources": "No usó conocimiento",
+      "status": {
+        "same": "Igual",
+        "changed": "Cambió",
+        "now_handoff": "Ahora transfiere",
+        "now_answers": "Ahora responde"
       }
     }
   },
@@ -4379,6 +4412,13 @@
       "feedback": {
         "notRateable": "Solo se pueden valorar respuestas de IA",
         "saveFailed": "No se pudo guardar la valoración"
+      },
+      "evals": {
+        "loadFailed": "No se pudieron cargar las comprobaciones",
+        "saveFailed": "No se pudo guardar la comprobación",
+        "limitReached": "Un agente puede tener hasta {max} comprobaciones",
+        "notFound": "Comprobación no encontrada",
+        "nothingToAccept": "Ejecuta primero la comprobación"
       }
     },
     "automations": {

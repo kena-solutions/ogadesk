@@ -16,6 +16,7 @@ interface Insights {
   agents: { agent_id: string | null; replied: number; handoff: number; skipped: number; error: number; avg_sources: number | null }[];
   gaps: { question: string; count: number; agent_id: string | null }[];
   sources: { title: string; count: number }[];
+  checks?: Record<string, { passing: number; ran: number; total: number }>;
   feedback?: {
     agents: { agent_id: string | null; up: number; down: number }[];
     down: FeedbackItem[];
@@ -45,6 +46,24 @@ export function AiInsights() {
   const [data, setData] = useState<Insights | null>(null);
   const [agents, setAgents] = useState<AgentDto[]>([]);
   const [question, setQuestion] = useState<string | null>(null);
+  const [savedChecks, setSavedChecks] = useState<Set<string>>(new Set());
+
+  // A reply a teammate liked becomes a check: the agent should keep answering this question this way.
+  const saveCheck = async (f: FeedbackItem) => {
+    const res = await fetch('/api/ai/evals', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        agent_id: f.agent_id,
+        question: f.question,
+        origin: 'feedback',
+        expected: { handoff: false, source_titles: f.sources ?? [], sample_reply: f.reply ?? '' },
+      }),
+    });
+    const json = await res.json().catch(() => ({}));
+    if (!res.ok) return void toast.error(json.error ?? t('loadFailed'));
+    setSavedChecks((s) => new Set(s).add(f.id));
+  };
 
   const load = useCallback(async () => {
     setData(null);
@@ -119,6 +138,11 @@ export function AiInsights() {
                       </p>
                     ) : null;
                   })()}
+                  {a.agent_id && data.checks?.[a.agent_id]?.ran ? (
+                    <p className="mt-2 text-center text-xs text-muted-foreground">
+                      {t('checksPassing', { ok: data.checks[a.agent_id].passing, total: data.checks[a.agent_id].ran })}
+                    </p>
+                  ) : null}
                   <p className="mt-3 text-xs text-muted-foreground">
                     {t('avgSources', { avg: (a.avg_sources ?? 0).toFixed(1) })}
                     {a.skipped > 0 && ` · ${t('skipped', { count: a.skipped })}`}
@@ -180,6 +204,27 @@ export function AiInsights() {
                     </div>
                   </li>
                 ))}
+              </ul>
+            </section>
+          )}
+
+          {(data.feedback?.up.filter((f) => f.question && f.agent_id).length ?? 0) > 0 && (
+            <section className="space-y-2">
+              <h3 className="text-sm font-medium text-foreground">{t('goodReplies')}</h3>
+              <ul className="divide-y divide-border rounded-xl border border-border">
+                {data.feedback!.up
+                  .filter((f) => f.question && f.agent_id)
+                  .map((f) => (
+                    <li key={f.id} className="flex items-center justify-between gap-3 px-3 py-2.5 text-sm">
+                      <div className="min-w-0">
+                        <p className="truncate text-foreground">{f.question}</p>
+                        <p className="line-clamp-1 text-xs text-muted-foreground">{f.reply}</p>
+                      </div>
+                      <Button size="sm" variant="outline" disabled={savedChecks.has(f.id)} onClick={() => void saveCheck(f)}>
+                        {savedChecks.has(f.id) ? t('checkSaved') : t('saveAsCheck')}
+                      </Button>
+                    </li>
+                  ))}
               </ul>
             </section>
           )}
