@@ -36,6 +36,7 @@
  */
 
 import type { SupabaseClient } from '@supabase/supabase-js';
+import { pauseAiForHumanReply } from '@/lib/ai/pause';
 
 const COEXISTENCE_WEBHOOK_FIELDS = new Set([
   'smb_app_state_sync',
@@ -259,6 +260,9 @@ async function handleMessageEchoes(
         last_message_at: createdAt,
       })
       .eq('id', conversation.id);
+
+    // The business answered from their phone: a person is in this chat, so the AI steps back.
+    await pauseAiForHumanReply(supabase, conversation.id);
   }
 }
 

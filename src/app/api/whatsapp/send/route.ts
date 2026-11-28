@@ -170,6 +170,7 @@ export async function POST(request: Request) {
         interactivePayload: interactive_payload,
         replyToMessageId: reply_to_message_id,
         senderId: userId,
+        pauseAi: true,
       })
 
       return NextResponse.json({

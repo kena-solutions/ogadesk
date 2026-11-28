@@ -109,11 +109,7 @@ export function AiThreadBanner({
       <Banner tone="muted">
         <div className="min-w-0 flex-1">
           <p className="font-medium text-foreground">{t("pausedTitle")}</p>
-          {handoffSummary && (
-            <p className="truncate text-muted-foreground" title={handoffSummary}>
-              {handoffSummary}
-            </p>
-          )}
+          {handoffSummary && <HandoffNote summary={handoffSummary} />}
         </div>
         <BannerButton onClick={() => toggle(false)} busy={busy} icon={Undo2}>
           {t("resume")}
@@ -138,6 +134,26 @@ export function AiThreadBanner({
         {t("takeOver")}
       </BannerButton>
     </Banner>
+  );
+}
+
+/** The handoff note: the headline, with the rest (what the customer said, what the AI said, knowledge) on demand. */
+function HandoffNote({ summary }: { summary: string }) {
+  const t = useTranslations("Inbox.aiBanner");
+  const [open, setOpen] = useState(false);
+  const [headline, ...details] = summary.split("\n");
+  return (
+    <div className="text-muted-foreground">
+      <p className={cn(!open && "truncate")} title={summary}>
+        {headline}
+        {details.length > 0 && (
+          <button type="button" onClick={() => setOpen((o) => !o)} className="ml-2 text-primary hover:underline">
+            {open ? t("hideDetails") : t("showDetails")}
+          </button>
+        )}
+      </p>
+      {open && details.map((line, i) => <p key={i} className="mt-0.5">{line}</p>)}
+    </div>
   );
 }
 

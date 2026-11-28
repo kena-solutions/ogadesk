@@ -162,7 +162,7 @@ describe('Portuguese messages in their UI context', () => {
           translator('Handoff')
         )
       ).toBe(
-        `🤖 O agente de IA transferiu a conversa ${phrase}. Última mensagem do cliente: “help {please}”`
+        `🤖 O agente de IA transferiu a conversa ${phrase}.\nCliente: • “help {please}”`
       );
     }
   );

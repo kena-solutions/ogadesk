@@ -9,6 +9,7 @@ import { buildSystemPrompt } from './defaults'
 import { buildHandoffSummary } from './handoff'
 import { loadToolRuntime } from './tools/registry'
 import { buildRetrievalQuery, latestUserMessage } from './query'
+import type { AiConfig, ChatMessage, KnowledgeHit } from './types'
 import { assignHandoff } from './handoff-pool'
 import { loadRoutingContext } from './routing-context'
 import { hasReplySince, inboundArrivedAt, logAiReply, type HandoffReason } from './reply-log'
@@ -84,10 +85,6 @@ export async function dispatchInboundToAiReply(
       contextLoader: () => loadRoutingContext(db, { accountId, conversationId, contactId }),
     })
     if (!config || !config.autoReplyEnabled) return
-    // Cheap early-out; the authoritative cap check is the atomic claim
-    // below (this read can race a concurrent inbound).
-    if (conv.ai_reply_count >= config.autoReplyMaxPerConversation) return
-
     // Blocked contacts, and contacts a lower plan archived, get no AI reply (and no LLM spend / typing indicator).
     const { data: blockedRow } = await db
       .from('contacts')
@@ -113,6 +110,13 @@ export async function dispatchInboundToAiReply(
     const messages = await buildConversationContext(db, conversationId)
     if (messages.length === 0) return
     const question = latestUserMessage(messages)
+
+    // The reply limit for this chat is reached: a person takes over (notified, with a note), instead of the bot
+    // going quiet and leaving the customer unanswered. The atomic claim below is the authoritative cap check.
+    if ((conv.ai_reply_count ?? 0) >= config.autoReplyMaxPerConversation) {
+      await handOffConversation(db, { accountId, conversationId, contactId, config, messages, replyCount: conv.ai_reply_count ?? 0, question, knowledge: [] }, 'reply_cap', false)
+      return
+    }
 
     // Account-wide throttle on the shared BYO key. The per-conversation
     // cap bounds one thread; this bounds a burst across many threads (a
@@ -175,27 +179,8 @@ export async function dispatchInboundToAiReply(
     // (b) route the conversation to the configured handoff agent - null leaves it in the shared queue - and (c) leave
     // a short internal note so whoever picks it up has context. Assigning fires the `on_conversation_assigned`
     // trigger, which notifies the agent.
-    const handOff = async (pendingAction: boolean, reason: HandoffReason = 'model') => {
-      const summary = buildHandoffSummary({
-        messages,
-        replyCount: conv.ai_reply_count ?? 0,
-        pendingAction,
-      })
-      await db
-        .from('conversations')
-        .update({ ai_autoreply_disabled: true, ai_handoff_summary: summary })
-        .eq('id', conversationId)
-      // Hand to the next online person in the agent's pool (or tell the whole pool when nobody is online); never
-      // stomps an existing human assignment.
-      const { assignedTo } = await assignHandoff(db, {
-        accountId, conversationId, contactId, agentId: config.agentId, legacyAssigneeId: config.handoffAgentId, question,
-      })
-      await logAiReply(db, {
-        accountId, agentId: config.agentId, conversationId, outcome: 'handoff', handoffReason: reason,
-        assignedTo, sourcesCount: knowledge.length,
-        topScore: knowledge[0]?.score ?? null, question,
-      })
-    }
+    const handOff = (pendingAction: boolean, reason: HandoffReason = 'model') =>
+      handOffConversation(db, { accountId, conversationId, contactId, config, messages, replyCount: conv.ai_reply_count ?? 0, question, knowledge }, reason, pendingAction)
 
     // Something else (a delayed automation, a teammate) may have replied while the model was thinking.
     if (await skipForFallback()) return
@@ -235,7 +220,20 @@ export async function dispatchInboundToAiReply(
       return
     }
     if (claimed !== true) {
-      if (pendingApproval) await handOff(true, 'tool_approval')
+      if (pendingApproval) {
+        await handOff(true, 'tool_approval')
+      } else {
+        // Lost the claim: most often the cap (another inbound took the last slot). If the chat is still the AI's and
+        // at its limit, hand it to a person rather than leaving the customer unanswered.
+        const { data: now } = await db
+          .from('conversations')
+          .select('assigned_agent_id, ai_autoreply_disabled, ai_reply_count')
+          .eq('id', conversationId)
+          .maybeSingle()
+        if (now && !now.assigned_agent_id && !now.ai_autoreply_disabled && (now.ai_reply_count ?? 0) >= config.autoReplyMaxPerConversation) {
+          await handOff(false, 'reply_cap')
+        }
+      }
       return
     }
 
@@ -260,6 +258,49 @@ export async function dispatchInboundToAiReply(
   } catch (err) {
     console.error('[ai auto-reply] dispatch failed:', err)
   }
+}
+
+interface HandoffContext {
+  accountId: string
+  conversationId: string
+  contactId: string
+  config: AiConfig
+  messages: ChatMessage[]
+  replyCount: number
+  question: string
+  /** What retrieval found for the last question (empty when nothing matched or it wasn't looked up). */
+  knowledge: KnowledgeHit[]
+}
+
+/**
+ * Stop auto-replying on this thread and hand it to a human: (a) pause the bot here (sticky until re-enabled),
+ * (b) route the conversation to the next online person in the agent's pool - or leave it in the shared queue and
+ * tell the whole pool when nobody is online - and (c) leave an internal note so whoever picks it up has context.
+ * Assigning fires the `on_conversation_assigned` trigger, which notifies the agent. Never stomps an existing human
+ * assignment.
+ */
+async function handOffConversation(
+  db: ReturnType<typeof supabaseAdmin>,
+  ctx: HandoffContext,
+  reason: HandoffReason,
+  pendingAction: boolean,
+): Promise<void> {
+  const { accountId, conversationId, contactId, config, knowledge, question } = ctx
+  const summary = buildHandoffSummary({
+    messages: ctx.messages,
+    replyCount: ctx.replyCount,
+    pendingAction,
+    reason,
+    knowledgeTitles: knowledge.map((k) => k.title ?? ''),
+  })
+  await db.from('conversations').update({ ai_autoreply_disabled: true, ai_handoff_summary: summary }).eq('id', conversationId)
+  const { assignedTo } = await assignHandoff(db, {
+    accountId, conversationId, contactId, agentId: config.agentId, legacyAssigneeId: config.handoffAgentId, question,
+  })
+  await logAiReply(db, {
+    accountId, agentId: config.agentId, conversationId, outcome: 'handoff', handoffReason: reason,
+    assignedTo, sourcesCount: knowledge.length, topScore: knowledge[0]?.score ?? null, question,
+  })
 }
 
 async function hasNewerInbound(

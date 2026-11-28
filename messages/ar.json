@@ -1145,7 +1145,9 @@
       "tookOver": "لقد توليت هذه المحادثة.",
       "resumed": "تم استئناف الذكاء الاصطناعي.",
       "updateError": "تعذّر تحديث مساعد الذكاء الاصطناعي.",
-      "networkError": "تعذّر الوصول إلى الخادم."
+      "networkError": "تعذّر الوصول إلى الخادم.",
+      "showDetails": "التفاصيل",
+      "hideDetails": "إخفاء"
     },
     "pendingActions": {
       "title": "يريد الذكاء الاصطناعي: {tool}",
@@ -4742,8 +4744,17 @@
   },
   "Handoff": {
     "summary": "🤖 حوّل وكيل الذكاء الاصطناعي المحادثة {count, plural, =0 {دون رد} =1 {بعد رد واحد} other {بعد # ردود}}.",
-    "lastMessage": " آخر رسالة من العميل: «{message}»",
-    "pendingAction": " هناك إجراء بانتظار موافقة أحد الزملاء."
+    "pendingAction": " هناك إجراء بانتظار موافقة أحد الزملاء.",
+    "reason": {
+      "model": "لم يكن متأكدًا من الإجابة.",
+      "reply_cap": "تم بلوغ حد الردود لهذه المحادثة.",
+      "tool_approval": "إجراء يحتاج إلى موافقة.",
+      "ungrounded": "لم يتمكن من التحقق من إجابته مقابل معرفتك."
+    },
+    "customerSaid": "العميل:",
+    "aiLastSaid": "آخر رد للذكاء الاصطناعي:",
+    "knowledgeNone": "المعرفة: لم يتطابق شيء.",
+    "knowledgeUsed": "المعرفة: {titles}"
   },
   "StarterAutomations": {
     "welcome_message": {

@@ -589,7 +589,9 @@
       "tookOver": "Vous avez pris la main sur cette conversation.",
       "resumed": "IA reprise.",
       "updateError": "Impossible de mettre à jour l'assistant IA.",
-      "networkError": "Impossible de joindre le serveur."
+      "networkError": "Impossible de joindre le serveur.",
+      "showDetails": "Détails",
+      "hideDetails": "Masquer"
     },
     "pendingActions": {
       "title": "L’IA veut : {tool}",
@@ -4604,9 +4606,18 @@
     "removeGroup": "Retirer le groupe"
   },
   "Handoff": {
-    "lastMessage": " Dernier message du client : « {message} »",
     "summary": "🤖 L'agent IA a transféré la conversation {count, plural, =0 {sans répondre} =1 {après # réponse} other {après # réponses}}.",
-    "pendingAction": " Une action attend l’approbation d’un coéquipier."
+    "pendingAction": " Une action attend l’approbation d’un coéquipier.",
+    "reason": {
+      "model": "Elle n'était pas sûre de la réponse.",
+      "reply_cap": "La limite de réponses de cette discussion est atteinte.",
+      "tool_approval": "Une action nécessite une approbation.",
+      "ungrounded": "Elle n'a pas pu vérifier sa réponse avec vos connaissances."
+    },
+    "customerSaid": "Client :",
+    "aiLastSaid": "Dernière réponse de l’IA :",
+    "knowledgeNone": "Connaissances : rien ne correspond.",
+    "knowledgeUsed": "Connaissances : {titles}"
   },
   "Presence": {
     "online": "En ligne, actif maintenant",

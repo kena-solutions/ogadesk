@@ -1145,7 +1145,9 @@
       "tookOver": "Anda telah mengambil alih obrolan ini.",
       "resumed": "AI dilanjutkan.",
       "updateError": "Tidak dapat memperbarui asisten AI.",
-      "networkError": "Tidak dapat menjangkau server."
+      "networkError": "Tidak dapat menjangkau server.",
+      "showDetails": "Detail",
+      "hideDetails": "Sembunyikan"
     },
     "pendingActions": {
       "title": "AI ingin: {tool}",
@@ -4742,8 +4744,17 @@
   },
   "Handoff": {
     "summary": "🤖 Agen AI menyerahkan percakapan {count, plural, =0 {tanpa membalas} other {setelah # balasan}}.",
-    "lastMessage": " Pesan terakhir pelanggan: “{message}”",
-    "pendingAction": " Ada tindakan yang menunggu persetujuan rekan tim."
+    "pendingAction": " Ada tindakan yang menunggu persetujuan rekan tim.",
+    "reason": {
+      "model": "Tidak yakin dengan jawabannya.",
+      "reply_cap": "Batas balasan chat ini tercapai.",
+      "tool_approval": "Ada tindakan yang butuh persetujuan.",
+      "ungrounded": "Tidak bisa memverifikasi jawabannya dengan pengetahuan Anda."
+    },
+    "customerSaid": "Pelanggan:",
+    "aiLastSaid": "Balasan terakhir AI:",
+    "knowledgeNone": "Pengetahuan: tidak ada yang cocok.",
+    "knowledgeUsed": "Pengetahuan: {titles}"
   },
   "StarterAutomations": {
     "welcome_message": {

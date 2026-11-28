@@ -589,7 +589,9 @@
       "tookOver": "이 대화를 직접 처리하기 시작했습니다.",
       "resumed": "AI가 재개되었습니다.",
       "updateError": "AI 어시스턴트를 업데이트하지 못했습니다.",
-      "networkError": "서버에 연결할 수 없습니다."
+      "networkError": "서버에 연결할 수 없습니다.",
+      "showDetails": "자세히",
+      "hideDetails": "숨기기"
     },
     "pendingActions": {
       "title": "AI가 하려는 작업: {tool}",
@@ -3850,8 +3852,17 @@
   },
   "Handoff": {
     "summary": "🤖 AI 에이전트가 {count, plural, =0 {답변하지 않고} other {#회 답변 후}} 대화를 상담원에게 전달했습니다.",
-    "lastMessage": " 고객의 마지막 메시지: “{message}”",
-    "pendingAction": " 팀원의 승인을 기다리는 작업이 있습니다."
+    "pendingAction": " 팀원의 승인을 기다리는 작업이 있습니다.",
+    "reason": {
+      "model": "답에 확신이 없었습니다.",
+      "reply_cap": "이 대화의 응답 한도에 도달했습니다.",
+      "tool_approval": "승인이 필요한 작업이 있습니다.",
+      "ungrounded": "답변을 지식과 대조해 확인하지 못했습니다."
+    },
+    "customerSaid": "고객:",
+    "aiLastSaid": "AI의 마지막 응답:",
+    "knowledgeNone": "지식: 일치하는 것이 없습니다.",
+    "knowledgeUsed": "지식: {titles}"
   },
   "Metadata": {
     "description": "영업, 지원, 마케팅을 위한 WhatsApp CRM입니다."

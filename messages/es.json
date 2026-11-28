@@ -589,7 +589,9 @@
       "tookOver": "Tomaste el control de este chat.",
       "resumed": "IA reanudada.",
       "updateError": "No se pudo actualizar el asistente de IA.",
-      "networkError": "No se pudo conectar con el servidor."
+      "networkError": "No se pudo conectar con el servidor.",
+      "showDetails": "Detalles",
+      "hideDetails": "Ocultar"
     },
     "pendingActions": {
       "title": "La IA quiere: {tool}",
@@ -3850,8 +3852,17 @@
   },
   "Handoff": {
     "summary": "🤖 El agente de IA transfirió la conversación {count, plural, =0 {sin responder} =1 {después de # respuesta} other {después de # respuestas}}.",
-    "lastMessage": " Último mensaje del cliente: “{message}”",
-    "pendingAction": " Hay una acción esperando la aprobación de un compañero."
+    "pendingAction": " Hay una acción esperando la aprobación de un compañero.",
+    "reason": {
+      "model": "No estaba seguro de la respuesta.",
+      "reply_cap": "Se alcanzó el límite de respuestas de este chat.",
+      "tool_approval": "Una acción necesita aprobación.",
+      "ungrounded": "No pudo verificar su respuesta con tu conocimiento."
+    },
+    "customerSaid": "Cliente:",
+    "aiLastSaid": "Última respuesta de la IA:",
+    "knowledgeNone": "Conocimiento: nada coincidió.",
+    "knowledgeUsed": "Conocimiento: {titles}"
   },
   "Metadata": {
     "description": "CRM de WhatsApp para ventas, soporte y marketing."

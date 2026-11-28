@@ -589,7 +589,9 @@
       "tookOver": "You’ve taken over this chat.",
       "resumed": "AI resumed.",
       "updateError": "Couldn’t update the AI assistant.",
-      "networkError": "Couldn’t reach the server."
+      "networkError": "Couldn’t reach the server.",
+      "showDetails": "Details",
+      "hideDetails": "Hide"
     },
     "pendingActions": {
       "title": "The AI wants to: {tool}",
@@ -3850,8 +3852,17 @@
   },
   "Handoff": {
     "summary": "🤖 AI agent handed off {count, plural, =0 {without replying} =1 {after # reply} other {after # replies}}.",
-    "lastMessage": " Last customer message: “{message}”",
-    "pendingAction": " An action is waiting for a teammate to approve it."
+    "pendingAction": " An action is waiting for a teammate to approve it.",
+    "reason": {
+      "model": "It wasn't sure of the answer.",
+      "reply_cap": "The reply limit for this chat was reached.",
+      "tool_approval": "An action needs approval.",
+      "ungrounded": "It couldn't verify its answer against your knowledge."
+    },
+    "customerSaid": "Customer:",
+    "aiLastSaid": "AI’s last reply:",
+    "knowledgeNone": "Knowledge: nothing matched.",
+    "knowledgeUsed": "Knowledge: {titles}"
   },
   "Metadata": {
     "description": "WhatsApp CRM for sales, support and marketing."

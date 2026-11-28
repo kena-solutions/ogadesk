@@ -63,7 +63,7 @@ describe('Spanish messages in their UI context', () => {
         translator('Handoff')
       );
       expect(text).toBe(
-        `🤖 El agente de IA transfirió la conversación ${phrase}. Último mensaje del cliente: “help {please}”`
+        `🤖 El agente de IA transfirió la conversación ${phrase}.\nCliente: • “help {please}”`
       );
       expect(text).not.toMatch(/other|plural|#/);
     }

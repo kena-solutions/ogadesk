@@ -1145,7 +1145,9 @@
       "tookOver": "Umechukua gumzo hili.",
       "resumed": "AI amerudishwa.",
       "updateError": "Imeshindwa kusasisha msaidizi wa AI.",
-      "networkError": "Imeshindwa kufikia seva."
+      "networkError": "Imeshindwa kufikia seva.",
+      "showDetails": "Maelezo",
+      "hideDetails": "Ficha"
     },
     "pendingActions": {
       "title": "AI inataka: {tool}",
@@ -4742,8 +4744,17 @@
   },
   "Handoff": {
     "summary": "🤖 Wakala wa AI amekabidhi {count, plural, =0 {bila kujibu} =1 {baada ya jibu #} other {baada ya majibu #}}.",
-    "lastMessage": " Ujumbe wa mwisho wa mteja: “{message}”",
-    "pendingAction": " Kuna kitendo kinachosubiri idhini ya mwenzako."
+    "pendingAction": " Kuna kitendo kinachosubiri idhini ya mwenzako.",
+    "reason": {
+      "model": "Haikuwa na uhakika wa jibu.",
+      "reply_cap": "Kikomo cha majibu cha mazungumzo haya kimefikiwa.",
+      "tool_approval": "Kitendo kinahitaji idhini.",
+      "ungrounded": "Haikuweza kuthibitisha jibu lake kwa maarifa yako."
+    },
+    "customerSaid": "Mteja:",
+    "aiLastSaid": "Jibu la mwisho la AI:",
+    "knowledgeNone": "Maarifa: hakuna kilicholingana.",
+    "knowledgeUsed": "Maarifa: {titles}"
   },
   "StarterAutomations": {
     "welcome_message": {

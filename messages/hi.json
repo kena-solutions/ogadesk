@@ -1145,7 +1145,9 @@
       "tookOver": "आपने यह चैट संभाल ली है।",
       "resumed": "AI फिर चालू हो गया।",
       "updateError": "AI असिस्टेंट अपडेट नहीं हो सका।",
-      "networkError": "सर्वर तक नहीं पहुँच सके।"
+      "networkError": "सर्वर तक नहीं पहुँच सके।",
+      "showDetails": "विवरण",
+      "hideDetails": "छिपाएँ"
     },
     "pendingActions": {
       "title": "AI यह करना चाहता है: {tool}",
@@ -4742,8 +4744,17 @@
   },
   "Handoff": {
     "summary": "🤖 AI एजेंट ने {count, plural, =0 {बिना जवाब दिए} =1 {# जवाब के बाद} other {# जवाबों के बाद}} बातचीत सौंप दी।",
-    "lastMessage": " ग्राहक का आख़िरी संदेश: “{message}”",
-    "pendingAction": " एक एक्शन किसी साथी की मंज़ूरी का इंतज़ार कर रहा है।"
+    "pendingAction": " एक एक्शन किसी साथी की मंज़ूरी का इंतज़ार कर रहा है।",
+    "reason": {
+      "model": "उसे जवाब पर भरोसा नहीं था।",
+      "reply_cap": "इस चैट की जवाब सीमा पूरी हो गई।",
+      "tool_approval": "एक कार्रवाई को मंज़ूरी चाहिए।",
+      "ungrounded": "वह आपके ज्ञान से अपने जवाब की पुष्टि नहीं कर सका।"
+    },
+    "customerSaid": "ग्राहक:",
+    "aiLastSaid": "AI का आखिरी जवाब:",
+    "knowledgeNone": "ज्ञान: कुछ भी मेल नहीं खाया।",
+    "knowledgeUsed": "ज्ञान: {titles}"
   },
   "StarterAutomations": {
     "welcome_message": {

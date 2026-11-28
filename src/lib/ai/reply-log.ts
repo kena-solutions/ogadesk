@@ -9,7 +9,7 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 // ============================================================
 
 export type ReplyOutcome = 'replied' | 'handoff' | 'skipped_fallback' | 'error'
-export type HandoffReason = 'model' | 'reply_cap' | 'tool_approval'
+export type HandoffReason = 'model' | 'reply_cap' | 'tool_approval' | 'ungrounded'
 
 /** When the customer message being answered arrived. Falls back to the latest customer message. */
 export async function inboundArrivedAt(

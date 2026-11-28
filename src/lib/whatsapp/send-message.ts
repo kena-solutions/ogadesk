@@ -45,6 +45,7 @@ import {
   resolveWhatsAppCredentialsAsync,
 } from '@/lib/whatsapp/resolve-config';
 import { supabaseAdmin } from '@/lib/flows/admin-client';
+import { pauseAiForHumanReply } from '@/lib/ai/pause';
 import {
   phoneVariants,
   isRecipientNotAllowedError,
@@ -111,6 +112,11 @@ export interface SendMessageParams {
    * active flow runs are left alone.
    */
   otp?: boolean;
+  /**
+   * A person in the dashboard is replying: also pause the AI for this chat (its "Resume AI" banner turns it back
+   * on). Off for API integrations, broadcasts and system sends.
+   */
+  pauseAi?: boolean;
 }
 
 export interface SendMessageResult {
@@ -238,6 +244,7 @@ export async function sendMessageToConversation(
     replyToMessageId,
     whatsappConfigId,
     otp,
+    pauseAi,
   } = params;
 
   if (!conversationId) {
@@ -624,6 +631,8 @@ export async function sendMessageToConversation(
       updated_at: new Date().toISOString(),
     })
     .eq('id', conversationId);
+
+  if (pauseAi) await pauseAiForHumanReply(supabaseAdmin(), conversationId);
 
   // Pause any active Flow run for this contact - the agent stepping in
   // is the strongest "yield, human is here" signal. Best-effort. An OTP is
