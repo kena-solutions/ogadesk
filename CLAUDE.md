@@ -6,6 +6,10 @@
 - `origin` is read-only: fetch from it and pull in specific features when the user asks (cherry-pick or merge selectively), then push the result to `fork`.
 - If the target remote is ever ambiguous, ask before pushing.
 
+## Use-case-driven UI
+
+What the platform shows is driven by the workspace's picked use cases (developer / support / sales / marketing). **Before planning or implementing any customer-visible feature (nav item, dashboard widget or KPI, inbox/contact/bulk button, settings card), decide which use cases it serves, register an id in `src/lib/features/use-cases.ts` and gate every entry point with `isFeatureEnabled`.** Name the tag in the plan and PR. Details, the current mapping and a checklist: `.claude/skills/use-case-gating/SKILL.md`.
+
 ## Changelog (public page at /changelog)
 
 The changelog is generated from git at build time (`scripts/build-changelog.mjs` → `src/lib/changelog.generated.json`). A commit appears on it only if its message has a `Changelog:` trailer.
