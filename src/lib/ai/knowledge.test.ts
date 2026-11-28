@@ -209,6 +209,40 @@ describe('retrieveKnowledge', () => {
   })
 })
 
+describe('retrieveKnowledge with a platform embedder', () => {
+  it('searches by meaning through the given embedder, without an own key', async () => {
+    const { db, state } = makeDb()
+    state.semantic = [{ id: 's1', content: 'S1', score: 0.7 }] as Row[]
+    const embedder = vi.fn(async (inputs: string[]) => inputs.map(() => [0.5]))
+    const out = await retrieveKnowledge(db, 'acct', { embeddingsApiKey: null, embedder }, 'delivery time')
+    expect(embedder).toHaveBeenCalledWith(['delivery time'])
+    expect(out.map((h) => h.matchedBy)).toEqual(['semantic'])
+    expect(h.embedTexts).not.toHaveBeenCalled()
+  })
+
+  it('quietly uses keywords when the platform has no embeddings provider', async () => {
+    const { db, state } = makeDb()
+    state.fts = [{ id: 'f1', content: 'F1' }]
+    const err = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const embedder = vi.fn(async () => {
+      throw Object.assign(new Error('none'), { code: 'embed_unavailable' })
+    })
+    const out = await retrieveKnowledge(db, 'acct', { embeddingsApiKey: null, embedder }, 'delivery time')
+    expect(out.map((x) => x.matchedBy)).toEqual(['keyword'])
+    expect(err).not.toHaveBeenCalled()
+    err.mockRestore()
+  })
+
+  it('embeds new chunks through the embedder at ingest', async () => {
+    const { db, state } = makeDb()
+    const embedder = vi.fn(async (inputs: string[]) => inputs.map(() => [1, 2]))
+    const result = await ingestDocument(db, 'acct', { embeddingsApiKey: null, embedder }, 'doc-1', 'hello world', { title: 'FAQ' })
+    expect(embedder).toHaveBeenCalledWith(['FAQ\n\nhello world'])
+    expect(result.keywordOnly).toBe(false)
+    expect(state.inserted![0].embedding).toBe('[1,2]')
+  })
+})
+
 describe('sourceRefs', () => {
   it('keeps one reference per document, best first', () => {
     const hit = (chunkId: string, documentId: string, score: number) => ({

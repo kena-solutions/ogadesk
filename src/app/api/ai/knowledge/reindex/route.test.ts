@@ -24,8 +24,8 @@ vi.mock('@/lib/auth/account', () => ({
   }),
 }))
 
-vi.mock('@/lib/ai/config', () => ({
-  loadEmbeddingsKey: async () => ({ key: h.corrupt ? null : 'sk-embed', corrupt: h.corrupt }),
+vi.mock('@/lib/ai/embedder', () => ({
+  loadEmbedder: async () => ({ embed: h.corrupt ? null : async () => [], source: h.corrupt ? 'none' : 'own', corrupt: h.corrupt }),
 }))
 
 vi.mock('@/lib/ai/admin-client', () => ({

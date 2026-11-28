@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { requireRole, toErrorResponse } from '@/lib/auth/account'
 import { checkRateLimit, rateLimitResponse, RATE_LIMITS } from '@/lib/rate-limit'
-import { loadEmbeddingsKey } from '@/lib/ai/config'
+import { loadEmbedder } from '@/lib/ai/embedder'
 import { supabaseAdmin } from '@/lib/ai/admin-client'
 import { runKnowledgeQueue } from '@/lib/ai/ingest/pipeline'
 import { IN_REQUEST_BUDGET_MS } from '@/lib/ai/ingest/route-helpers'
@@ -24,7 +24,7 @@ export async function POST() {
     const limit = checkRateLimit(`ai-kb-reindex:${userId}`, RATE_LIMITS.adminAction)
     if (!limit.success) return rateLimitResponse(limit)
 
-    const { key, corrupt } = await loadEmbeddingsKey(supabase, accountId)
+    const { embed, corrupt } = await loadEmbedder(supabase, accountId)
     // The whole point of Reindex is usually to backfill embeddings - so
     // if a key is configured but can't be decrypted, don't quietly do a
     // keyword-only pass and report success. Stop and tell the admin.
@@ -59,7 +59,7 @@ export async function POST() {
     const done = stats.indexed + stats.unchanged + stats.failed
     return NextResponse.json({
       success: stats.failed === 0,
-      semantic: Boolean(key),
+      semantic: Boolean(embed),
       total,
       indexed: stats.indexed + stats.unchanged,
       failed: stats.failed,

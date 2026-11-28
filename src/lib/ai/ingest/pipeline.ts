@@ -15,7 +15,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { chunkText } from '../chunk'
 import { ingestDocument } from '../knowledge'
-import { loadEmbeddingsKey } from '../config'
+import { EMBED_UNAVAILABLE, loadEmbedder, type Embedder } from '../embedder'
 import { htmlToText } from './html'
 import { qaChunks } from './qa'
 import { capText, KNOWLEDGE_LIMITS, nextSyncAt, type SourceType, type SyncInterval } from './limits'
@@ -83,7 +83,7 @@ export async function indexDocument(
   db: SupabaseClient,
   doc: DocumentRow,
   source: Pick<SourceRow, 'type'>,
-  embeddingsApiKey: string | null,
+  embedder: Embedder | null,
   fetcher: PageFetcher = fetchPage,
 ): Promise<'ready' | 'unchanged' | 'failed'> {
   try {
@@ -110,7 +110,7 @@ export async function indexDocument(
     const result = await ingestDocument(
       db,
       doc.account_id,
-      { embeddingsApiKey },
+      { embeddingsApiKey: null, embedder },
       doc.id,
       content,
       { chunks: chunksFor(source.type, content), title },
@@ -123,7 +123,11 @@ export async function indexDocument(
         // Keyword-only (embedding failed) keeps no hash, so the next sync retries the embed.
         content_hash: result.keywordOnly ? null : hash,
         status: 'ready',
-        error: result.keywordOnly ? `Indexed for keyword search only: ${errorMessage(result.embedError)}` : null,
+        // 'No embeddings provider' is a normal state (no key / platform has none): not worth a warning on every document.
+        error:
+          result.keywordOnly && (result.embedError as { code?: string } | null)?.code !== EMBED_UNAVAILABLE
+            ? `Indexed for keyword search only: ${errorMessage(result.embedError)}`
+            : null,
         chunk_count: result.chunkCount,
         claimed_at: null,
       })
@@ -322,7 +326,7 @@ export async function runKnowledgeQueue(
   }
 
   const sources = new Map<string, SourceRow>()
-  const keys = new Map<string, string | null>()
+  const embedders = new Map<string, Embedder | null>()
   while (Date.now() < opts.deadline) {
     let docs: DocumentRow[]
     if (scoped) {
@@ -354,10 +358,10 @@ export async function runKnowledgeQueue(
         source = data as SourceRow
         sources.set(source.id, source)
       }
-      if (!keys.has(doc.account_id)) {
-        keys.set(doc.account_id, (await loadEmbeddingsKey(db, doc.account_id)).key)
+      if (!embedders.has(doc.account_id)) {
+        embedders.set(doc.account_id, (await loadEmbedder(db, doc.account_id)).embed)
       }
-      const outcome = await indexDocument(db, doc, source, keys.get(doc.account_id) ?? null, fetcher)
+      const outcome = await indexDocument(db, doc, source, embedders.get(doc.account_id) ?? null, fetcher)
       if (outcome === 'ready') stats.indexed += 1
       else if (outcome === 'unchanged') stats.unchanged += 1
       else stats.failed += 1

@@ -3,7 +3,7 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 
 const h = vi.hoisted(() => ({ ingest: vi.fn() }))
 vi.mock('../knowledge', () => ({ ingestDocument: h.ingest }))
-vi.mock('../config', () => ({ loadEmbeddingsKey: async () => ({ key: null, corrupt: false }) }))
+vi.mock('../embedder', () => ({ loadEmbedder: async () => ({ embed: null, source: 'none', corrupt: false }), EMBED_UNAVAILABLE: 'embed_unavailable' }))
 
 import { chunksFor, indexDocument, rollupStatus, sha256, type DocumentRow } from './pipeline'
 import { FetchPageError, type PageFetcher } from './fetch'
@@ -34,6 +34,7 @@ const doc = (over: Partial<DocumentRow> = {}): DocumentRow => ({
   ...over,
 })
 
+const emb = async (inputs: string[]) => inputs.map(() => [0])
 const page = (body: string): PageFetcher => async (url) => ({ url, contentType: 'text/html', body })
 
 beforeEach(() => {
@@ -61,9 +62,9 @@ describe('chunksFor', () => {
 describe('indexDocument', () => {
   it('fetches a page, extracts its text and title, and indexes it', async () => {
     const { db, updates } = fakeDb()
-    const out = await indexDocument(db, doc(), { type: 'website' }, 'sk', page('<title>FAQ</title><p>Hello there</p>'))
+    const out = await indexDocument(db, doc(), { type: 'website' }, emb, page('<title>FAQ</title><p>Hello there</p>'))
     expect(out).toBe('ready')
-    expect(h.ingest).toHaveBeenCalledWith(db, 'a1', { embeddingsApiKey: 'sk' }, 'd1', 'Hello there', { chunks: ['Hello there'], title: 'FAQ' })
+    expect(h.ingest).toHaveBeenCalledWith(db, 'a1', { embeddingsApiKey: null, embedder: emb }, 'd1', 'Hello there', { chunks: ['Hello there'], title: 'FAQ' })
     expect(updates.at(-1)).toMatchObject({ title: 'FAQ', content: 'Hello there', status: 'ready', chunk_count: 2, error: null })
     expect(updates.at(-1)!.content_hash).toBe(await sha256('Hello there'))
   })
@@ -71,7 +72,7 @@ describe('indexDocument', () => {
   it('skips the embed when the page has not changed', async () => {
     const { db, updates } = fakeDb()
     const hash = await sha256('Hello there')
-    const out = await indexDocument(db, doc({ content_hash: hash, chunk_count: 1 }), { type: 'url' }, 'sk', page('<p>Hello there</p>'))
+    const out = await indexDocument(db, doc({ content_hash: hash, chunk_count: 1 }), { type: 'url' }, emb, page('<p>Hello there</p>'))
     expect(out).toBe('unchanged')
     expect(h.ingest).not.toHaveBeenCalled()
     expect(updates.at(-1)).toMatchObject({ status: 'ready' })
@@ -103,7 +104,7 @@ describe('indexDocument', () => {
   it('keeps no hash when only keyword indexing worked, so a sync retries the embed', async () => {
     const { db, updates } = fakeDb()
     h.ingest.mockResolvedValue({ keywordOnly: true, embedError: new Error('rate limited'), chunkCount: 1 })
-    await indexDocument(db, doc({ url: null, content: 'Hi' }), { type: 'text' }, 'sk')
+    await indexDocument(db, doc({ url: null, content: 'Hi' }), { type: 'text' }, emb)
     expect(updates.at(-1)).toMatchObject({ content_hash: null, status: 'ready' })
     expect(String(updates.at(-1)!.error)).toContain('rate limited')
   })

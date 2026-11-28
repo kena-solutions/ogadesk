@@ -33,6 +33,8 @@ export interface AiConfig {
    *  knowledge base is embedded and semantic retrieval turns on; when
    *  null, retrieval falls back to lexical full-text search. */
   embeddingsApiKey: string | null
+  /** Platform AI: embeds with the platform's providers and credits (see embedder.ts). */
+  embedder?: ((inputs: string[]) => Promise<number[][]>) | null
   /** The AI agent this config was resolved for (see `loadAgentConfig`).
    *  Absent/null for the legacy single-config path. */
   agentId?: string | null

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getCurrentAccount, toErrorResponse } from '@/lib/auth/account'
 import { checkRateLimit, rateLimitResponse, RATE_LIMITS } from '@/lib/rate-limit'
-import { loadEmbeddingsKey } from '@/lib/ai/config'
+import { loadEmbedder } from '@/lib/ai/embedder'
 import { minSimilarity, retrieveKnowledge } from '@/lib/ai/knowledge'
 import { getT } from '@/lib/i18n/translate'
 
@@ -43,10 +43,10 @@ export async function POST(request: Request) {
       }
     }
 
-    const { key } = await loadEmbeddingsKey(supabase, accountId)
-    const hits = await retrieveKnowledge(supabase, accountId, { embeddingsApiKey: key }, query, { sourceIds })
+    const { embed, source } = await loadEmbedder(supabase, accountId)
+    const hits = await retrieveKnowledge(supabase, accountId, { embeddingsApiKey: null, embedder: embed }, query, { sourceIds })
     return NextResponse.json({
-      semantic: Boolean(key),
+      semantic: source === 'own' || hits.some((h) => h.matchedBy !== 'keyword'),
       min_similarity: minSimilarity(),
       hits: hits.map((h) => ({
         source_id: h.sourceId,

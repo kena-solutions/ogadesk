@@ -7,7 +7,7 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 import { AGENT_COLUMNS } from './agents'
 import { parseAgentInput, parseIdList, type AgentInputError } from './agent-input'
 import { AGENT_TEMPLATES, AGENT_TEMPLATE_IDS } from './agent-templates'
-import { loadEmbeddingsKey } from './config'
+import { loadEmbedder } from './embedder'
 import { KNOWLEDGE_LIMITS, nextSyncAt } from './ingest/limits'
 import { SOURCE_COLUMNS, queueSourceSync, runKnowledgeQueue, type SourceRow } from './ingest/pipeline'
 import { IN_REQUEST_BUDGET_MS, SOURCE_LIST_COLUMNS } from './ingest/route-helpers'
@@ -321,10 +321,10 @@ export async function searchKnowledge(db: SupabaseClient, accountId: string, bod
       sourceIds = ((links ?? []) as { source_id: string }[]).map((l) => l.source_id)
     }
   }
-  const { key } = await loadEmbeddingsKey(db, accountId)
-  const hits = await retrieveKnowledge(db, accountId, { embeddingsApiKey: key }, query, { sourceIds })
+  const { embed, source } = await loadEmbedder(db, accountId)
+  const hits = await retrieveKnowledge(db, accountId, { embeddingsApiKey: null, embedder: embed }, query, { sourceIds })
   return ok({
-    semantic: Boolean(key),
+    semantic: source === 'own' || hits.some((h) => h.matchedBy !== 'keyword'),
     min_similarity: minSimilarity(),
     hits: hits.map((h) => ({ source_id: h.sourceId, title: h.title, snippet: h.content.slice(0, 400), score: h.score, matched_by: h.matchedBy })),
   })

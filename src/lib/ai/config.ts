@@ -1,6 +1,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { decrypt } from '@/lib/whatsapp/encryption'
 import type { AiConfig } from './types'
+import { platformEmbedder } from './embedder'
 import { AGENT_COLUMNS, hasRouting, pickAgent, type AgentTarget, type AiAgentRow } from './agents'
 import { checkAiAdminGate } from './admin-gate'
 
@@ -61,6 +62,7 @@ export async function loadAiConfig(
       provider: 'openai', model: '', baseUrl: null, apiKey: '', source: 'platform',
       systemPrompt: row.system_prompt, isActive: row.is_active, autoReplyEnabled: row.auto_reply_enabled,
       autoReplyMaxPerConversation: row.auto_reply_max_per_conversation, handoffAgentId: row.handoff_agent_id, embeddingsApiKey: null,
+      embedder: platformEmbedder(accountId),
     }
   }
   if (!row.api_key) return null

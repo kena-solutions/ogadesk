@@ -1,7 +1,8 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
 import type { AiConfig, KnowledgeHit } from './types'
 import { chunkText } from './chunk'
-import { embedTexts, toVectorLiteral } from './embeddings'
+import { toVectorLiteral } from './embeddings'
+import { EMBED_UNAVAILABLE, ownKeyEmbedder, type Embedder } from './embedder'
 import { keywordQuery } from './query'
 
 // ============================================================
@@ -9,6 +10,13 @@ import { keywordQuery } from './query'
 // retrieve (semantic when an embeddings key is present, topped up with
 // lexical full-text search).
 // ============================================================
+
+/** What meaning-based search can use: the business's own key, or an embedder (platform AI). */
+export type EmbedConfig = Pick<AiConfig, 'embeddingsApiKey'> & { embedder?: Embedder | null }
+
+export function embedderOf(config: EmbedConfig): Embedder | null {
+  return config.embedder ?? (config.embeddingsApiKey ? ownKeyEmbedder(config.embeddingsApiKey) : null)
+}
 
 export interface IngestResult {
   keywordOnly: boolean
@@ -35,7 +43,7 @@ interface MatchRow {
 export async function ingestDocument(
   db: SupabaseClient,
   accountId: string,
-  config: Pick<AiConfig, 'embeddingsApiKey'>,
+  config: EmbedConfig,
   documentId: string,
   content: string,
   opts: {
@@ -54,13 +62,11 @@ export async function ingestDocument(
   // document searchable lexically.
   let embeddings: number[][] | null = null
   let embedError: unknown = null
-  if (config.embeddingsApiKey && chunks.length > 0) {
+  const embed = embedderOf(config)
+  if (embed && chunks.length > 0) {
     try {
       const title = opts.title?.trim()
-      embeddings = await embedTexts(
-        config.embeddingsApiKey,
-        title ? chunks.map((c) => `${title}\n\n${c}`) : chunks,
-      )
+      embeddings = await embed(title ? chunks.map((c) => `${title}\n\n${c}`) : chunks)
     } catch (err) {
       embedError = err
     }
@@ -164,7 +170,7 @@ export function fuseRankings(semantic: KnowledgeHit[], keyword: KnowledgeHit[], 
 export async function retrieveKnowledge(
   db: SupabaseClient,
   accountId: string,
-  config: Pick<AiConfig, 'embeddingsApiKey'>,
+  config: EmbedConfig,
   queryText: string,
   opts: RetrieveOptions = {},
 ): Promise<KnowledgeHit[]> {
@@ -195,9 +201,10 @@ export async function retrieveKnowledge(
   const terms = keywordQuery(query)
 
   const semanticSearch = async (): Promise<KnowledgeHit[]> => {
-    if (!config.embeddingsApiKey) return []
+    const embed = embedderOf(config)
+    if (!embed) return []
     try {
-      const [queryEmbedding] = await embedTexts(config.embeddingsApiKey, [query])
+      const [queryEmbedding] = await embed([query])
       if (!queryEmbedding) return []
       const { data, error } = await db.rpc('match_ai_knowledge_semantic_v2', {
         p_account_id: accountId,
@@ -208,7 +215,10 @@ export async function retrieveKnowledge(
       if (error || !Array.isArray(data)) return []
       return (data as MatchRow[]).map((r) => toHit(r, 'semantic')).filter((h) => h.score >= floor)
     } catch (err) {
-      console.error('[ai knowledge] semantic retrieval failed, using keywords only:', err)
+      // No embeddings provider on the platform is a normal state, not worth a log line per reply.
+      if ((err as { code?: string })?.code !== EMBED_UNAVAILABLE) {
+        console.error('[ai knowledge] semantic retrieval failed, using keywords only:', err)
+      }
       return []
     }
   }
