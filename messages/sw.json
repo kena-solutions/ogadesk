@@ -312,7 +312,9 @@
     "planArchivedTitle": "Mpango wako umehifadhi baadhi ya vipengee",
     "planArchivedBody": "Mpango wako unaruhusu vichache kuliko ulivyokuwa navyo, hivyo vilivyotumika kidogo karibuni vimehifadhiwa. Hakuna kilichofutwa; pandisha mpango ili kuvirudisha.",
     "planRestoredTitle": "Vipengee vilivyohifadhiwa vimerudi",
-    "planRestoredBody": "Mpango wako una nafasi tena, hivyo vipengee ulivyohifadhi vimerejeshwa."
+    "planRestoredBody": "Mpango wako una nafasi tena, hivyo vipengee ulivyohifadhi vimerejeshwa.",
+    "aiHandoffTitle": "Mteja anahitaji mtu",
+    "aiHandoffBody": "AI imempeleka {contact} kwa timu yako."
   },
   "DashboardShell": {
     "loading": "Inapakia..."
@@ -2704,7 +2706,8 @@
       "replyWhenOption": {
         "fallback": "Hakuna aliyejibu mwingine",
         "always": "Kila wakati"
-      }
+      },
+      "handoffRotation": "{count, plural, =1 {Huenda kwa mtu huyu akiwa mtandaoni} other {Kwa zamu kwa aliye mtandaoni ({count})}}"
     },
     "tools": {
       "title": "Miunganisho ambayo wakala huyu anaweza kutumia",

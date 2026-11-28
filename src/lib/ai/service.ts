@@ -39,6 +39,36 @@ export type Result<T> = { ok: true; data: T } | { ok: false; status: 400 | 404 |
 const ok = <T>(data: T): Result<T> => ({ ok: true, data })
 const no = (status: 400 | 404 | 500, code: ServiceError): Result<never> => ({ ok: false, status, code })
 
+/**
+ * Replace an agent's handoff pool. `handoff_agent_id` (older clients) is kept equal to the first member, and a
+ * client that sends only `handoff_agent_id` gets a pool of that one person.
+ */
+async function setHandoffPool(db: SupabaseClient, accountId: string, agentId: string, ids: string[]): Promise<boolean> {
+  const unique = Array.from(new Set(ids))
+  const { error: delErr } = await db.from('ai_agent_handoff_members').delete().eq('agent_id', agentId)
+  if (delErr) return false
+  if (unique.length > 0) {
+    const { error } = await db
+      .from('ai_agent_handoff_members')
+      .insert(unique.map((user_id, i) => ({ agent_id: agentId, user_id, account_id: accountId, position: i + 1 })))
+    if (error) return false
+  }
+  await db.from('ai_agents').update({ handoff_agent_id: unique[0] ?? null, handoff_cursor: 0 }).eq('id', agentId)
+  return true
+}
+
+/** The pool a write asks for: explicit list, else derived from a lone handoff_agent_id, else untouched (null). */
+function requestedPool(data: { handoff_member_ids?: string[]; handoff_agent_id?: string | null }): string[] | null {
+  if (data.handoff_member_ids) return data.handoff_member_ids
+  if ('handoff_agent_id' in data) return data.handoff_agent_id ? [data.handoff_agent_id] : []
+  return null
+}
+
+async function allMembers(db: SupabaseClient, accountId: string, ids: string[]): Promise<boolean> {
+  for (const id of ids) if (!(await isMember(db, accountId, id))) return false
+  return true
+}
+
 /** A handoff target must be a member of the workspace (else a chat would be assigned to a stranger). */
 async function isMember(db: SupabaseClient, accountId: string, userId: string | null | undefined) {
   if (!userId) return true
@@ -53,49 +83,84 @@ export function agentTemplates() {
 }
 
 export async function listAgents(db: SupabaseClient, accountId: string): Promise<Result<Record<string, unknown>[]>> {
-  const [agents, links] = await Promise.all([
+  const [agents, links, pool] = await Promise.all([
     db.from('ai_agents').select(AGENT_SELECT).eq('account_id', accountId).order('is_default', { ascending: false }).order('created_at', { ascending: true }),
     db.from('ai_agent_knowledge').select('agent_id').eq('account_id', accountId),
+    db.from('ai_agent_handoff_members').select('agent_id, user_id, position').eq('account_id', accountId).order('position'),
   ])
   if (agents.error) return no(500, 'failed')
   const counts = new Map<string, number>()
   for (const l of (links.data ?? []) as { agent_id: string }[]) counts.set(l.agent_id, (counts.get(l.agent_id) ?? 0) + 1)
-  return ok(((agents.data ?? []) as unknown as Record<string, unknown>[]).map((a) => ({ ...a, source_count: counts.get(a.id as string) ?? 0 })))
+  const members = new Map<string, string[]>()
+  for (const m of (pool.data ?? []) as { agent_id: string; user_id: string }[]) members.set(m.agent_id, [...(members.get(m.agent_id) ?? []), m.user_id])
+  return ok(((agents.data ?? []) as unknown as Record<string, unknown>[]).map((a) => ({
+    ...a, source_count: counts.get(a.id as string) ?? 0, handoff_member_ids: members.get(a.id as string) ?? [],
+  })))
 }
 
 export async function getAgent(db: SupabaseClient, accountId: string, id: string): Promise<Result<Record<string, unknown>>> {
   const { data: agent, error } = await db.from('ai_agents').select(AGENT_SELECT).eq('id', id).eq('account_id', accountId).maybeSingle()
   if (error) return no(500, 'failed')
   if (!agent) return no(404, 'not_found')
-  const { data: links } = await db.from('ai_agent_knowledge').select('source_id').eq('agent_id', id)
-  return ok({ ...(agent as unknown as Record<string, unknown>), source_ids: ((links ?? []) as { source_id: string }[]).map((l) => l.source_id) })
+  const [{ data: links }, { data: pool }] = await Promise.all([
+    db.from('ai_agent_knowledge').select('source_id').eq('agent_id', id),
+    db.from('ai_agent_handoff_members').select('user_id').eq('agent_id', id).order('position'),
+  ])
+  return ok({
+    ...(agent as unknown as Record<string, unknown>),
+    source_ids: ((links ?? []) as { source_id: string }[]).map((l) => l.source_id),
+    handoff_member_ids: ((pool ?? []) as { user_id: string }[]).map((m) => m.user_id),
+  })
 }
 
 export async function createAgent(db: SupabaseClient, accountId: string, actorId: string | null, body: unknown): Promise<Result<Record<string, unknown>>> {
   const parsed = parseAgentInput(body, { partial: false })
   if ('error' in parsed) return no(400, parsed.error)
-  if (!(await isMember(db, accountId, parsed.data.handoff_agent_id))) return no(400, 'handoff_not_member')
+  const { handoff_member_ids: _ignored, ...columns } = parsed.data
+  void _ignored
+  const pool = requestedPool(parsed.data)
+  if (!(await allMembers(db, accountId, [...(pool ?? []), ...(columns.handoff_agent_id ? [columns.handoff_agent_id] : [])]))) return no(400, 'handoff_not_member')
   const { count } = await db.from('ai_agents').select('id', { count: 'exact', head: true }).eq('account_id', accountId)
   if ((count ?? 0) >= MAX_AGENTS) return no(400, 'agent_limit')
   // The first agent in a workspace becomes its default.
   const { data, error } = await db
     .from('ai_agents')
-    .insert({ ...parsed.data, account_id: accountId, created_by: actorId, is_default: (count ?? 0) === 0 })
+    .insert({ ...columns, account_id: accountId, created_by: actorId, is_default: (count ?? 0) === 0 })
     .select(AGENT_SELECT)
     .single()
   if (error || !data) return no(500, 'failed')
-  return ok({ ...(data as unknown as Record<string, unknown>), source_count: 0 })
+  const row = data as unknown as Record<string, unknown>
+  if (pool && pool.length > 0 && !(await setHandoffPool(db, accountId, row.id as string, pool))) return no(500, 'failed')
+  return ok({ ...row, source_count: 0, handoff_member_ids: pool ?? [], handoff_agent_id: pool?.[0] ?? row.handoff_agent_id ?? null })
 }
 
 export async function updateAgent(db: SupabaseClient, accountId: string, id: string, body: unknown): Promise<Result<Record<string, unknown>>> {
   const parsed = parseAgentInput(body, { partial: true })
   if ('error' in parsed) return no(400, parsed.error)
-  if (!(await isMember(db, accountId, parsed.data.handoff_agent_id))) return no(400, 'handoff_not_member')
+  const { handoff_member_ids: _ignored, ...columns } = parsed.data
+  void _ignored
+  const pool = requestedPool(parsed.data)
+  if (!(await allMembers(db, accountId, pool ?? []))) return no(400, 'handoff_not_member')
   if (Object.keys(parsed.data).length === 0) return no(400, 'empty_update')
-  const { data, error } = await db.from('ai_agents').update(parsed.data).eq('id', id).eq('account_id', accountId).select(AGENT_SELECT).maybeSingle()
-  if (error) return no(500, 'failed')
-  if (!data) return no(404, 'not_found')
-  return ok(data as unknown as Record<string, unknown>)
+  // The pool owns handoff_agent_id; drop it from the column update (setHandoffPool keeps it in step).
+  const { handoff_agent_id: _legacy, ...plain } = columns
+  void _legacy
+  let row: Record<string, unknown> | null = null
+  if (Object.keys(plain).length > 0) {
+    const { data, error } = await db.from('ai_agents').update(plain).eq('id', id).eq('account_id', accountId).select(AGENT_SELECT).maybeSingle()
+    if (error) return no(500, 'failed')
+    if (!data) return no(404, 'not_found')
+    row = data as unknown as Record<string, unknown>
+  } else {
+    const { data } = await db.from('ai_agents').select(AGENT_SELECT).eq('id', id).eq('account_id', accountId).maybeSingle()
+    if (!data) return no(404, 'not_found')
+    row = data as unknown as Record<string, unknown>
+  }
+  if (pool) {
+    if (!(await setHandoffPool(db, accountId, id, pool))) return no(500, 'failed')
+    row = { ...row, handoff_agent_id: pool[0] ?? null, handoff_member_ids: pool }
+  }
+  return ok(row)
 }
 
 /** The default agent can't be deleted. */

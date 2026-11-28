@@ -26,7 +26,6 @@ import type { SourceDto } from '@/lib/ai/knowledge-client';
 import type { AgentTemplate } from '@/lib/ai/agent-templates';
 
 // Base UI Select can't use an empty value, so "shared queue" gets a sentinel.
-const HANDOFF_QUEUE = '__queue__';
 const CHANNELS: AgentChannel[] = ['whatsapp', 'web_chat'];
 
 type SubTab = 'setup' | 'knowledge' | 'tools' | 'playground';
@@ -40,7 +39,7 @@ interface Form {
   auto_reply_enabled: boolean;
   reply_mode: 'fallback' | 'always';
   auto_reply_max_per_conversation: number;
-  handoff_agent_id: string;
+  handoff_member_ids: string[];
   channels: AgentChannel[];
   priority: number;
   persona_gender: string;
@@ -73,7 +72,7 @@ function toForm(a: AgentDto | null, preset?: AgentPreset | null): Form {
     reply_mode: a?.reply_mode === 'always' ? 'always' : 'fallback',
     auto_reply_max_per_conversation:
       a?.auto_reply_max_per_conversation ?? preset?.auto_reply_max_per_conversation ?? 3,
-    handoff_agent_id: a?.handoff_agent_id ?? '',
+    handoff_member_ids: a?.handoff_member_ids ?? (a?.handoff_agent_id ? [a.handoff_agent_id] : []),
     channels: a?.channels ?? preset?.channels ?? ['whatsapp', 'web_chat'],
     priority: a?.priority ?? 0,
     persona_gender: a?.persona_gender ?? '',
@@ -139,7 +138,7 @@ export function AgentEditor({
         body: JSON.stringify({
           ...form,
           model: form.model.trim() || null,
-          handoff_agent_id: form.handoff_agent_id || null,
+          handoff_agent_id: undefined,
         }),
       });
       const data = await res.json().catch(() => ({}));
@@ -167,10 +166,6 @@ export function AgentEditor({
 
   const toggleChannel = (c: AgentChannel, on: boolean) =>
     set('channels', on ? CHANNELS.filter((x) => x === c || form.channels.includes(x)) : form.channels.filter((x) => x !== c));
-
-  const handoffLabel = form.handoff_agent_id
-    ? (members.find((m) => m.user_id === form.handoff_agent_id) ?? null)
-    : null;
 
   return (
     <div className="space-y-4">
@@ -369,24 +364,35 @@ export function AgentEditor({
                 />
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="ag-handoff">{t('handoffTo')}</Label>
-                <Select
-                  value={form.handoff_agent_id || HANDOFF_QUEUE}
-                  onValueChange={(v) => set('handoff_agent_id', !v || v === HANDOFF_QUEUE ? '' : v)}
-                  disabled={disabled || !form.auto_reply_enabled}
-                >
-                  <SelectTrigger id="ag-handoff" className="min-w-56">
-                    <SelectValue>{handoffLabel ? memberLabel(handoffLabel) : t('handoffQueue')}</SelectValue>
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value={HANDOFF_QUEUE}>{t('handoffQueue')}</SelectItem>
+                <Label>{t('handoffTo')}</Label>
+                {members.length === 0 ? (
+                  <p className="text-xs text-muted-foreground">{t('handoffQueue')}</p>
+                ) : (
+                  <ul className="max-h-48 divide-y divide-border overflow-y-auto rounded-lg border border-border">
                     {members.map((m) => (
-                      <SelectItem key={m.user_id} value={m.user_id}>
-                        {memberLabel(m)}
-                      </SelectItem>
+                      <li key={m.user_id}>
+                        <label className="flex cursor-pointer items-center gap-3 px-3 py-2 text-sm hover:bg-muted/30">
+                          <Checkbox
+                            checked={form.handoff_member_ids.includes(m.user_id)}
+                            onCheckedChange={(v) =>
+                              set(
+                                'handoff_member_ids',
+                                v === true
+                                  ? [...form.handoff_member_ids, m.user_id]
+                                  : form.handoff_member_ids.filter((id) => id !== m.user_id),
+                              )
+                            }
+                            disabled={disabled || !form.auto_reply_enabled}
+                          />
+                          <span className="truncate text-foreground">{memberLabel(m)}</span>
+                        </label>
+                      </li>
                     ))}
-                  </SelectContent>
-                </Select>
+                  </ul>
+                )}
+                <p className="text-xs text-muted-foreground">
+                  {form.handoff_member_ids.length === 0 ? t('handoffQueue') : t('handoffRotation', { count: form.handoff_member_ids.length })}
+                </p>
               </div>
             </CardContent>
           </Card>

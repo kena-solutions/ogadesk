@@ -254,7 +254,8 @@ export type NotificationType =
   | 'trial_ending'
   | 'trial_ended'
   | 'plan_archived'
-  | 'plan_restored';
+  | 'plan_restored'
+  | 'ai_handoff';
 
 export interface Notification {
   id: string;

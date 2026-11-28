@@ -312,7 +312,9 @@
     "planArchivedTitle": "Paket Anda mengarsipkan beberapa item",
     "planArchivedBody": "Paket Anda mengizinkan lebih sedikit dari yang Anda miliki, jadi item yang paling jarang dipakai belakangan diarsipkan. Tidak ada yang dihapus; tingkatkan paket untuk mengembalikannya.",
     "planRestoredTitle": "Item yang diarsipkan sudah kembali",
-    "planRestoredBody": "Paket Anda punya ruang lagi, jadi item yang diarsipkannya telah dipulihkan."
+    "planRestoredBody": "Paket Anda punya ruang lagi, jadi item yang diarsipkannya telah dipulihkan.",
+    "aiHandoffTitle": "Pelanggan butuh orang",
+    "aiHandoffBody": "AI meneruskan {contact} ke tim Anda."
   },
   "DashboardShell": {
     "loading": "Memuat..."
@@ -2704,7 +2706,8 @@
       "replyWhenOption": {
         "fallback": "Belum ada balasan lain",
         "always": "Selalu"
-      }
+      },
+      "handoffRotation": "{count, plural, =1 {Ke orang ini saat online} other {Bergiliran ke yang sedang online ({count})}}"
     },
     "tools": {
       "title": "Integrasi yang boleh dipakai agen ini",

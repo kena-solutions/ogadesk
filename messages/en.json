@@ -3416,7 +3416,9 @@
     "planArchivedTitle": "Some items were archived by your plan",
     "planArchivedBody": "Your plan allows fewer than you had, so the least recently used ones were archived. Nothing was deleted; upgrade to bring them back.",
     "planRestoredTitle": "Archived items are back",
-    "planRestoredBody": "Your plan has room again, so the items it had archived were restored."
+    "planRestoredBody": "Your plan has room again, so the items it had archived were restored.",
+    "aiHandoffTitle": "A customer needs a person",
+    "aiHandoffBody": "The AI handed {contact} to your team."
   },
   "Agents": {
     "tabUsage": "Usage",
@@ -3552,7 +3554,8 @@
       "replyWhenOption": {
         "fallback": "Nothing else replied",
         "always": "Always"
-      }
+      },
+      "handoffRotation": "{count, plural, =1 {Goes to this person when online} other {In turn to whoever is online ({count})}}"
     },
     "tools": {
       "title": "Integrations this agent can use",

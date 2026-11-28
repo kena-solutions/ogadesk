@@ -3416,7 +3416,9 @@
     "planArchivedTitle": "Seu plano arquivou alguns itens",
     "planArchivedBody": "Seu plano permite menos do que você tinha, então os menos usados recentemente foram arquivados. Nada foi apagado; faça upgrade para trazê-los de volta.",
     "planRestoredTitle": "Os itens arquivados voltaram",
-    "planRestoredBody": "Seu plano tem espaço de novo, então os itens que ele arquivou foram restaurados."
+    "planRestoredBody": "Seu plano tem espaço de novo, então os itens que ele arquivou foram restaurados.",
+    "aiHandoffTitle": "Um cliente precisa de uma pessoa",
+    "aiHandoffBody": "A IA passou {contact} para sua equipe."
   },
   "Agents": {
     "tabUsage": "Uso",
@@ -3552,7 +3554,8 @@
       "replyWhenOption": {
         "fallback": "Nada mais respondeu",
         "always": "Sempre"
-      }
+      },
+      "handoffRotation": "{count, plural, =1 {Vai para esta pessoa quando estiver online} other {Em rodízio para quem estiver online ({count})}}"
     },
     "tools": {
       "title": "Integrações que este agente pode usar",

@@ -16,6 +16,8 @@ export interface AgentDto {
   auto_reply_enabled: boolean
   auto_reply_max_per_conversation: number
   handoff_agent_id: string | null
+  /** Humans handoffs rotate across, in order. */
+  handoff_member_ids?: string[]
   channels: AgentChannel[]
   priority: number
   knowledge_mode: KnowledgeMode

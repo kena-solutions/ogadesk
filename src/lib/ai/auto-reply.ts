@@ -9,6 +9,7 @@ import { buildSystemPrompt } from './defaults'
 import { buildHandoffSummary } from './handoff'
 import { loadToolRuntime } from './tools/registry'
 import { buildRetrievalQuery, latestUserMessage } from './query'
+import { assignHandoff } from './handoff-pool'
 import { hasReplySince, inboundArrivedAt, logAiReply, type HandoffReason } from './reply-log'
 import {
   engineSendText,
@@ -182,18 +183,14 @@ export async function dispatchInboundToAiReply(
         .from('conversations')
         .update({ ai_autoreply_disabled: true, ai_handoff_summary: summary })
         .eq('id', conversationId)
-      // Only set the assignee when a target is configured AND the thread
-      // isn't already owned - never stomp an existing human assignment.
-      if (config.handoffAgentId) {
-        await db
-          .from('conversations')
-          .update({ assigned_agent_id: config.handoffAgentId })
-          .eq('id', conversationId)
-          .is('assigned_agent_id', null)
-      }
+      // Hand to the next online person in the agent's pool (or tell the whole pool when nobody is online); never
+      // stomps an existing human assignment.
+      const { assignedTo } = await assignHandoff(db, {
+        accountId, conversationId, contactId, agentId: config.agentId, legacyAssigneeId: config.handoffAgentId, question,
+      })
       await logAiReply(db, {
         accountId, agentId: config.agentId, conversationId, outcome: 'handoff', handoffReason: reason,
-        assignedTo: config.handoffAgentId ?? null, sourcesCount: knowledge.length,
+        assignedTo, sourcesCount: knowledge.length,
         topScore: knowledge[0]?.score ?? null, question,
       })
     }

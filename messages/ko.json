@@ -3416,7 +3416,9 @@
     "planArchivedTitle": "요금제에 따라 일부 항목이 보관되었습니다",
     "planArchivedBody": "요금제 한도가 보유 개수보다 적어 최근에 가장 적게 사용한 항목을 보관했습니다. 삭제된 것은 없으며, 업그레이드하면 다시 돌아옵니다.",
     "planRestoredTitle": "보관된 항목이 돌아왔습니다",
-    "planRestoredBody": "요금제에 다시 여유가 생겨 보관했던 항목을 복원했습니다."
+    "planRestoredBody": "요금제에 다시 여유가 생겨 보관했던 항목을 복원했습니다.",
+    "aiHandoffTitle": "고객이 상담원을 기다립니다",
+    "aiHandoffBody": "AI가 {contact}님을 팀에 넘겼습니다."
   },
   "Agents": {
     "tabUsage": "사용량",
@@ -3552,7 +3554,8 @@
       "replyWhenOption": {
         "fallback": "다른 응답이 없을 때",
         "always": "항상"
-      }
+      },
+      "handoffRotation": "{count, plural, =1 {접속 중일 때 이 사람에게 전달} other {접속 중인 사람에게 순서대로 전달 ({count}명)}}"
     },
     "tools": {
       "title": "이 에이전트가 사용할 수 있는 통합",

@@ -19,6 +19,8 @@ export interface AgentWrite {
   priority?: number
   knowledge_mode?: KnowledgeMode
   reply_mode?: ReplyMode
+  /** Humans handoffs rotate across, in order. Not a column: the service stores it in ai_agent_handoff_members. */
+  handoff_member_ids?: string[]
   /** Optional persona overrides; null = inherit the platform default. */
   persona_gender?: string | null
   persona_tone?: string | null
@@ -36,6 +38,7 @@ export type AgentInputError =
   | 'knowledge_mode_invalid'
   | 'persona_too_long'
 
+export const MAX_HANDOFF_MEMBERS = 20
 export const AGENT_NAME_MAX = 80
 export const AGENT_PROMPT_MAX = 20_000
 /** Max lengths of the persona fields (mirrored by CHECKs in migration 115). */
@@ -95,6 +98,7 @@ export function parseAgentInput(
     if (mode !== 'all' && mode !== 'selected') return { error: 'knowledge_mode_invalid' }
     out.knowledge_mode = mode
   }
+  if (has('handoff_member_ids')) out.handoff_member_ids = parseIdList(b.handoff_member_ids, MAX_HANDOFF_MEMBERS) ?? []
   // 'always' = answer even when a flow/automation already replied; anything else = fallback (the default).
   if (!partial || has('reply_mode')) out.reply_mode = b.reply_mode === 'always' ? 'always' : 'fallback'
   // Only when sent (null = every connected integration). Ids are scoped to the account when tools are loaded.

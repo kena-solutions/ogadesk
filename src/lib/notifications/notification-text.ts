@@ -15,6 +15,9 @@ export function notificationText(
   // Written by the database in English; shown in the reader's language.
   if (notification.type === 'plan_archived') return { title: t('planArchivedTitle'), body: t('planArchivedBody') };
   if (notification.type === 'plan_restored') return { title: t('planRestoredTitle'), body: t('planRestoredBody') };
+  if (notification.type === 'ai_handoff') {
+    return { title: t('aiHandoffTitle'), body: notification.body || t('aiHandoffBody', { contact: names.contact || t('unknownContact') }) };
+  }
   if (notification.type !== 'conversation_assigned') {
     return { title: notification.title, body: notification.body };
   }

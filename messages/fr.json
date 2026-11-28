@@ -3416,7 +3416,9 @@
     "planArchivedTitle": "Votre forfait a archivé certains éléments",
     "planArchivedBody": "Votre forfait en autorise moins que ce que vous aviez : les moins utilisés récemment ont été archivés. Rien n'a été supprimé ; passez à un forfait supérieur pour les récupérer.",
     "planRestoredTitle": "Les éléments archivés sont de retour",
-    "planRestoredBody": "Votre forfait a de nouveau de la place : les éléments qu'il avait archivés ont été restaurés."
+    "planRestoredBody": "Votre forfait a de nouveau de la place : les éléments qu'il avait archivés ont été restaurés.",
+    "aiHandoffTitle": "Un client a besoin d’une personne",
+    "aiHandoffBody": "L'IA a transmis {contact} à votre équipe."
   },
   "Agents": {
     "tabUsage": "Utilisation",
@@ -3552,7 +3554,8 @@
       "replyWhenOption": {
         "fallback": "Rien d'autre n'a répondu",
         "always": "Toujours"
-      }
+      },
+      "handoffRotation": "{count, plural, =1 {Va à cette personne quand elle est en ligne} other {À tour de rôle à qui est en ligne ({count})}}"
     },
     "tools": {
       "title": "Intégrations que cet agent peut utiliser",
