@@ -1171,6 +1171,20 @@
       "current": "Tiket: {stage}",
       "noPipeline": "Buat pipeline dukungan terlebih dahulu (Pipeline → Dukungan)",
       "pipeline": "Pipeline dukungan"
+    },
+    "feedback": {
+      "good": "Balasan bagus",
+      "bad": "Balasan buruk",
+      "whatWasWrong": "Apa yang salah?",
+      "reason": {
+        "wrong": "Jawaban salah",
+        "out_of_date": "Kedaluwarsa",
+        "tone": "Nada salah",
+        "other": "Lainnya"
+      },
+      "thanksUp": "Terima kasih, dicatat.",
+      "thanksDown": "Terima kasih. Muncul di Wawasan.",
+      "failed": "Gagal menyimpan penilaian."
     }
   },
   "Pipelines": {
@@ -2942,7 +2956,16 @@
       "topSources": "Pengetahuan paling sering dipakai",
       "usedTimes": "{count} balasan",
       "deletedAgent": "Agen dihapus",
-      "loadFailed": "Gagal memuat wawasan."
+      "loadFailed": "Gagal memuat wawasan.",
+      "needsFixing": "Perlu diperbaiki",
+      "noQuestion": "(tidak ada pertanyaan)",
+      "openChat": "Buka chat",
+      "reason": {
+        "wrong": "Jawaban salah",
+        "out_of_date": "Kedaluwarsa",
+        "tone": "Nada salah",
+        "other": "Lainnya"
+      }
     }
   },
   "Settings": {
@@ -5559,7 +5582,11 @@
         "queryRequired": "query wajib diisi"
       },
       "platformNotInPlan": "AI OgaDesk tidak termasuk dalam paket Anda. Upgrade, atau gunakan kunci API Anda sendiri.",
-      "insightsFailed": "Gagal memuat wawasan AI"
+      "insightsFailed": "Gagal memuat wawasan AI",
+      "feedback": {
+        "notRateable": "Hanya balasan AI yang bisa dinilai",
+        "saveFailed": "Gagal menyimpan penilaian"
+      }
     },
     "automations": {
       "copyName": "{name} (Salinan)",

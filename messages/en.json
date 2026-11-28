@@ -615,6 +615,20 @@
       "current": "Ticket: {stage}",
       "noPipeline": "Create a support pipeline first (Pipelines → Support)",
       "pipeline": "Support pipeline"
+    },
+    "feedback": {
+      "good": "Good reply",
+      "bad": "Bad reply",
+      "whatWasWrong": "What was wrong?",
+      "reason": {
+        "wrong": "Wrong answer",
+        "out_of_date": "Out of date",
+        "tone": "Wrong tone",
+        "other": "Something else"
+      },
+      "thanksUp": "Thanks, noted.",
+      "thanksDown": "Thanks. It shows under Insights.",
+      "failed": "Couldn't save your rating."
     }
   },
   "Contacts": {
@@ -3790,7 +3804,16 @@
       "topSources": "Most used knowledge",
       "usedTimes": "{count, plural, =1 {1 reply} other {# replies}}",
       "deletedAgent": "Deleted agent",
-      "loadFailed": "Couldn't load insights."
+      "loadFailed": "Couldn't load insights.",
+      "needsFixing": "Needs fixing",
+      "noQuestion": "(no question found)",
+      "openChat": "Open chat",
+      "reason": {
+        "wrong": "Wrong answer",
+        "out_of_date": "Out of date",
+        "tone": "Wrong tone",
+        "other": "Something else"
+      }
     }
   },
   "Interactive": {
@@ -4345,7 +4368,11 @@
         "queryRequired": "query is required"
       },
       "platformNotInPlan": "OgaDesk AI isn't included in your plan. Upgrade, or use your own API key.",
-      "insightsFailed": "Failed to load AI insights"
+      "insightsFailed": "Failed to load AI insights",
+      "feedback": {
+        "notRateable": "Only AI replies can be rated",
+        "saveFailed": "Failed to save the rating"
+      }
     },
     "automations": {
       "copyName": "{name} (Copy)",

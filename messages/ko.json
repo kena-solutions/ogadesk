@@ -615,6 +615,20 @@
       "current": "티켓: {stage}",
       "noPipeline": "먼저 지원 파이프라인을 만드세요(파이프라인 → 지원)",
       "pipeline": "지원 파이프라인"
+    },
+    "feedback": {
+      "good": "좋은 답변",
+      "bad": "나쁜 답변",
+      "whatWasWrong": "무엇이 문제였나요?",
+      "reason": {
+        "wrong": "틀린 답",
+        "out_of_date": "오래된 정보",
+        "tone": "어조가 맞지 않음",
+        "other": "기타"
+      },
+      "thanksUp": "감사합니다. 기록했습니다.",
+      "thanksDown": "감사합니다. 인사이트에 표시됩니다.",
+      "failed": "평가를 저장하지 못했습니다."
     }
   },
   "Contacts": {
@@ -3790,7 +3804,16 @@
       "topSources": "가장 많이 쓰인 지식",
       "usedTimes": "응답 {count}건",
       "deletedAgent": "삭제된 에이전트",
-      "loadFailed": "인사이트를 불러오지 못했습니다."
+      "loadFailed": "인사이트를 불러오지 못했습니다.",
+      "needsFixing": "수정 필요",
+      "noQuestion": "(질문 없음)",
+      "openChat": "대화 열기",
+      "reason": {
+        "wrong": "틀린 답",
+        "out_of_date": "오래된 정보",
+        "tone": "어조가 맞지 않음",
+        "other": "기타"
+      }
     }
   },
   "Interactive": {
@@ -4345,7 +4368,11 @@
         "queryRequired": "검색어는 필수입니다"
       },
       "platformNotInPlan": "OgaDesk AI는 현재 요금제에 포함되어 있지 않습니다. 업그레이드하거나 내 API 키를 사용하세요.",
-      "insightsFailed": "AI 인사이트를 불러오지 못했습니다"
+      "insightsFailed": "AI 인사이트를 불러오지 못했습니다",
+      "feedback": {
+        "notRateable": "AI 응답만 평가할 수 있습니다",
+        "saveFailed": "평가를 저장하지 못했습니다"
+      }
     },
     "automations": {
       "copyName": "{name} (복사본)",

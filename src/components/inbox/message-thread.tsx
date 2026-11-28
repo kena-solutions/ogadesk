@@ -57,6 +57,7 @@ import { TemplatePicker } from "./template-picker";
 import { AiThreadBanner } from "./ai-thread-banner";
 import { PendingActionsBanner } from "./pending-actions-banner";
 import { AiAgentPicker, useAiAgents } from "./ai-agent-picker";
+import { useAiFeedback } from "./use-ai-feedback";
 import { CreateTicketButton } from "./create-ticket-button";
 import { buildReplyPreview } from "./reply-quote";
 import {
@@ -203,6 +204,7 @@ export function MessageThread({
 
   const { user } = useAuth();
   const aiAgents = useAiAgents();
+  const aiFeedback = useAiFeedback(conversation?.id);
   // Local mirror of the conversation's pinned AI agent, so the picker
   // updates at once (the realtime UPDATE reconciles it).
   const [aiAgentId, setAiAgentId] = useState<string | null>(conversation?.ai_agent_id ?? null);
@@ -1344,6 +1346,8 @@ export function MessageThread({
                         onReact={(emoji) => {
                           if (emoji) void postReaction(msg.id, emoji);
                         }}
+                        feedback={aiFeedback.mine[msg.id]}
+                        onRate={(rating, reason) => void aiFeedback.rate(msg.id, rating, reason ?? null)}
                       >
                         <MessageBubble
                           message={msg}

@@ -1171,6 +1171,20 @@
       "current": "التذكرة: {stage}",
       "noPipeline": "أنشئ مسار دعم أولًا (المسارات ← الدعم)",
       "pipeline": "مسار الدعم"
+    },
+    "feedback": {
+      "good": "رد جيد",
+      "bad": "رد سيئ",
+      "whatWasWrong": "ما المشكلة؟",
+      "reason": {
+        "wrong": "إجابة خاطئة",
+        "out_of_date": "قديمة",
+        "tone": "نبرة غير مناسبة",
+        "other": "شيء آخر"
+      },
+      "thanksUp": "شكرًا، تم التسجيل.",
+      "thanksDown": "شكرًا. يظهر في التحليلات.",
+      "failed": "تعذر حفظ تقييمك."
     }
   },
   "Pipelines": {
@@ -2942,7 +2956,16 @@
       "topSources": "أكثر المعرفة استخدامًا",
       "usedTimes": "{count} رد",
       "deletedAgent": "وكيل محذوف",
-      "loadFailed": "تعذر تحميل التحليلات."
+      "loadFailed": "تعذر تحميل التحليلات.",
+      "needsFixing": "يحتاج إلى إصلاح",
+      "noQuestion": "(لا يوجد سؤال)",
+      "openChat": "فتح المحادثة",
+      "reason": {
+        "wrong": "إجابة خاطئة",
+        "out_of_date": "قديمة",
+        "tone": "نبرة غير مناسبة",
+        "other": "شيء آخر"
+      }
     }
   },
   "Settings": {
@@ -5559,7 +5582,11 @@
         "queryRequired": "الاستعلام مطلوب"
       },
       "platformNotInPlan": "ذكاء OgaDesk الاصطناعي غير مشمول في خطتك. قم بالترقية أو استخدم مفتاح API الخاص بك.",
-      "insightsFailed": "تعذر تحميل تحليلات الذكاء الاصطناعي"
+      "insightsFailed": "تعذر تحميل تحليلات الذكاء الاصطناعي",
+      "feedback": {
+        "notRateable": "يمكن تقييم ردود الذكاء الاصطناعي فقط",
+        "saveFailed": "تعذر حفظ التقييم"
+      }
     },
     "automations": {
       "copyName": "{name} (نسخة)",

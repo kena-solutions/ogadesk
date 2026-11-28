@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, type ReactNode } from "react";
-import { CornerUpLeft, Copy, SmilePlus } from "lucide-react";
+import { CornerUpLeft, Copy, SmilePlus, ThumbsDown, ThumbsUp } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { shouldOpenTouchToolbar } from "@/lib/inbox/context-menu";
@@ -11,6 +11,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import type { Message } from "@/types";
+import { FEEDBACK_REASONS, type FeedbackRating, type FeedbackReason } from "@/lib/ai/feedback";
+import type { MyFeedback } from "./use-ai-feedback";
 import { useTranslations } from "next-intl";
 
 // WhatsApp's own quick-reaction bar starts with these six. Picking the same
@@ -21,6 +23,9 @@ interface MessageActionsProps {
   message: Message;
   onReply: () => void;
   onReact: (emoji: string) => void;
+  /** The signed-in teammate's rating of this AI reply, and how to change it (AI replies only). */
+  feedback?: MyFeedback;
+  onRate?: (rating: FeedbackRating, reason?: FeedbackReason | null) => void;
   children: ReactNode;
 }
 
@@ -33,6 +38,8 @@ export function MessageActions({
   message,
   onReply,
   onReact,
+  feedback,
+  onRate,
   children,
 }: MessageActionsProps) {
   const t = useTranslations("Inbox.actions");
@@ -42,6 +49,8 @@ export function MessageActions({
   // interacts elsewhere.
   const [touchOpen, setTouchOpen] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [downOpen, setDownOpen] = useState(false);
+  const tf = useTranslations("Inbox.feedback");
   const lastPointerType = useRef<string | null>(null);
 
   const isAgent =
@@ -108,7 +117,7 @@ export function MessageActions({
       <div className="group/actions relative min-w-0 max-w-[75%]">
         {children}
       <div
-        data-touch-open={touchOpen || pickerOpen ? "true" : undefined}
+        data-touch-open={touchOpen || pickerOpen || downOpen ? "true" : undefined}
         className={cn(
           "absolute -top-3 z-10 flex h-7 items-center gap-0.5 rounded-full border border-border bg-popover/95 px-1 shadow-md backdrop-blur-sm transition-opacity",
           "opacity-0 group-hover/actions:opacity-100 group-focus-within/actions:opacity-100",
@@ -140,6 +149,54 @@ export function MessageActions({
             ))}
           </PopoverContent>
         </Popover>
+        {message.ai_generated && onRate && (
+          <>
+            <button
+              type="button"
+              onClick={() => onRate("up")}
+              className={cn(
+                "flex h-5 w-5 items-center justify-center rounded-full hover:bg-muted",
+                feedback?.rating === "up" ? "text-primary" : "text-popover-foreground hover:text-foreground",
+              )}
+              aria-label={tf("good")}
+              aria-pressed={feedback?.rating === "up"}
+            >
+              <ThumbsUp className="h-3.5 w-3.5" />
+            </button>
+            <Popover open={downOpen} onOpenChange={setDownOpen}>
+              <PopoverTrigger
+                className={cn(
+                  "flex h-5 w-5 items-center justify-center rounded-full hover:bg-muted",
+                  feedback?.rating === "down" ? "text-destructive" : "text-popover-foreground hover:text-foreground",
+                )}
+                aria-label={tf("bad")}
+                aria-pressed={feedback?.rating === "down"}
+              >
+                <ThumbsDown className="h-3.5 w-3.5" />
+              </PopoverTrigger>
+              <PopoverContent className="flex w-auto flex-col gap-1 p-1.5" sideOffset={6}>
+                <p className="px-1.5 pt-0.5 text-xs text-muted-foreground">{tf("whatWasWrong")}</p>
+                {FEEDBACK_REASONS.map((r) => (
+                  <button
+                    key={r}
+                    type="button"
+                    onClick={() => {
+                      onRate("down", r);
+                      setDownOpen(false);
+                      setTouchOpen(false);
+                    }}
+                    className={cn(
+                      "rounded-md px-2 py-1 text-left text-sm hover:bg-muted",
+                      feedback?.rating === "down" && feedback.reason === r && "bg-muted font-medium",
+                    )}
+                  >
+                    {tf(`reason.${r}`)}
+                  </button>
+                ))}
+              </PopoverContent>
+            </Popover>
+          </>
+        )}
         <button
           type="button"
           onClick={handleReply}

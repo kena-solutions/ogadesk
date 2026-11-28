@@ -1171,6 +1171,20 @@
       "current": "Tiketi: {stage}",
       "noPipeline": "Unda kwanza mfumo wa msaada (Mifumo → Msaada)",
       "pipeline": "Mfumo wa msaada"
+    },
+    "feedback": {
+      "good": "Jibu zuri",
+      "bad": "Jibu baya",
+      "whatWasWrong": "Nini kilikuwa kibaya?",
+      "reason": {
+        "wrong": "Jibu si sahihi",
+        "out_of_date": "Imepitwa na wakati",
+        "tone": "Sauti isiyofaa",
+        "other": "Jambo lingine"
+      },
+      "thanksUp": "Asante, imeandikwa.",
+      "thanksDown": "Asante. Inaonekana kwenye Maarifa.",
+      "failed": "Imeshindwa kuhifadhi tathmini."
     }
   },
   "Pipelines": {
@@ -2942,7 +2956,16 @@
       "topSources": "Maarifa yanayotumika zaidi",
       "usedTimes": "majibu {count}",
       "deletedAgent": "Wakala aliyefutwa",
-      "loadFailed": "Imeshindwa kupakia maarifa."
+      "loadFailed": "Imeshindwa kupakia maarifa.",
+      "needsFixing": "Inahitaji marekebisho",
+      "noQuestion": "(hakuna swali)",
+      "openChat": "Fungua gumzo",
+      "reason": {
+        "wrong": "Jibu si sahihi",
+        "out_of_date": "Imepitwa na wakati",
+        "tone": "Sauti isiyofaa",
+        "other": "Jambo lingine"
+      }
     }
   },
   "Settings": {
@@ -5559,7 +5582,11 @@
         "queryRequired": "swali linahitajika"
       },
       "platformNotInPlan": "AI ya OgaDesk haimo kwenye mpango wako. Pandisha mpango au tumia ufunguo wako wa API.",
-      "insightsFailed": "Imeshindwa kupakia maarifa ya AI"
+      "insightsFailed": "Imeshindwa kupakia maarifa ya AI",
+      "feedback": {
+        "notRateable": "Majibu ya AI pekee yanaweza kupimwa",
+        "saveFailed": "Imeshindwa kuhifadhi tathmini"
+      }
     },
     "automations": {
       "copyName": "{name} (Nakala)",

@@ -615,6 +615,20 @@
       "current": "Ticket : {stage}",
       "noPipeline": "Créez d'abord un pipeline de support (Pipelines → Support)",
       "pipeline": "Pipeline de support"
+    },
+    "feedback": {
+      "good": "Bonne réponse",
+      "bad": "Mauvaise réponse",
+      "whatWasWrong": "Qu'est-ce qui n'allait pas ?",
+      "reason": {
+        "wrong": "Mauvaise réponse",
+        "out_of_date": "Obsolète",
+        "tone": "Mauvais ton",
+        "other": "Autre chose"
+      },
+      "thanksUp": "Merci, noté.",
+      "thanksDown": "Merci. Cela apparaît dans Analyses.",
+      "failed": "Impossible d'enregistrer votre note."
     }
   },
   "Contacts": {
@@ -3790,7 +3804,16 @@
       "topSources": "Connaissances les plus utilisées",
       "usedTimes": "{count, plural, =1 {1 réponse} other {# réponses}}",
       "deletedAgent": "Agent supprimé",
-      "loadFailed": "Impossible de charger les analyses."
+      "loadFailed": "Impossible de charger les analyses.",
+      "needsFixing": "À corriger",
+      "noQuestion": "(aucune question)",
+      "openChat": "Ouvrir la discussion",
+      "reason": {
+        "wrong": "Mauvaise réponse",
+        "out_of_date": "Obsolète",
+        "tone": "Mauvais ton",
+        "other": "Autre chose"
+      }
     }
   },
   "Interactive": {
@@ -4321,7 +4344,11 @@
         "queryRequired": "la requête est obligatoire"
       },
       "platformNotInPlan": "L'IA OgaDesk n'est pas incluse dans votre offre. Passez à une offre supérieure ou utilisez votre propre clé API.",
-      "insightsFailed": "Impossible de charger les analyses IA"
+      "insightsFailed": "Impossible de charger les analyses IA",
+      "feedback": {
+        "notRateable": "Seules les réponses IA peuvent être notées",
+        "saveFailed": "Impossible d'enregistrer la note"
+      }
     },
     "automations": {
       "copyName": "{name} (Copie)",

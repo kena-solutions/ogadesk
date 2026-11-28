@@ -1171,6 +1171,20 @@
       "current": "टिकट: {stage}",
       "noPipeline": "पहले एक सपोर्ट पाइपलाइन बनाएं (पाइपलाइन → सपोर्ट)",
       "pipeline": "सपोर्ट पाइपलाइन"
+    },
+    "feedback": {
+      "good": "अच्छा जवाब",
+      "bad": "खराब जवाब",
+      "whatWasWrong": "क्या गलत था?",
+      "reason": {
+        "wrong": "गलत जवाब",
+        "out_of_date": "पुरानी जानकारी",
+        "tone": "गलत लहजा",
+        "other": "कुछ और"
+      },
+      "thanksUp": "धन्यवाद, नोट कर लिया।",
+      "thanksDown": "धन्यवाद। यह इनसाइट्स में दिखेगा।",
+      "failed": "आपकी रेटिंग सेव नहीं हो सकी।"
     }
   },
   "Pipelines": {
@@ -2942,7 +2956,16 @@
       "topSources": "सबसे ज़्यादा उपयोग हुआ ज्ञान",
       "usedTimes": "{count} जवाब",
       "deletedAgent": "हटाया गया एजेंट",
-      "loadFailed": "इनसाइट्स लोड नहीं हो सकीं।"
+      "loadFailed": "इनसाइट्स लोड नहीं हो सकीं।",
+      "needsFixing": "सुधार चाहिए",
+      "noQuestion": "(कोई सवाल नहीं)",
+      "openChat": "चैट खोलें",
+      "reason": {
+        "wrong": "गलत जवाब",
+        "out_of_date": "पुरानी जानकारी",
+        "tone": "गलत लहजा",
+        "other": "कुछ और"
+      }
     }
   },
   "Settings": {
@@ -5559,7 +5582,11 @@
         "queryRequired": "क्वेरी ज़रूरी है"
       },
       "platformNotInPlan": "OgaDesk AI आपके प्लान में शामिल नहीं है। अपग्रेड करें या अपनी API कुंजी इस्तेमाल करें।",
-      "insightsFailed": "AI इनसाइट्स लोड नहीं हो सकीं"
+      "insightsFailed": "AI इनसाइट्स लोड नहीं हो सकीं",
+      "feedback": {
+        "notRateable": "केवल AI जवाबों को रेट किया जा सकता है",
+        "saveFailed": "रेटिंग सेव नहीं हो सकी"
+      }
     },
     "automations": {
       "copyName": "{name} (कॉपी)",

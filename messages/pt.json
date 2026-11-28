@@ -615,6 +615,20 @@
       "current": "Ticket: {stage}",
       "noPipeline": "Crie primeiro um pipeline de suporte (Pipelines → Suporte)",
       "pipeline": "Pipeline de suporte"
+    },
+    "feedback": {
+      "good": "Boa resposta",
+      "bad": "Resposta ruim",
+      "whatWasWrong": "O que deu errado?",
+      "reason": {
+        "wrong": "Resposta errada",
+        "out_of_date": "Desatualizada",
+        "tone": "Tom errado",
+        "other": "Outra coisa"
+      },
+      "thanksUp": "Obrigado, anotado.",
+      "thanksDown": "Obrigado. Aparece em Análises.",
+      "failed": "Não foi possível salvar sua avaliação."
     }
   },
   "Contacts": {
@@ -3790,7 +3804,16 @@
       "topSources": "Conhecimento mais usado",
       "usedTimes": "{count, plural, =1 {1 resposta} other {# respostas}}",
       "deletedAgent": "Agente excluído",
-      "loadFailed": "Não foi possível carregar as análises."
+      "loadFailed": "Não foi possível carregar as análises.",
+      "needsFixing": "A corrigir",
+      "noQuestion": "(sem pergunta)",
+      "openChat": "Abrir conversa",
+      "reason": {
+        "wrong": "Resposta errada",
+        "out_of_date": "Desatualizada",
+        "tone": "Tom errado",
+        "other": "Outra coisa"
+      }
     }
   },
   "Interactive": {
@@ -4345,7 +4368,11 @@
         "queryRequired": "a consulta é obrigatória"
       },
       "platformNotInPlan": "A IA do OgaDesk não está incluída no seu plano. Faça upgrade ou use sua própria chave API.",
-      "insightsFailed": "Não foi possível carregar as análises de IA"
+      "insightsFailed": "Não foi possível carregar as análises de IA",
+      "feedback": {
+        "notRateable": "Só respostas de IA podem ser avaliadas",
+        "saveFailed": "Não foi possível salvar a avaliação"
+      }
     },
     "automations": {
       "copyName": "{name} (Cópia)",

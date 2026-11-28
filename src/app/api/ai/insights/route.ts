@@ -22,12 +22,21 @@ export async function GET(request: Request) {
     const raw = Number(new URL(request.url).searchParams.get('days'))
     const days = Number.isFinite(raw) ? Math.min(90, Math.max(1, Math.floor(raw))) : 30
 
-    const { data, error } = await supabase.rpc('ai_agent_stats', { p_account: accountId, p_days: days })
-    if (error) {
-      console.error('[ai/insights] stats failed:', error)
+    const [stats, feedback] = await Promise.all([
+      supabase.rpc('ai_agent_stats', { p_account: accountId, p_days: days }),
+      supabase.rpc('ai_feedback_summary', { p_account: accountId, p_days: days }),
+    ])
+    if (stats.error) {
+      console.error('[ai/insights] stats failed:', stats.error)
       return NextResponse.json({ error: t('ai.insightsFailed') }, { status: 500 })
     }
-    return NextResponse.json({ days, ...(data as Record<string, unknown>) })
+    // Ratings are a bonus: if that function isn't there yet, the rest still shows.
+    if (feedback.error) console.error('[ai/insights] feedback summary failed:', feedback.error)
+    return NextResponse.json({
+      days,
+      ...(stats.data as Record<string, unknown>),
+      feedback: feedback.error ? { agents: [], down: [], up: [] } : feedback.data,
+    })
   } catch (err) {
     return toErrorResponse(err)
   }
