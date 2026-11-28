@@ -334,7 +334,9 @@
   "Channels": {
     "whatsapp": "WhatsApp",
     "web_chat": "Gumzo la tovuti",
-    "websiteVisitor": "Mgeni wa tovuti"
+    "websiteVisitor": "Mgeni wa tovuti",
+    "visitorTyping": "{name} anaandika…",
+    "visitorOnline": "Yupo mtandaoni sasa"
   },
   "CommandPalette": {
     "title": "Tafuta",

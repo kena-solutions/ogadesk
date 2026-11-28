@@ -6,6 +6,7 @@ import { useState, useEffect, useLayoutEffect, useCallback, useRef, useMemo } fr
 import { createClient } from "@/lib/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { usePresence } from "@/hooks/use-presence";
+import { useChatRoom } from "@/hooks/use-chat-room";
 import { PresenceDot } from "@/components/presence/presence-dot";
 import { presenceLabel } from "@/lib/presence";
 import { cn } from "@/lib/utils";
@@ -338,6 +339,8 @@ export function MessageThread({
   // chat has none (see src/lib/channels/registry.ts).
   const channel = channelOf(conversation);
   const channelCaps = channelCapabilities(channel);
+  // Website chat: is the visitor here, and are they typing (and tell them when we are).
+  const chatRoom = useChatRoom(conversation?.id ?? null, channel === "web_chat" && !!conversation);
   const windowHours = channelCaps.replyWindowHours;
 
   // Session timer (channels with a reply window only)
@@ -1095,6 +1098,12 @@ export function MessageThread({
                 ? contactHandle(contact)
                 : contact?.email || contact?.phone || tChannels("websiteVisitor")}
             </p>
+            {channel === "web_chat" && chatRoom.visitorOnline ? (
+              <p className="flex items-center gap-1 truncate text-xs text-emerald-600 dark:text-emerald-400">
+                <span className="size-1.5 rounded-full bg-emerald-500" aria-hidden />
+                {tChannels("visitorOnline")}
+              </p>
+            ) : null}
           </div>
           {/* Session timer badge - hidden on the narrowest phones so
               the name + back arrow keep their room. Only for channels
@@ -1395,6 +1404,12 @@ export function MessageThread({
         }}
       />
 
+      {channel === "web_chat" && chatRoom.visitorTyping ? (
+        <p className="px-4 pb-1 text-xs text-muted-foreground" role="status">
+          {tChannels("visitorTyping", { name: displayName })}
+        </p>
+      ) : null}
+
       {/* Composer. A blocked contact can't be messaged at all (the server
           refuses too), so the composer is replaced by an explanation and an
           Unblock button. */}
@@ -1420,6 +1435,7 @@ export function MessageThread({
         onOpenTemplates={handleOpenTemplates}
         replyTo={replyTo}
         onClearReply={() => setReplyTo(null)}
+        onTyping={channel === "web_chat" ? chatRoom.sendTyping : undefined}
       />
       )}
 

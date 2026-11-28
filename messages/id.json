@@ -334,7 +334,9 @@
   "Channels": {
     "whatsapp": "WhatsApp",
     "web_chat": "Obrolan situs web",
-    "websiteVisitor": "Pengunjung situs web"
+    "websiteVisitor": "Pengunjung situs web",
+    "visitorTyping": "{name} sedang mengetik…",
+    "visitorOnline": "Sedang online"
   },
   "CommandPalette": {
     "title": "Cari",

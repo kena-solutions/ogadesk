@@ -334,7 +334,9 @@
   "Channels": {
     "whatsapp": "WhatsApp",
     "web_chat": "वेबसाइट चैट",
-    "websiteVisitor": "वेबसाइट विज़िटर"
+    "websiteVisitor": "वेबसाइट विज़िटर",
+    "visitorTyping": "{name} टाइप कर रहे हैं…",
+    "visitorOnline": "अभी ऑनलाइन"
   },
   "CommandPalette": {
     "title": "खोजें",

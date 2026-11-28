@@ -5663,7 +5663,9 @@
   "Channels": {
     "whatsapp": "WhatsApp",
     "web_chat": "Website chat",
-    "websiteVisitor": "Website visitor"
+    "websiteVisitor": "Website visitor",
+    "visitorTyping": "{name} is typing…",
+    "visitorOnline": "Online now"
   },
   "PhoneField": {
     "searchCountry": "Search country or code",

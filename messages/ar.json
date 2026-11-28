@@ -334,7 +334,9 @@
   "Channels": {
     "whatsapp": "واتساب",
     "web_chat": "دردشة الموقع",
-    "websiteVisitor": "زائر الموقع"
+    "websiteVisitor": "زائر الموقع",
+    "visitorTyping": "{name} يكتب الآن…",
+    "visitorOnline": "متصل الآن"
   },
   "CommandPalette": {
     "title": "بحث",

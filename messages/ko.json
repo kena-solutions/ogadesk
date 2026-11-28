@@ -5663,7 +5663,9 @@
   "Channels": {
     "whatsapp": "WhatsApp",
     "web_chat": "웹사이트 채팅",
-    "websiteVisitor": "웹사이트 방문자"
+    "websiteVisitor": "웹사이트 방문자",
+    "visitorTyping": "{name}님이 입력 중…",
+    "visitorOnline": "지금 접속 중"
   },
   "PhoneField": {
     "searchCountry": "국가 또는 코드 검색",

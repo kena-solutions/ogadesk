@@ -123,6 +123,8 @@ interface MessageComposerProps {
   onOpenTemplates: () => void;
   replyTo?: ReplyDraft | null;
   onClearReply?: () => void;
+  /** Website chat: tells the visitor we are typing (true while typing, false when cleared or sent). */
+  onTyping?: (on: boolean) => void;
 }
 
 function formatDuration(seconds: number): string {
@@ -146,6 +148,7 @@ export function MessageComposer({
   onOpenTemplates,
   replyTo,
   onClearReply,
+  onTyping,
 }: MessageComposerProps) {
   const t = useTranslations("Inbox.composer");
   const tGate = useTranslations("GatedButton");
@@ -253,6 +256,7 @@ export function MessageComposer({
     setSending(true);
     try {
       onSend(trimmed, replyTo?.id);
+      onTyping?.(false);
       setText("");
       setDraftSources([]);
       setDraftUnsupported([]);
@@ -262,7 +266,7 @@ export function MessageComposer({
     } finally {
       setSending(false);
     }
-  }, [text, sending, sessionExpired, onSend, replyTo?.id]);
+  }, [text, sending, sessionExpired, onSend, onTyping, replyTo?.id]);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -277,13 +281,14 @@ export function MessageComposer({
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       setText(e.target.value);
+      onTyping?.(e.target.value.trim().length > 0);
       if (!e.target.value.trim()) {
         setDraftSources([]);
         setDraftUnsupported([]);
       }
       adjustHeight();
     },
-    [adjustHeight]
+    [adjustHeight, onTyping]
   );
 
   // Ask the AI assistant for a suggested reply and drop it into the
