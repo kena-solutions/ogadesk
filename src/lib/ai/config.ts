@@ -1,7 +1,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { decrypt } from '@/lib/whatsapp/encryption'
 import type { AiConfig } from './types'
-import { AGENT_COLUMNS, pickAgent, type AgentTarget, type AiAgentRow } from './agents'
+import { AGENT_COLUMNS, hasRouting, pickAgent, type AgentTarget, type AiAgentRow } from './agents'
 import { checkAiAdminGate } from './admin-gate'
 
 interface AiConfigRow {
@@ -124,7 +124,16 @@ export async function loadAgentConfig(
     return { ...workspace, agentId: null, agentName: null, knowledgeSourceIds: null }
   }
 
-  const agent = pickAgent(rows as AiAgentRow[], target)
+  const agentRows = rows as AiAgentRow[]
+  let routed = target
+  if (!target.context && target.contextLoader && agentRows.some((a) => a.is_active && hasRouting(a.routing))) {
+    try {
+      routed = { ...target, context: await target.contextLoader() }
+    } catch (err) {
+      console.error('[ai config] routing context failed, ignoring agent rules:', err)
+    }
+  }
+  const agent = pickAgent(agentRows, routed)
   if (!agent) return null
 
   let knowledgeSourceIds: string[] | null = null

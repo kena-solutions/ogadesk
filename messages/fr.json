@@ -3555,7 +3555,8 @@
         "fallback": "Rien d'autre n'a répondu",
         "always": "Toujours"
       },
-      "handoffRotation": "{count, plural, =1 {Va à cette personne quand elle est en ligne} other {À tour de rôle à qui est en ligne ({count})}}"
+      "handoffRotation": "{count, plural, =1 {Va à cette personne quand elle est en ligne} other {À tour de rôle à qui est en ligne ({count})}}",
+      "useWhen": "Utiliser cet agent quand…"
     },
     "tools": {
       "title": "Intégrations que cet agent peut utiliser",
@@ -3715,6 +3716,50 @@
         "name": "Agent administratif",
         "description": "Accueil pour la facturation, les réservations, les comptes et le suivi des commandes ; recueille les détails et transmet toute modification à votre équipe.",
         "agentName": "Agent administratif"
+      }
+    },
+    "rules": {
+      "tags": "Le contact a une étiquette",
+      "noTags": "Pas encore d'étiquettes.",
+      "keywords": "Le message mentionne",
+      "keywordsPlaceholder": "facture, remboursement",
+      "hours": "Seulement aux heures ouvrées",
+      "to": "à"
+    },
+    "routingTest": {
+      "button": "Tester le routage",
+      "title": "Quel agent répond ?",
+      "failed": "Impossible de tester le routage.",
+      "noRules": "Aucune règle",
+      "ruleTags": "{count, plural, =1 {1 étiquette} other {# étiquettes}}",
+      "ruleKeywords": "mots : {words}",
+      "ruleHours": "{from}-{to}",
+      "channel": {
+        "whatsapp": "WhatsApp",
+        "web_chat": "Chat du site"
+      },
+      "status": {
+        "chosen": "Répond",
+        "eligible": "Pas nécessaire",
+        "off": "Désactivé",
+        "other_channel": "Autre canal",
+        "rules_not_met": "Règles non remplies"
+      },
+      "priority": "Priorité",
+      "channelLabel": "Canal",
+      "messageLabel": "Le client dit",
+      "messagePlaceholder": "ex. Je voudrais ma facture",
+      "answers": "{name} répond ({reason})",
+      "nobody": "Aucun agent ne répondrait.",
+      "run": "Tester",
+      "reason": {
+        "pinned": "choisi à la main",
+        "default_requested": "agent par défaut",
+        "override": "épinglé dans la boîte",
+        "rules": "ses règles correspondent",
+        "channel": "couvre ce canal",
+        "default": "agent par défaut",
+        "none": "aucun"
       }
     }
   },

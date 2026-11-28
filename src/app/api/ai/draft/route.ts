@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { requireRole, toErrorResponse } from '@/lib/auth/account'
 import { checkRateLimit, rateLimitResponse, RATE_LIMITS } from '@/lib/rate-limit'
 import { loadAgentConfig } from '@/lib/ai/config'
+import { loadRoutingContext } from '@/lib/ai/routing-context'
 import { buildConversationContext } from '@/lib/ai/context'
 import { retrieveKnowledge, sourceRefs } from '@/lib/ai/knowledge'
 import { runGeneration } from '@/lib/ai/run'
@@ -67,6 +68,7 @@ export async function POST(request: Request) {
     const config = await loadAgentConfig(supabase, accountId, {
       conversationAgentId: conversation.ai_agent_id ?? null,
       channel: conversation.channel ?? 'whatsapp',
+      contextLoader: () => loadRoutingContext(supabase, { accountId, conversationId }),
     }).catch((err) => {
       // Decrypt failure - surface distinctly from "not configured".
       console.error('[ai/draft] loadAgentConfig error:', err)

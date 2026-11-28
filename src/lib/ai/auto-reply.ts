@@ -10,6 +10,7 @@ import { buildHandoffSummary } from './handoff'
 import { loadToolRuntime } from './tools/registry'
 import { buildRetrievalQuery, latestUserMessage } from './query'
 import { assignHandoff } from './handoff-pool'
+import { loadRoutingContext } from './routing-context'
 import { hasReplySince, inboundArrivedAt, logAiReply, type HandoffReason } from './reply-log'
 import {
   engineSendText,
@@ -80,6 +81,7 @@ export async function dispatchInboundToAiReply(
     const config = await loadAgentConfig(db, accountId, {
       conversationAgentId: conv.ai_agent_id ?? null,
       channel: conv.channel ?? 'whatsapp',
+      contextLoader: () => loadRoutingContext(db, { accountId, conversationId, contactId }),
     })
     if (!config || !config.autoReplyEnabled) return
     // Cheap early-out; the authoritative cap check is the atomic claim

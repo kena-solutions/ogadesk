@@ -4,7 +4,7 @@
 // checked by the route (it needs the DB).
 // ============================================================
 
-import { normalizeChannels, type AgentChannel, type KnowledgeMode, type ReplyMode } from './agents'
+import { normalizeChannels, type AgentRouting, type AgentChannel, type KnowledgeMode, type ReplyMode } from './agents'
 
 export interface AgentWrite {
   name?: string
@@ -19,6 +19,7 @@ export interface AgentWrite {
   priority?: number
   knowledge_mode?: KnowledgeMode
   reply_mode?: ReplyMode
+  routing?: AgentRouting | null
   /** Humans handoffs rotate across, in order. Not a column: the service stores it in ai_agent_handoff_members. */
   handoff_member_ids?: string[]
   /** Optional persona overrides; null = inherit the platform default. */
@@ -39,6 +40,33 @@ export type AgentInputError =
   | 'persona_too_long'
 
 export const MAX_HANDOFF_MEMBERS = 20
+export const MAX_ROUTING_TAGS = 20
+export const MAX_ROUTING_KEYWORDS = 20
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+const HHMM = /^([01]\d|2[0-3]):[0-5]\d$/
+
+/** Clean a routing body: known parts only, bounded; null when it holds no rule at all. */
+export function parseRouting(input: unknown): AgentRouting | null {
+  if (!input || typeof input !== 'object') return null
+  const b = input as Record<string, unknown>
+  const out: AgentRouting = {}
+  const tags = Array.isArray(b.tags) ? b.tags.filter((t): t is string => typeof t === 'string' && UUID_RE.test(t)) : []
+  if (tags.length > 0) out.tags = Array.from(new Set(tags)).slice(0, MAX_ROUTING_TAGS)
+  const keywords = Array.isArray(b.keywords) ? b.keywords : typeof b.keywords === 'string' ? b.keywords.split(/[\n,]/) : []
+  const kw = keywords.filter((k): k is string => typeof k === 'string').map((k) => k.trim().slice(0, 60)).filter(Boolean)
+  if (kw.length > 0) out.keywords = Array.from(new Set(kw)).slice(0, MAX_ROUTING_KEYWORDS)
+  const h = b.hours && typeof b.hours === 'object' ? (b.hours as Record<string, unknown>) : null
+  if (h && h.enabled === true) {
+    const days = Array.isArray(h.days) ? h.days.filter((d): d is number => Number.isInteger(d) && d >= 0 && d <= 6) : [1, 2, 3, 4, 5]
+    out.hours = {
+      enabled: true,
+      days: Array.from(new Set(days)),
+      from: typeof h.from === 'string' && HHMM.test(h.from) ? h.from : '09:00',
+      to: typeof h.to === 'string' && HHMM.test(h.to) ? h.to : '17:00',
+    }
+  }
+  return Object.keys(out).length > 0 ? out : null
+}
 export const AGENT_NAME_MAX = 80
 export const AGENT_PROMPT_MAX = 20_000
 /** Max lengths of the persona fields (mirrored by CHECKs in migration 115). */
@@ -99,6 +127,7 @@ export function parseAgentInput(
     out.knowledge_mode = mode
   }
   if (has('handoff_member_ids')) out.handoff_member_ids = parseIdList(b.handoff_member_ids, MAX_HANDOFF_MEMBERS) ?? []
+  if (has('routing')) out.routing = parseRouting(b.routing)
   // 'always' = answer even when a flow/automation already replied; anything else = fallback (the default).
   if (!partial || has('reply_mode')) out.reply_mode = b.reply_mode === 'always' ? 'always' : 'fallback'
   // Only when sent (null = every connected integration). Ids are scoped to the account when tools are loaded.

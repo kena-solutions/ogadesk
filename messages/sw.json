@@ -2707,7 +2707,8 @@
         "fallback": "Hakuna aliyejibu mwingine",
         "always": "Kila wakati"
       },
-      "handoffRotation": "{count, plural, =1 {Huenda kwa mtu huyu akiwa mtandaoni} other {Kwa zamu kwa aliye mtandaoni ({count})}}"
+      "handoffRotation": "{count, plural, =1 {Huenda kwa mtu huyu akiwa mtandaoni} other {Kwa zamu kwa aliye mtandaoni ({count})}}",
+      "useWhen": "Tumia wakala huyu wakati…"
     },
     "tools": {
       "title": "Miunganisho ambayo wakala huyu anaweza kutumia",
@@ -2867,6 +2868,50 @@
         "name": "Wakala wa utawala",
         "description": "Mapokezi kwa malipo, uhifadhi, akaunti na hali ya oda; hukusanya maelezo na kupeleka mabadiliko yoyote kwa timu yako.",
         "agentName": "Wakala wa utawala"
+      }
+    },
+    "rules": {
+      "tags": "Mwasiliani ana lebo",
+      "noTags": "Bado hakuna lebo.",
+      "keywords": "Ujumbe unataja",
+      "keywordsPlaceholder": "ankara, marejesho",
+      "hours": "Wakati wa kazi tu",
+      "to": "hadi"
+    },
+    "routingTest": {
+      "button": "Jaribu uelekezaji",
+      "title": "Wakala gani anajibu?",
+      "failed": "Imeshindwa kujaribu uelekezaji.",
+      "noRules": "Hakuna sheria",
+      "ruleTags": "lebo {count}",
+      "ruleKeywords": "maneno: {words}",
+      "ruleHours": "{from}-{to}",
+      "channel": {
+        "whatsapp": "WhatsApp",
+        "web_chat": "Gumzo la tovuti"
+      },
+      "status": {
+        "chosen": "Anajibu",
+        "eligible": "Haihitajiki",
+        "off": "Imezimwa",
+        "other_channel": "Kituo kingine",
+        "rules_not_met": "Sheria hazijatimizwa"
+      },
+      "priority": "Kipaumbele",
+      "channelLabel": "Kituo",
+      "messageLabel": "Mteja anasema",
+      "messagePlaceholder": "mf. Nahitaji ankara yangu",
+      "answers": "{name} anajibu ({reason})",
+      "nobody": "Hakuna wakala angejibu.",
+      "run": "Jaribu",
+      "reason": {
+        "pinned": "imechaguliwa kwa mkono",
+        "default_requested": "wakala chaguo-msingi",
+        "override": "umebandikwa kwenye kikasha",
+        "rules": "sheria zake zinalingana",
+        "channel": "inashughulikia kituo hiki",
+        "default": "wakala chaguo-msingi",
+        "none": "hakuna"
       }
     }
   },

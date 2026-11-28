@@ -3555,7 +3555,8 @@
         "fallback": "Nada más respondió",
         "always": "Siempre"
       },
-      "handoffRotation": "{count, plural, =1 {Va a esta persona cuando esté en línea} other {Por turnos a quien esté en línea ({count})}}"
+      "handoffRotation": "{count, plural, =1 {Va a esta persona cuando esté en línea} other {Por turnos a quien esté en línea ({count})}}",
+      "useWhen": "Usar este agente cuando…"
     },
     "tools": {
       "title": "Integraciones que puede usar este agente",
@@ -3715,6 +3716,50 @@
         "name": "Agente administrativo",
         "description": "Recepción para facturación, reservas, cuentas y estado de pedidos; recoge los datos y pasa cualquier cambio a tu equipo.",
         "agentName": "Agente administrativo"
+      }
+    },
+    "rules": {
+      "tags": "El contacto tiene una etiqueta",
+      "noTags": "Aún no hay etiquetas.",
+      "keywords": "El mensaje menciona",
+      "keywordsPlaceholder": "factura, reembolso",
+      "hours": "Solo en horario laboral",
+      "to": "a"
+    },
+    "routingTest": {
+      "button": "Probar enrutamiento",
+      "title": "¿Qué agente responde?",
+      "failed": "No se pudo probar el enrutamiento.",
+      "noRules": "Sin reglas",
+      "ruleTags": "{count, plural, =1 {1 etiqueta} other {# etiquetas}}",
+      "ruleKeywords": "palabras: {words}",
+      "ruleHours": "{from}-{to}",
+      "channel": {
+        "whatsapp": "WhatsApp",
+        "web_chat": "Chat web"
+      },
+      "status": {
+        "chosen": "Responde",
+        "eligible": "No hace falta",
+        "off": "Apagado",
+        "other_channel": "Otro canal",
+        "rules_not_met": "Reglas no cumplidas"
+      },
+      "priority": "Prioridad",
+      "channelLabel": "Canal",
+      "messageLabel": "El cliente dice",
+      "messagePlaceholder": "p. ej. Necesito mi factura",
+      "answers": "{name} responde ({reason})",
+      "nobody": "Ningún agente respondería.",
+      "run": "Probar",
+      "reason": {
+        "pinned": "elegido a mano",
+        "default_requested": "agente predeterminado",
+        "override": "fijado en la bandeja",
+        "rules": "sus reglas coinciden",
+        "channel": "cubre este canal",
+        "default": "agente predeterminado",
+        "none": "ninguno"
       }
     }
   },

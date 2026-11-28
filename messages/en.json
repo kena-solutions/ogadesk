@@ -3555,7 +3555,8 @@
         "fallback": "Nothing else replied",
         "always": "Always"
       },
-      "handoffRotation": "{count, plural, =1 {Goes to this person when online} other {In turn to whoever is online ({count})}}"
+      "handoffRotation": "{count, plural, =1 {Goes to this person when online} other {In turn to whoever is online ({count})}}",
+      "useWhen": "Use this agent when…"
     },
     "tools": {
       "title": "Integrations this agent can use",
@@ -3715,6 +3716,50 @@
         "name": "Admin agent",
         "description": "Front desk for billing, bookings, accounts and order status; collects details and hands any change to your team.",
         "agentName": "Admin agent"
+      }
+    },
+    "rules": {
+      "tags": "Contact has a tag",
+      "noTags": "No tags yet.",
+      "keywords": "Message mentions",
+      "keywordsPlaceholder": "invoice, refund",
+      "hours": "Only in business hours",
+      "to": "to"
+    },
+    "routingTest": {
+      "button": "Test routing",
+      "title": "Which agent answers?",
+      "failed": "Couldn't test the routing.",
+      "noRules": "No rules",
+      "ruleTags": "{count, plural, =1 {1 tag} other {# tags}}",
+      "ruleKeywords": "words: {words}",
+      "ruleHours": "{from}-{to}",
+      "channel": {
+        "whatsapp": "WhatsApp",
+        "web_chat": "Website chat"
+      },
+      "status": {
+        "chosen": "Answers",
+        "eligible": "Not needed",
+        "off": "Off",
+        "other_channel": "Other channel",
+        "rules_not_met": "Rules not met"
+      },
+      "priority": "Priority",
+      "channelLabel": "Channel",
+      "messageLabel": "Customer says",
+      "messagePlaceholder": "e.g. I need my invoice",
+      "answers": "{name} answers ({reason})",
+      "nobody": "No agent would answer.",
+      "run": "Test",
+      "reason": {
+        "pinned": "chosen by hand",
+        "default_requested": "default agent",
+        "override": "pinned in the inbox",
+        "rules": "its rules match",
+        "channel": "covers this channel",
+        "default": "default agent",
+        "none": "none"
       }
     }
   },

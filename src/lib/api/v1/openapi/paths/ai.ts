@@ -44,6 +44,15 @@ const agentProps: Record<string, OpenApiObject> = {
   channels: { type: 'array', items: { type: 'string', enum: ['whatsapp', 'web_chat'] } },
   priority: { type: 'integer' },
   knowledge_mode: { type: 'string', enum: ['all', 'selected'] },
+  routing: {
+    type: ['object', 'null'],
+    description: 'When to use this agent. All parts optional; every part given must match. Null or empty = no rules.',
+    properties: {
+      tags: { type: 'array', items: { type: 'string', format: 'uuid' }, description: 'Contact has at least one of these tags.' },
+      keywords: { type: 'array', items: { type: 'string' }, description: 'The conversation mentions at least one of these words.' },
+      hours: { type: 'object', description: 'Only inside these business hours (workspace time zone).', properties: { enabled: { type: 'boolean' }, days: { type: 'array', items: { type: 'integer', minimum: 0, maximum: 6 } }, from: { type: 'string' }, to: { type: 'string' } } },
+    },
+  },
   reply_mode: { type: 'string', enum: ['fallback', 'always'], description: "'fallback' (default): answer only if no flow or automation already replied to the message." },
   tool_integrations: { type: ['array', 'null'], items: { type: 'string', format: 'uuid' } },
 }

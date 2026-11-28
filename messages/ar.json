@@ -2707,7 +2707,8 @@
         "fallback": "لم يرد أحد غيره",
         "always": "دائمًا"
       },
-      "handoffRotation": "{count, plural, =1 {يذهب إلى هذا الشخص عند اتصاله} other {بالتناوب إلى من هو متصل ({count})}}"
+      "handoffRotation": "{count, plural, =1 {يذهب إلى هذا الشخص عند اتصاله} other {بالتناوب إلى من هو متصل ({count})}}",
+      "useWhen": "استخدم هذا الوكيل عندما…"
     },
     "tools": {
       "title": "التكاملات التي يمكن لهذا الوكيل استخدامها",
@@ -2867,6 +2868,50 @@
         "name": "الوكيل الإداري",
         "description": "مكتب استقبال للفواتير والحجوزات والحسابات وحالة الطلبات؛ يجمع التفاصيل ويحيل أي تغيير إلى فريقك.",
         "agentName": "الوكيل الإداري"
+      }
+    },
+    "rules": {
+      "tags": "لدى جهة الاتصال وسم",
+      "noTags": "لا توجد وسوم بعد.",
+      "keywords": "تذكر الرسالة",
+      "keywordsPlaceholder": "فاتورة، استرداد",
+      "hours": "خلال ساعات العمل فقط",
+      "to": "إلى"
+    },
+    "routingTest": {
+      "button": "اختبار التوجيه",
+      "title": "أي وكيل يجيب؟",
+      "failed": "تعذر اختبار التوجيه.",
+      "noRules": "بلا قواعد",
+      "ruleTags": "{count} وسوم",
+      "ruleKeywords": "كلمات: {words}",
+      "ruleHours": "{from}-{to}",
+      "channel": {
+        "whatsapp": "WhatsApp",
+        "web_chat": "دردشة الموقع"
+      },
+      "status": {
+        "chosen": "يجيب",
+        "eligible": "غير لازم",
+        "off": "متوقف",
+        "other_channel": "قناة أخرى",
+        "rules_not_met": "القواعد غير محققة"
+      },
+      "priority": "الأولوية",
+      "channelLabel": "القناة",
+      "messageLabel": "يقول العميل",
+      "messagePlaceholder": "مثال: أحتاج فاتورتي",
+      "answers": "{name} يجيب ({reason})",
+      "nobody": "لن يجيب أي وكيل.",
+      "run": "اختبار",
+      "reason": {
+        "pinned": "اختير يدويًا",
+        "default_requested": "الوكيل الافتراضي",
+        "override": "مثبّت في البريد",
+        "rules": "تطابق قواعده",
+        "channel": "يغطي هذه القناة",
+        "default": "الوكيل الافتراضي",
+        "none": "لا أحد"
       }
     }
   },

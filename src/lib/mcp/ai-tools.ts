@@ -23,6 +23,11 @@ const agentFields = {
   channels: z.array(z.enum(['whatsapp', 'web_chat'])).optional(),
   priority: z.number().int().optional().describe('Higher wins when several agents match a conversation.'),
   knowledge_mode: z.enum(['all', 'selected']).optional().describe("'all' = every library source; 'selected' = only linked ones (link_agent_knowledge)."),
+  routing: z.object({
+    tags: z.array(z.string()).optional().describe('Tag ids; the contact must have at least one.'),
+    keywords: z.array(z.string()).optional().describe('Words; the conversation must mention at least one.'),
+    hours: z.object({ enabled: z.boolean(), days: z.array(z.number().int().min(0).max(6)).optional(), from: z.string().optional(), to: z.string().optional() }).optional().describe('Only inside these hours (workspace time zone); days 0=Sunday.'),
+  }).nullable().optional().describe('When to use this agent. Every part given must match; null clears the rules.'),
   reply_mode: z.enum(['fallback', 'always']).optional().describe("'fallback' (default) = answer only when no flow or automation already replied to the customer's message; 'always' = answer regardless (risks double replies)."),
   persona_tone: z.string().max(400).nullable().optional(),
   persona_behaviour: z.string().max(1500).nullable().optional(),

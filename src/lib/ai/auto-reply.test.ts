@@ -232,6 +232,7 @@ describe('dispatchInboundToAiReply, eligibility gates', () => {
     expect(h.loadAgentConfig).toHaveBeenCalledWith(expect.anything(), 'acct-1', {
       conversationAgentId: 'agent-sales',
       channel: 'whatsapp',
+      contextLoader: expect.any(Function),
     })
     expect(h.retrieveKnowledge.mock.calls[0][4]).toEqual({ sourceIds: ['src-1'] })
     expect(h.engineSendText).toHaveBeenCalledWith(

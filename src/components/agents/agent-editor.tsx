@@ -21,7 +21,8 @@ import { SOURCE_ICON, StatusPill } from './knowledge-library';
 import { memberLabel } from '@/lib/account/members';
 import type { AccountMember } from '@/types';
 import type { AgentDto } from '@/lib/ai/agents-client';
-import type { AgentChannel, KnowledgeMode } from '@/lib/ai/agents';
+import type { AgentChannel, AgentRouting, KnowledgeMode } from '@/lib/ai/agents';
+import { RoutingRules } from './routing-rules';
 import type { SourceDto } from '@/lib/ai/knowledge-client';
 import type { AgentTemplate } from '@/lib/ai/agent-templates';
 
@@ -42,6 +43,7 @@ interface Form {
   handoff_member_ids: string[];
   channels: AgentChannel[];
   priority: number;
+  routing: AgentRouting;
   persona_gender: string;
   persona_tone: string;
   persona_behaviour: string;
@@ -75,6 +77,7 @@ function toForm(a: AgentDto | null, preset?: AgentPreset | null): Form {
     handoff_member_ids: a?.handoff_member_ids ?? (a?.handoff_agent_id ? [a.handoff_agent_id] : []),
     channels: a?.channels ?? preset?.channels ?? ['whatsapp', 'web_chat'],
     priority: a?.priority ?? 0,
+    routing: a?.routing ?? {},
     persona_gender: a?.persona_gender ?? '',
     persona_tone: a?.persona_tone ?? '',
     persona_behaviour: a?.persona_behaviour ?? '',
@@ -301,6 +304,10 @@ export function AgentEditor({
                     {t(`channel.${c}`)}
                   </label>
                 ))}
+              </div>
+              <div className="space-y-2 border-t border-border pt-4">
+                <p className="text-sm font-medium text-foreground">{t('useWhen')}</p>
+                <RoutingRules value={form.routing} onChange={(r) => set('routing', r)} disabled={disabled} />
               </div>
               <div className="flex items-center justify-between gap-4">
                 <div>

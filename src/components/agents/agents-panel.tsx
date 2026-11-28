@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { useAuth } from '@/hooks/use-auth';
 import { canEditSettings } from '@/lib/auth/roles';
 import { Button } from '@/components/ui/button';
+import { RoutingTest } from './routing-test';
 import { AgentEditor, type AgentPreset } from './agent-editor';
 import { AGENT_TEMPLATE_IDS, AGENT_TEMPLATES, type AgentTemplateId } from '@/lib/ai/agent-templates';
 import { fetchAccountMembers } from '@/lib/account/members';
@@ -146,11 +147,14 @@ export function AgentsPanel({ configured, workspaceModel, onGoToSettings, onDeta
         </div>
       )}
 
-      {canEdit && agents !== null && agents.length > 0 && (
-        <div className="flex justify-end">
-          <Button size="sm" onClick={startNew}>
-            <Plus className="mr-1.5 h-4 w-4" /> {t('newAgent')}
-          </Button>
+      {agents !== null && agents.length > 0 && (
+        <div className="flex justify-end gap-2">
+          {agents.length > 1 && <RoutingTest agents={agents} />}
+          {canEdit && (
+            <Button size="sm" onClick={startNew}>
+              <Plus className="mr-1.5 h-4 w-4" /> {t('newAgent')}
+            </Button>
+          )}
         </div>
       )}
 

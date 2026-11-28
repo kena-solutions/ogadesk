@@ -2707,7 +2707,8 @@
         "fallback": "Belum ada balasan lain",
         "always": "Selalu"
       },
-      "handoffRotation": "{count, plural, =1 {Ke orang ini saat online} other {Bergiliran ke yang sedang online ({count})}}"
+      "handoffRotation": "{count, plural, =1 {Ke orang ini saat online} other {Bergiliran ke yang sedang online ({count})}}",
+      "useWhen": "Gunakan agen ini saat…"
     },
     "tools": {
       "title": "Integrasi yang boleh dipakai agen ini",
@@ -2867,6 +2868,50 @@
         "name": "Agen admin",
         "description": "Meja depan untuk tagihan, pemesanan, akun, dan status pesanan; mengumpulkan detail dan menyerahkan setiap perubahan ke tim.",
         "agentName": "Agen admin"
+      }
+    },
+    "rules": {
+      "tags": "Kontak punya tag",
+      "noTags": "Belum ada tag.",
+      "keywords": "Pesan menyebut",
+      "keywordsPlaceholder": "faktur, pengembalian dana",
+      "hours": "Hanya jam kerja",
+      "to": "sampai"
+    },
+    "routingTest": {
+      "button": "Uji perutean",
+      "title": "Agen mana yang menjawab?",
+      "failed": "Gagal menguji perutean.",
+      "noRules": "Tanpa aturan",
+      "ruleTags": "{count} tag",
+      "ruleKeywords": "kata: {words}",
+      "ruleHours": "{from}-{to}",
+      "channel": {
+        "whatsapp": "WhatsApp",
+        "web_chat": "Chat situs web"
+      },
+      "status": {
+        "chosen": "Menjawab",
+        "eligible": "Tak diperlukan",
+        "off": "Mati",
+        "other_channel": "Kanal lain",
+        "rules_not_met": "Aturan tidak terpenuhi"
+      },
+      "priority": "Prioritas",
+      "channelLabel": "Kanal",
+      "messageLabel": "Pelanggan berkata",
+      "messagePlaceholder": "mis. Saya butuh faktur",
+      "answers": "{name} menjawab ({reason})",
+      "nobody": "Tidak ada agen yang menjawab.",
+      "run": "Uji",
+      "reason": {
+        "pinned": "dipilih manual",
+        "default_requested": "agen default",
+        "override": "disematkan di kotak masuk",
+        "rules": "aturannya cocok",
+        "channel": "menangani kanal ini",
+        "default": "agen default",
+        "none": "tidak ada"
       }
     }
   },
