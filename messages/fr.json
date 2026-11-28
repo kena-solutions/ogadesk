@@ -2683,12 +2683,9 @@
       "loadFailed": "Impossible de charger l'objectif de délai de réponse"
     },
     "aiConfig": {
-      "title": "Configuration de l'agent",
-      "description": "Utilisez votre propre clé API OpenAI, Anthropic ou compatible OpenAI. OgaDesk appelle directement le fournisseur avec votre clé : pas de frais d'IA par utilisateur, et vos données restent les vôtres. Cela alimente les réponses rédigées par l'IA dans la boîte de réception, le robot de réponse automatique et le bac à sable.",
       "adminOnlyConfig": "Seuls les administrateurs et les propriétaires peuvent modifier la configuration de l'IA.",
       "loadFailed": "Échec du chargement de la configuration de l'IA",
       "providerAndKey": "Fournisseur et clé",
-      "encryptionNotice": "Votre clé est chiffrée au repos (AES-256-GCM) et n'est plus jamais affichée après l'enregistrement.",
       "provider": "Fournisseur",
       "model": "Modèle",
       "apiKey": "Clé API",
@@ -2701,9 +2698,7 @@
       "embeddingsHint": "Une clé OpenAI utilisée uniquement pour vectoriser votre base de connaissances (text-embedding-3-small){sameKeyText}. Laissez vide pour utiliser la recherche par mots-clés. Effacez-la pour désactiver la recherche sémantique.",
       "sameKeyText": ", peut être la même clé que ci-dessus",
       "behaviour": "Comportement",
-      "behaviourDesc": "Active l'IA pour tout l'espace de travail. Chaque agent a ses propres instructions et réponses automatiques dans Agents.",
       "enableAssistant": "Activer l'assistant IA",
-      "enableAssistantDesc": "Interrupteur général. Active le bouton « Rédiger avec l'IA » dans la boîte de réception.",
       "remove": "Retirer",
       "save": "Enregistrer",
       "missingModel": "Saisissez un nom de modèle.",
@@ -2717,7 +2712,6 @@
       "baseUrlHint": "URL de base de l'API compatible OpenAI, par exemple https://api.groq.com/openai/v1. /chat/completions est ajouté automatiquement, sauf si vous incluez vous-même ce chemin.",
       "missingBaseUrl": "Saisissez l'URL de base de l'API compatible OpenAI.",
       "sourceTitle": "D'où viennent les réponses IA",
-      "sourceDesc": "Utilisez l'IA incluse avec OgaDesk ou connectez la clé de votre propre fournisseur.",
       "sourcePlatform": "IA OgaDesk",
       "sourcePlatformDesc": "Aucune clé nécessaire. Utilise les crédits IA inclus dans votre offre.",
       "sourceOwn": "Ma propre clé API",
@@ -3425,8 +3419,6 @@
     "planRestoredBody": "Votre forfait a de nouveau de la place : les éléments qu'il avait archivés ont été restaurés."
   },
   "Agents": {
-    "title": "Agents IA",
-    "description": "Créez des agents IA qui répondent à vos clients à partir de votre bibliothèque de connaissances. Chaque agent a ses propres instructions, canaux et connaissances.",
     "tabUsage": "Utilisation",
     "playground": {
       "title": "Bac à sable",
@@ -3451,7 +3443,6 @@
     },
     "usage": {
       "title": "Utilisation des jetons",
-      "description": "Jetons consommés sur votre clé de fournisseur par les brouillons et le robot de réponse automatique. Seuls les compteurs sont conservés ici, jamais le contenu des messages.",
       "window": "{days} derniers jours",
       "loadFailed": "Échec du chargement de l'utilisation",
       "empty": "Aucune utilisation de l'IA au cours des {days} derniers jours.",
@@ -3470,8 +3461,6 @@
     "tabKnowledge": "Connaissances",
     "tabSettings": "Paramètres",
     "list": {
-      "title": "Vos agents",
-      "description": "Chaque conversation est traitée par un seul agent : celui choisi dans la boîte de réception, sinon l'agent prioritaire pour son canal, sinon l'agent par défaut.",
       "newAgent": "Nouvel agent",
       "notConfigured": "Ajoutez la clé de votre fournisseur IA dans Paramètres pour que vos agents puissent répondre.",
       "goToSettings": "Aller aux paramètres",
@@ -3517,9 +3506,7 @@
       "instructions": "Instructions",
       "instructionsPlaceholder": "Qui est l'entreprise, le ton de l'agent, ce qu'il doit faire et ne pas faire…",
       "active": "Agent activé",
-      "activeDesc": "Désactivé, cet agent n'est plus utilisé pour le routage ni les brouillons, mais vous pouvez toujours le tester.",
       "routing": "Canaux",
-      "routingDesc": "Les canaux sur lesquels cet agent répond. Si plusieurs agents couvrent un canal, la priorité la plus haute l'emporte.",
       "channel": {
         "whatsapp": "WhatsApp",
         "web_chat": "Chat du site"
@@ -3527,18 +3514,13 @@
       "priority": "Priorité",
       "priorityDesc": "De -100 à 100. La plus haute gagne.",
       "autoReplyTitle": "Réponse automatique",
-      "autoReplyDesc": "Sans réponse automatique, cet agent écrit seulement des brouillons que votre équipe envoie.",
       "autoReply": "Répondre automatiquement",
-      "autoReplyHint": "Répond aux nouveaux messages quand aucun flux ne les traite et qu'aucun membre n'est assigné.",
       "maxReplies": "Réponses auto max. par conversation",
-      "maxRepliesDesc": "Après ce nombre de réponses dans un fil, l'agent transfère.",
       "handoffTo": "Transférer à",
-      "handoffDesc": "Quand l'agent ne peut pas aider ou atteint la limite, il se met en pause et envoie la discussion ici avec une courte note.",
       "handoffQueue": "File partagée (non assignée)",
       "save": "Enregistrer",
       "create": "Créer l'agent",
       "knowledgeTitle": "Connaissances",
-      "knowledgeDesc": "Choisissez sur quoi cet agent peut répondre. Les sources sont dans la bibliothèque et plusieurs agents peuvent les partager.",
       "mode": {
         "all": "Toute la bibliothèque",
         "selected": "Sources choisies"
@@ -3564,7 +3546,8 @@
       "personaAvoidPlaceholder": "ex. argot, longs paragraphes",
       "personaNever": "À ne jamais faire",
       "personaNeverPlaceholder": "ex. promettre des remboursements, donner des prix absents de la base de connaissances",
-      "personaInheritHint": "Les règles de sécurité d'OgaDesk s'appliquent toujours, quoi que vous écriviez ici."
+      "personaInheritHint": "Les règles de sécurité d'OgaDesk s'appliquent toujours, quoi que vous écriviez ici.",
+      "default": "Par défaut"
     },
     "tools": {
       "title": "Intégrations que cet agent peut utiliser",
@@ -3583,8 +3566,6 @@
       "saveFailed": "Enregistrement impossible. Veuillez réessayer."
     },
     "library": {
-      "title": "Bibliothèque de connaissances",
-      "description": "Ajoutez des connaissances une seule fois à partir de texte, de questions-réponses, de fichiers ou de sites web, puis choisissez les agents qui s'en servent. Les agents ne répondent qu'avec les sources liées.",
       "addSource": "Ajouter une source",
       "reindexAll": "Tout réindexer",
       "search": "Rechercher dans la bibliothèque",
@@ -3701,7 +3682,6 @@
     },
     "templates": {
       "title": "Partir d'un modèle",
-      "description": "Chaque modèle remplit le nom et les instructions. Vous pouvez tout modifier avant d'enregistrer, puis lier les connaissances à utiliser.",
       "back": "Retour",
       "blank": {
         "name": "Vierge",

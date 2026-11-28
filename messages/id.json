@@ -2571,8 +2571,6 @@
     }
   },
   "Agents": {
-    "title": "Agen AI",
-    "description": "Buat agen AI yang menjawab pelanggan dari pustaka pengetahuan Anda. Setiap agen punya instruksi, kanal, dan pengetahuannya sendiri.",
     "tabUsage": "Penggunaan",
     "playground": {
       "title": "Area uji",
@@ -2597,7 +2595,6 @@
     },
     "usage": {
       "title": "Penggunaan token",
-      "description": "Token yang dipakai dari kunci penyedia Anda oleh draf dan bot balasan otomatis. Hanya hitungan, tidak ada isi pesan yang disimpan di sini.",
       "window": "{days} hari terakhir",
       "loadFailed": "Gagal memuat penggunaan",
       "empty": "Belum ada penggunaan AI dalam {days} hari terakhir.",
@@ -2616,8 +2613,6 @@
     "tabKnowledge": "Pengetahuan",
     "tabSettings": "Pengaturan",
     "list": {
-      "title": "Agen Anda",
-      "description": "Setiap percakapan dijawab satu agen: yang dipilih di kotak masuk, atau agen berprioritas tertinggi untuk kanalnya, atau agen bawaan.",
       "newAgent": "Agen baru",
       "notConfigured": "Tambahkan kunci penyedia AI di Pengaturan agar agen Anda bisa membalas.",
       "goToSettings": "Buka Pengaturan",
@@ -2663,9 +2658,7 @@
       "instructions": "Instruksi",
       "instructionsPlaceholder": "Siapa bisnisnya, bagaimana nada agen, apa yang boleh dan tidak boleh dilakukan…",
       "active": "Agen aktif",
-      "activeDesc": "Saat nonaktif, agen ini dilewati untuk perutean dan draf, tetapi Anda tetap bisa mengujinya.",
       "routing": "Kanal",
-      "routingDesc": "Kanal yang dijawab agen ini. Jika beberapa agen mencakup satu kanal, prioritas tertinggi yang menang.",
       "channel": {
         "whatsapp": "WhatsApp",
         "web_chat": "Obrolan situs web"
@@ -2673,18 +2666,13 @@
       "priority": "Prioritas",
       "priorityDesc": "-100 sampai 100. Yang lebih tinggi menang.",
       "autoReplyTitle": "Balasan otomatis",
-      "autoReplyDesc": "Tanpa balasan otomatis, agen ini hanya menulis draf yang dikirim tim Anda.",
       "autoReply": "Balas otomatis",
-      "autoReplyHint": "Menjawab pesan baru saat tidak ada alur yang menanganinya dan tidak ada rekan yang ditugaskan.",
       "maxReplies": "Maks balasan otomatis per percakapan",
-      "maxRepliesDesc": "Setelah sekian balasan dalam satu percakapan, agen menyerahkannya.",
       "handoffTo": "Serahkan ke",
-      "handoffDesc": "Saat agen tidak bisa membantu, atau mencapai batas balasan, agen berhenti dan mengarahkan obrolan ke sini dengan catatan singkat.",
       "handoffQueue": "Antrean bersama (belum ditugaskan)",
       "save": "Simpan",
       "create": "Buat agen",
       "knowledgeTitle": "Pengetahuan",
-      "knowledgeDesc": "Pilih sumber yang boleh dipakai agen ini untuk menjawab. Sumber ada di pustaka dan bisa dipakai bersama oleh beberapa agen.",
       "mode": {
         "all": "Seluruh pustaka",
         "selected": "Sumber terpilih"
@@ -2710,7 +2698,8 @@
       "personaAvoidPlaceholder": "mis. bahasa gaul, paragraf panjang",
       "personaNever": "Hal yang tidak boleh dilakukan",
       "personaNeverPlaceholder": "mis. menjanjikan pengembalian dana, menyebut harga yang tidak ada di basis pengetahuan",
-      "personaInheritHint": "Aturan keamanan OgaDesk selalu berlaku, apa pun yang Anda tulis di sini."
+      "personaInheritHint": "Aturan keamanan OgaDesk selalu berlaku, apa pun yang Anda tulis di sini.",
+      "default": "Default"
     },
     "tools": {
       "title": "Integrasi yang boleh dipakai agen ini",
@@ -2729,8 +2718,6 @@
       "saveFailed": "Gagal menyimpan. Silakan coba lagi."
     },
     "library": {
-      "title": "Pustaka pengetahuan",
-      "description": "Tambahkan pengetahuan sekali dari teks, tanya jawab, berkas, atau situs web, lalu pilih agen mana yang memakainya. Agen hanya menjawab dari sumber yang ditautkan.",
       "addSource": "Tambah sumber",
       "reindexAll": "Indeks ulang semua",
       "search": "Cari di pustaka",
@@ -2847,7 +2834,6 @@
     },
     "templates": {
       "title": "Mulai dari templat",
-      "description": "Setiap templat mengisi nama dan instruksi. Anda bisa mengubah semuanya sebelum menyimpan, lalu tautkan pengetahuan yang harus digunakan.",
       "back": "Kembali",
       "blank": {
         "name": "Kosong",
@@ -3603,12 +3589,9 @@
       }
     },
     "aiConfig": {
-      "title": "Pengaturan agen",
-      "description": "Gunakan kunci API OpenAI, Anthropic, atau yang kompatibel dengan OpenAI milik Anda. OgaDesk memanggil penyedia langsung dengan kunci Anda, tanpa biaya AI per pengguna, dan data Anda tetap milik Anda. Ini menjalankan draf balasan AI di kotak masuk, bot balasan otomatis, dan area uji.",
       "adminOnlyConfig": "Hanya admin dan pemilik yang dapat mengubah konfigurasi AI.",
       "loadFailed": "Gagal memuat konfigurasi AI",
       "providerAndKey": "Penyedia & kunci",
-      "encryptionNotice": "Kunci Anda dienkripsi saat disimpan (AES-256-GCM) dan tidak pernah ditampilkan lagi setelah disimpan.",
       "provider": "Penyedia",
       "model": "Model",
       "apiKey": "Kunci API",
@@ -3621,9 +3604,7 @@
       "embeddingsHint": "Kunci OpenAI yang hanya dipakai untuk meng-embed basis pengetahuan Anda (text-embedding-3-small){sameKeyText}. Kosongkan untuk memakai pencarian kata kunci. Hapus untuk mematikan pencarian semantik.",
       "sameKeyText": ", bisa sama dengan kunci di atas",
       "behaviour": "Perilaku",
-      "behaviourDesc": "Mengaktifkan AI untuk seluruh ruang kerja. Setiap agen punya instruksi dan pengaturan balasan otomatisnya sendiri di Agen.",
       "enableAssistant": "Aktifkan asisten AI",
-      "enableAssistantDesc": "Sakelar utama. Mengaktifkan tombol “Susun dengan AI” di kotak masuk.",
       "remove": "Hapus",
       "save": "Simpan",
       "missingModel": "Masukkan nama model.",
@@ -3637,7 +3618,6 @@
       "baseUrlHint": "URL dasar API kompatibel OpenAI, misalnya https://api.groq.com/openai/v1. /chat/completions ditambahkan otomatis kecuali Anda menyertakan jalur itu sendiri.",
       "missingBaseUrl": "Masukkan URL dasar API kompatibel OpenAI.",
       "sourceTitle": "Sumber balasan AI",
-      "sourceDesc": "Gunakan AI yang disertakan OgaDesk, atau sambungkan kunci penyedia Anda sendiri.",
       "sourcePlatform": "AI OgaDesk",
       "sourcePlatformDesc": "Tanpa kunci. Memakai kredit AI yang termasuk dalam paket Anda.",
       "sourceOwn": "Kunci API saya sendiri",

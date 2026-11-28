@@ -2683,12 +2683,9 @@
       "loadFailed": "No se pudo cargar el objetivo de tiempo de respuesta"
     },
     "aiConfig": {
-      "title": "Configuración del agente",
-      "description": "Usa tu propia clave de OpenAI, Anthropic o de una API compatible con OpenAI. OgaDesk llama al proveedor directamente con tu clave, sin cargos de IA por puesto, y tus datos siguen siendo tuyos. Esto impulsa las respuestas redactadas por IA, el bot de respuesta automática y el Playground.",
       "adminOnlyConfig": "Solo los administradores y propietarios pueden cambiar la configuración de IA.",
       "loadFailed": "Error al cargar la configuración de IA",
       "providerAndKey": "Proveedor y clave",
-      "encryptionNotice": "Tu clave se cifra en reposo (AES-256-GCM) y no se vuelve a mostrar después de guardarla.",
       "provider": "Proveedor",
       "model": "Modelo",
       "apiKey": "Clave de API",
@@ -2701,9 +2698,7 @@
       "embeddingsHint": "Una clave de OpenAI que se usa solo para generar embeddings de tu base de conocimiento (text-embedding-3-small){sameKeyText}. Déjala en blanco para usar búsqueda por palabras clave. Bórrala para desactivar la búsqueda semántica.",
       "sameKeyText": ": puede ser la misma clave de arriba",
       "behaviour": "Comportamiento",
-      "behaviourDesc": "Activa la IA para todo el espacio de trabajo. Cada agente tiene sus propias instrucciones y respuestas automáticas en Agentes.",
       "enableAssistant": "Activar asistente de IA",
-      "enableAssistantDesc": "Interruptor general. Activa el botón “Redactar con IA” en la bandeja de entrada.",
       "remove": "Quitar",
       "save": "Guardar",
       "missingModel": "Ingresa el nombre de un modelo.",
@@ -2717,7 +2712,6 @@
       "baseUrlHint": "URL base de la API compatible con OpenAI, por ejemplo https://api.groq.com/openai/v1. /chat/completions se añade automáticamente, salvo que incluyas esa ruta.",
       "missingBaseUrl": "Introduce la URL base de la API compatible con OpenAI.",
       "sourceTitle": "De dónde vienen las respuestas de IA",
-      "sourceDesc": "Usa la IA incluida con OgaDesk o conecta la clave de tu propio proveedor.",
       "sourcePlatform": "IA de OgaDesk",
       "sourcePlatformDesc": "No necesitas clave. Usa los créditos de IA incluidos en tu plan.",
       "sourceOwn": "Mi propia clave API",
@@ -3425,8 +3419,6 @@
     "planRestoredBody": "Tu plan vuelve a tener espacio, así que se restauraron los elementos que había archivado."
   },
   "Agents": {
-    "title": "Agentes de IA",
-    "description": "Crea agentes de IA que responden a tus clientes con tu biblioteca de conocimiento. Cada agente tiene sus propias instrucciones, canales y conocimiento.",
     "tabUsage": "Uso",
     "playground": {
       "title": "Playground",
@@ -3451,7 +3443,6 @@
     },
     "usage": {
       "title": "Uso de tokens",
-      "description": "Tokens gastados con la clave de tu proveedor por los borradores y el bot de respuesta automática. Solo conteos; aquí no se guarda contenido de mensajes.",
       "window": "Últimos {days} días",
       "loadFailed": "Error al cargar el uso",
       "empty": "Aún no hay uso de IA en los últimos {days} días.",
@@ -3470,8 +3461,6 @@
     "tabKnowledge": "Conocimiento",
     "tabSettings": "Ajustes",
     "list": {
-      "title": "Tus agentes",
-      "description": "Cada conversación la atiende un agente: el elegido en la bandeja, si no el de mayor prioridad para su canal, si no el agente predeterminado.",
       "newAgent": "Nuevo agente",
       "notConfigured": "Añade la clave de tu proveedor de IA en Ajustes para que tus agentes puedan responder.",
       "goToSettings": "Ir a Ajustes",
@@ -3517,9 +3506,7 @@
       "instructions": "Instrucciones",
       "instructionsPlaceholder": "Quién es el negocio, cómo debe sonar el agente, qué debe y no debe hacer…",
       "active": "Agente activo",
-      "activeDesc": "Si está apagado, este agente no se usa para enrutar ni para borradores, pero puedes seguir probándolo.",
       "routing": "Canales",
-      "routingDesc": "Los canales en los que responde este agente. Si varios agentes cubren un canal, gana la prioridad más alta.",
       "channel": {
         "whatsapp": "WhatsApp",
         "web_chat": "Chat web"
@@ -3527,18 +3514,13 @@
       "priority": "Prioridad",
       "priorityDesc": "De -100 a 100. Gana la más alta.",
       "autoReplyTitle": "Respuesta automática",
-      "autoReplyDesc": "Sin respuesta automática, este agente solo escribe borradores que envía tu equipo.",
       "autoReply": "Responder automáticamente",
-      "autoReplyHint": "Responde mensajes nuevos cuando ningún flujo los gestiona y no hay nadie asignado.",
       "maxReplies": "Máximo de respuestas automáticas por conversación",
-      "maxRepliesDesc": "Tras estas respuestas en una conversación, el agente transfiere.",
       "handoffTo": "Transferir a",
-      "handoffDesc": "Cuando el agente no puede ayudar o llega al límite, se pausa y envía el chat aquí con una nota breve.",
       "handoffQueue": "Cola compartida (sin asignar)",
       "save": "Guardar",
       "create": "Crear agente",
       "knowledgeTitle": "Conocimiento",
-      "knowledgeDesc": "Elige de qué puede responder este agente. Las fuentes están en la biblioteca y varios agentes pueden compartirlas.",
       "mode": {
         "all": "Toda la biblioteca",
         "selected": "Fuentes elegidas"
@@ -3564,7 +3546,8 @@
       "personaAvoidPlaceholder": "p. ej. jerga, párrafos largos",
       "personaNever": "Cosas que nunca debe hacer",
       "personaNeverPlaceholder": "p. ej. prometer reembolsos, dar precios que no estén en la base de conocimiento",
-      "personaInheritHint": "Las reglas de seguridad de OgaDesk siempre se aplican, escribas lo que escribas aquí."
+      "personaInheritHint": "Las reglas de seguridad de OgaDesk siempre se aplican, escribas lo que escribas aquí.",
+      "default": "Predeterminado"
     },
     "tools": {
       "title": "Integraciones que puede usar este agente",
@@ -3583,8 +3566,6 @@
       "saveFailed": "No se pudo guardar. Inténtalo de nuevo."
     },
     "library": {
-      "title": "Biblioteca de conocimiento",
-      "description": "Añade conocimiento una vez desde texto, preguntas y respuestas, archivos o sitios web, y elige qué agentes lo usan. Los agentes solo responden con las fuentes vinculadas.",
       "addSource": "Añadir fuente",
       "reindexAll": "Reindexar todo",
       "search": "Buscar en la biblioteca",
@@ -3701,7 +3682,6 @@
     },
     "templates": {
       "title": "Empieza con una plantilla",
-      "description": "Cada plantilla rellena el nombre y las instrucciones. Puedes cambiarlo todo antes de guardar y luego vincular el conocimiento que debe usar.",
       "back": "Volver",
       "blank": {
         "name": "En blanco",

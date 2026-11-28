@@ -2571,8 +2571,6 @@
     }
   },
   "Agents": {
-    "title": "Mawakala wa AI",
-    "description": "Jenga mawakala wa AI wanaojibu wateja kutoka maktaba yako ya maarifa. Kila wakala ana maelekezo, njia na maarifa yake.",
     "tabUsage": "Matumizi",
     "playground": {
       "title": "Uwanja wa majaribio",
@@ -2597,7 +2595,6 @@
     },
     "usage": {
       "title": "Matumizi ya tokeni",
-      "description": "Tokeni zilizotumika kwenye ufunguo wa mtoa huduma wako kwa rasimu na bot ya majibu ya kiotomatiki. Idadi tu, hakuna maudhui ya ujumbe yanayohifadhiwa hapa.",
       "window": "Siku {days} zilizopita",
       "loadFailed": "Imeshindwa kupakia matumizi",
       "empty": "Bado hakuna matumizi ya AI katika siku {days} zilizopita.",
@@ -2616,8 +2613,6 @@
     "tabKnowledge": "Maarifa",
     "tabSettings": "Mipangilio",
     "list": {
-      "title": "Mawakala wako",
-      "description": "Kila mazungumzo hujibiwa na wakala mmoja: aliyechaguliwa kwenye kikasha, vinginevyo wakala mwenye kipaumbele cha juu kwa njia yake, vinginevyo wakala chaguomsingi.",
       "newAgent": "Wakala mpya",
       "notConfigured": "Ongeza ufunguo wa mtoa huduma wa AI kwenye Mipangilio kabla mawakala wako hawajaweza kujibu.",
       "goToSettings": "Nenda kwenye Mipangilio",
@@ -2663,9 +2658,7 @@
       "instructions": "Maelekezo",
       "instructionsPlaceholder": "Biashara ni nani, wakala azungumze vipi, afanye nini na asifanye nini…",
       "active": "Wakala amewashwa",
-      "activeDesc": "Akizimwa, wakala huyu anarukwa katika uelekezaji na rasimu, lakini bado unaweza kumjaribu.",
       "routing": "Njia",
-      "routingDesc": "Njia ambazo wakala huyu hujibu. Mawakala kadhaa wakishughulikia njia moja, mwenye kipaumbele cha juu hushinda.",
       "channel": {
         "whatsapp": "WhatsApp",
         "web_chat": "Gumzo la tovuti"
@@ -2673,18 +2666,13 @@
       "priority": "Kipaumbele",
       "priorityDesc": "-100 hadi 100. Cha juu hushinda.",
       "autoReplyTitle": "Jibu la kiotomatiki",
-      "autoReplyDesc": "Bila jibu la kiotomatiki, wakala huyu huandika rasimu tu ambazo timu yako hutuma.",
       "autoReply": "Jibu kiotomatiki",
-      "autoReplyHint": "Hujibu jumbe mpya wakati hakuna mtiririko unaozishughulikia na hakuna mwenzako aliyekabidhiwa.",
       "maxReplies": "Kiwango cha juu cha majibu ya kiotomatiki kwa mazungumzo",
-      "maxRepliesDesc": "Baada ya majibu haya mengi katika mazungumzo moja, wakala hukabidhi.",
       "handoffTo": "Kabidhi kwa",
-      "handoffDesc": "Wakala asipoweza kusaidia, au akifikia kikomo cha majibu, husimama na kuelekeza gumzo hapa pamoja na kidokezo kifupi.",
       "handoffQueue": "Foleni ya pamoja (haijakabidhiwa)",
       "save": "Hifadhi",
       "create": "Unda wakala",
       "knowledgeTitle": "Maarifa",
-      "knowledgeDesc": "Chagua wakala huyu anaweza kujibu kutoka wapi. Vyanzo vinakaa kwenye maktaba na vinaweza kushirikiwa na mawakala kadhaa.",
       "mode": {
         "all": "Maktaba yote",
         "selected": "Vyanzo vilivyochaguliwa"
@@ -2710,7 +2698,8 @@
       "personaAvoidPlaceholder": "mfano: lugha ya mitaani, aya ndefu",
       "personaNever": "Mambo ya kutofanya kamwe",
       "personaNeverPlaceholder": "mfano: kuahidi kurejeshewa pesa, kutaja bei zisizo kwenye msingi wa maarifa",
-      "personaInheritHint": "Kanuni za usalama za OgaDesk hutumika kila wakati, chochote utakachoandika hapa."
+      "personaInheritHint": "Kanuni za usalama za OgaDesk hutumika kila wakati, chochote utakachoandika hapa.",
+      "default": "Chaguo-msingi"
     },
     "tools": {
       "title": "Miunganisho ambayo wakala huyu anaweza kutumia",
@@ -2729,8 +2718,6 @@
       "saveFailed": "Imeshindwa kuhifadhi. Tafadhali jaribu tena."
     },
     "library": {
-      "title": "Maktaba ya maarifa",
-      "description": "Ongeza maarifa mara moja kutoka maandishi, maswali na majibu, faili au tovuti, kisha uchague mawakala wa kuyatumia. Mawakala hujibu tu kutoka vyanzo vilivyounganishwa nao.",
       "addSource": "Ongeza chanzo",
       "reindexAll": "Orodhesha upya zote",
       "search": "Tafuta kwenye maktaba",
@@ -2847,7 +2834,6 @@
     },
     "templates": {
       "title": "Anza na kiolezo",
-      "description": "Kila kiolezo hujaza jina na maelekezo. Unaweza kubadilisha kila kitu kabla ya kuhifadhi, kisha unganisha maarifa inayopaswa kutumia.",
       "back": "Rudi",
       "blank": {
         "name": "Tupu",
@@ -3603,12 +3589,9 @@
       }
     },
     "aiConfig": {
-      "title": "Usanidi wa wakala",
-      "description": "Tumia ufunguo wako wa API wa OpenAI, Anthropic au unaoendana na OpenAI. OgaDesk huita mtoa huduma moja kwa moja kwa ufunguo wako, bila ada za AI kwa kila kiti, na data yako inabaki yako. Hii huendesha majibu ya AI yaliyoandaliwa kwenye kikasha, bot ya majibu ya kiotomatiki na uwanja wa majaribio.",
       "adminOnlyConfig": "Wasimamizi na wamiliki tu ndio wanaoweza kubadilisha usanidi wa AI.",
       "loadFailed": "Imeshindwa kupakia usanidi wa AI",
       "providerAndKey": "Mtoa huduma na ufunguo",
-      "encryptionNotice": "Ufunguo wako husimbwa ukihifadhiwa (AES-256-GCM) na hauonyeshwi tena baada ya kuhifadhi.",
       "provider": "Mtoa huduma",
       "model": "Modeli",
       "apiKey": "Ufunguo wa API",
@@ -3621,9 +3604,7 @@
       "embeddingsHint": "Ufunguo wa OpenAI unaotumika tu kuweka embeddings za msingi wako wa maarifa (text-embedding-3-small){sameKeyText}. Uache tupu kutumia utafutaji wa maneno muhimu. Ufute kuzima utafutaji wa kimaana.",
       "sameKeyText": ", unaweza kuwa ufunguo ule ule wa juu",
       "behaviour": "Tabia",
-      "behaviourDesc": "Huwasha AI kwa eneo zima la kazi. Kila wakala ana maelekezo na mipangilio yake ya majibu ya kiotomatiki chini ya Mawakala.",
       "enableAssistant": "Washa msaidizi wa AI",
-      "enableAssistantDesc": "Swichi kuu. Huwasha kitufe cha “Andaa kwa AI” kwenye kikasha.",
       "remove": "Ondoa",
       "save": "Hifadhi",
       "missingModel": "Weka jina la modeli.",
@@ -3637,7 +3618,6 @@
       "baseUrlHint": "URL ya msingi ya API inayoendana na OpenAI, mfano https://api.groq.com/openai/v1. /chat/completions huongezwa kiotomatiki usipoweka njia hiyo wewe mwenyewe.",
       "missingBaseUrl": "Weka URL ya msingi ya API inayoendana na OpenAI.",
       "sourceTitle": "Majibu ya AI yanatoka wapi",
-      "sourceDesc": "Tumia AI inayokuja na OgaDesk, au unganisha ufunguo wa mtoa huduma wako mwenyewe.",
       "sourcePlatform": "AI ya OgaDesk",
       "sourcePlatformDesc": "Hakuna ufunguo unaohitajika. Inatumia krediti za AI zilizo kwenye mpango wako.",
       "sourceOwn": "Ufunguo wangu wa API",

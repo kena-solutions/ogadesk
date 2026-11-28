@@ -185,13 +185,7 @@ export function KnowledgeLibrary() {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div>
-          <h2 className="flex items-center gap-2 text-base font-semibold text-foreground">
-            <BookOpen className="h-4 w-4 text-primary" /> {t('title')}
-          </h2>
-          <p className="mt-0.5 max-w-2xl text-sm text-muted-foreground">{t('description')}</p>
-        </div>
+      <div className="flex flex-wrap items-center justify-end gap-3">
         <div className="flex gap-2">
           {isAdmin && (sources ?? []).length > 0 && (
             <Button variant="outline" size="sm" onClick={reindexAll} disabled={reindexing}>

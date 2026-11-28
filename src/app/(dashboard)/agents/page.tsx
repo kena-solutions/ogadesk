@@ -19,6 +19,8 @@ export default function AgentsPage() {
   const canViewUsage = accountRole ? canEditSettings(accountRole) : false;
   const [tab, setTab] = useState<Tab>('agents');
   const [decided, setDecided] = useState(false);
+  // An agent (or the new-agent picker) is open: show only its own header.
+  const [detailOpen, setDetailOpen] = useState(false);
   const [configured, setConfigured] = useState(false);
   const [workspaceModel, setWorkspaceModel] = useState<string | null>(null);
 
@@ -49,14 +51,9 @@ export default function AgentsPage() {
 
   return (
     <div>
-      <div className="flex items-center gap-2">
-        <Bot className="h-6 w-6 text-primary" />
-        <h1 className="text-2xl font-bold tracking-tight text-foreground">{t('title')}</h1>
-      </div>
-      <p className="mt-1 text-sm text-muted-foreground">{t('description')}</p>
-
       {decided && (
-        <Tabs value={tab} onValueChange={(v) => setTab(v as Tab)} className="mt-6">
+        <Tabs value={tab} onValueChange={(v) => setTab(v as Tab)}>
+          {!(tab === 'agents' && detailOpen) && (
           <TabsList>
             <TabsTrigger value="agents">
               <Bot className="mr-1.5 h-4 w-4" /> {t('tabAgents')}
@@ -73,12 +70,14 @@ export default function AgentsPage() {
               </TabsTrigger>
             )}
           </TabsList>
+          )}
 
-          <TabsContent value="agents" className="mt-4">
+          <TabsContent value="agents" className={detailOpen ? '' : 'mt-4'}>
             <AgentsPanel
               configured={configured}
               workspaceModel={workspaceModel}
               onGoToSettings={() => setTab('settings')}
+              onDetailChange={setDetailOpen}
             />
           </TabsContent>
 

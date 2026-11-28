@@ -22,11 +22,13 @@ const TEMPLATE_ICONS: Record<AgentTemplateId, typeof Bot> = {
   admin: ShieldCheck,
 };
 
-export function AgentsPanel({ configured, workspaceModel, onGoToSettings }: {
+export function AgentsPanel({ configured, workspaceModel, onGoToSettings, onDetailChange }: {
   /** The workspace has a provider key. */
   configured: boolean;
   workspaceModel: string | null;
   onGoToSettings: () => void;
+  /** True while an agent or the template picker is open. */
+  onDetailChange?: (open: boolean) => void;
 }) {
   const t = useTranslations('Agents.list');
   const { accountId, accountRole } = useAuth();
@@ -61,6 +63,11 @@ export function AgentsPanel({ configured, workspaceModel, onGoToSettings }: {
     void load();
     void fetchAccountMembers().then(setMembers);
   }, [load]);
+
+  const detailOpen = editing !== undefined || picking;
+  useEffect(() => {
+    onDetailChange?.(detailOpen);
+  }, [detailOpen, onDetailChange]);
 
   const changed = () => {
     if (accountId) invalidateAgents(accountId);
@@ -104,10 +111,7 @@ export function AgentsPanel({ configured, workspaceModel, onGoToSettings }: {
             <ArrowLeft className="mr-1 h-4 w-4" /> {tt('back')}
           </Button>
         </div>
-        <div>
-          <h2 className="text-base font-semibold text-foreground">{tt('title')}</h2>
-          <p className="mt-0.5 max-w-2xl text-sm text-muted-foreground">{tt('description')}</p>
-        </div>
+        <h2 className="text-base font-semibold text-foreground">{tt('title')}</h2>
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {AGENT_TEMPLATE_IDS.map((id) => {
             const Icon = TEMPLATE_ICONS[id];
@@ -142,19 +146,13 @@ export function AgentsPanel({ configured, workspaceModel, onGoToSettings }: {
         </div>
       )}
 
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div>
-          <h2 className="flex items-center gap-2 text-base font-semibold text-foreground">
-            <Bot className="h-4 w-4 text-primary" /> {t('title')}
-          </h2>
-          <p className="mt-0.5 max-w-2xl text-sm text-muted-foreground">{t('description')}</p>
-        </div>
-        {canEdit && (
+      {canEdit && agents !== null && agents.length > 0 && (
+        <div className="flex justify-end">
           <Button size="sm" onClick={startNew}>
             <Plus className="mr-1.5 h-4 w-4" /> {t('newAgent')}
           </Button>
-        )}
-      </div>
+        </div>
+      )}
 
       {agents === null ? (
         <div className="flex justify-center py-16 text-muted-foreground">

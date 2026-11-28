@@ -2683,12 +2683,9 @@
       "loadFailed": "Couldn't load the reply time target"
     },
     "aiConfig": {
-      "title": "Agent setup",
-      "description": "Bring your own OpenAI, Anthropic, or OpenAI-compatible API key. OgaDesk calls the provider directly with your key, no per-seat AI fees, and your data stays yours. This powers AI-drafted replies in the inbox, the auto-reply bot, and the Playground.",
       "adminOnlyConfig": "Only admins and owners can change the AI configuration.",
       "loadFailed": "Failed to load AI configuration",
       "providerAndKey": "Provider & key",
-      "encryptionNotice": "Your key is encrypted at rest (AES-256-GCM) and never shown again after saving.",
       "provider": "Provider",
       "model": "Model",
       "apiKey": "API key",
@@ -2701,9 +2698,7 @@
       "embeddingsHint": "An OpenAI key used only to embed your knowledge base (text-embedding-3-small){sameKeyText}. Leave blank to use keyword search instead. Clear it to turn semantic search off.",
       "sameKeyText": ", can be the same key as above",
       "behaviour": "Behaviour",
-      "behaviourDesc": "Turns AI on for the whole workspace. Each agent has its own instructions and auto-reply settings under Agents.",
       "enableAssistant": "Enable AI assistant",
-      "enableAssistantDesc": "Master switch. Turns on the “Draft with AI” button in the inbox.",
       "remove": "Remove",
       "save": "Save",
       "missingModel": "Enter a model name.",
@@ -2717,7 +2712,6 @@
       "baseUrlHint": "Base URL for the OpenAI-compatible API, for example https://api.groq.com/openai/v1. /chat/completions is added automatically unless you include that path yourself.",
       "missingBaseUrl": "Enter the Base URL for the OpenAI-compatible API.",
       "sourceTitle": "Where AI replies come from",
-      "sourceDesc": "Use the AI included with OgaDesk, or connect your own provider key.",
       "sourcePlatform": "OgaDesk AI",
       "sourcePlatformDesc": "No key needed. Uses the AI credits included in your plan.",
       "sourceOwn": "My own API key",
@@ -3425,8 +3419,6 @@
     "planRestoredBody": "Your plan has room again, so the items it had archived were restored."
   },
   "Agents": {
-    "title": "AI Agents",
-    "description": "Build AI agents that answer customers from your knowledge library. Each agent has its own instructions, channels and knowledge.",
     "tabUsage": "Usage",
     "playground": {
       "title": "Playground",
@@ -3451,7 +3443,6 @@
     },
     "usage": {
       "title": "Token usage",
-      "description": "Tokens spent on your provider key by drafts and the auto-reply bot. Counts only, no message content is stored here.",
       "window": "Last {days} days",
       "loadFailed": "Failed to load usage",
       "empty": "No AI usage in the last {days} days yet.",
@@ -3470,8 +3461,6 @@
     "tabKnowledge": "Knowledge",
     "tabSettings": "Settings",
     "list": {
-      "title": "Your agents",
-      "description": "Each conversation is answered by one agent: the one picked in the inbox, else the highest-priority agent for its channel, else the default agent.",
       "newAgent": "New agent",
       "notConfigured": "Add your AI provider key in Settings before your agents can reply.",
       "goToSettings": "Go to Settings",
@@ -3517,9 +3506,7 @@
       "instructions": "Instructions",
       "instructionsPlaceholder": "Who the business is, how the agent should sound, what it should and should not do…",
       "active": "Agent is on",
-      "activeDesc": "When off, this agent is skipped for routing and drafts, but you can still test it.",
       "routing": "Channels",
-      "routingDesc": "The channels this agent answers on. When several agents cover a channel, the higher priority wins.",
       "channel": {
         "whatsapp": "WhatsApp",
         "web_chat": "Website chat"
@@ -3527,18 +3514,13 @@
       "priority": "Priority",
       "priorityDesc": "-100 to 100. Higher wins.",
       "autoReplyTitle": "Auto-reply",
-      "autoReplyDesc": "Without auto-reply, this agent only writes drafts that your team sends.",
       "autoReply": "Reply automatically",
-      "autoReplyHint": "Answers new messages when no flow handles them and no teammate is assigned.",
       "maxReplies": "Max auto-replies per conversation",
-      "maxRepliesDesc": "After this many replies in one thread, the agent hands off.",
       "handoffTo": "Hand off to",
-      "handoffDesc": "When the agent can't help, or hits the reply cap, it pauses and routes the chat here with a short note.",
       "handoffQueue": "Shared queue (unassigned)",
       "save": "Save",
       "create": "Create agent",
       "knowledgeTitle": "Knowledge",
-      "knowledgeDesc": "Pick what this agent may answer from. Sources live in the library and can be shared by several agents.",
       "mode": {
         "all": "Whole library",
         "selected": "Selected sources"
@@ -3564,7 +3546,8 @@
       "personaAvoidPlaceholder": "e.g. slang, long paragraphs",
       "personaNever": "Things never to do",
       "personaNeverPlaceholder": "e.g. promise refunds, share prices not in the knowledge base",
-      "personaInheritHint": "OgaDesk's own safety rules always apply, whatever you write here."
+      "personaInheritHint": "OgaDesk's own safety rules always apply, whatever you write here.",
+      "default": "Default"
     },
     "tools": {
       "title": "Integrations this agent can use",
@@ -3583,8 +3566,6 @@
       "saveFailed": "Could not save. Please try again."
     },
     "library": {
-      "title": "Knowledge library",
-      "description": "Add knowledge once from text, Q&A, files or websites, then choose which agents use it. Agents only answer from the sources linked to them.",
       "addSource": "Add source",
       "reindexAll": "Reindex all",
       "search": "Search the library",
@@ -3701,7 +3682,6 @@
     },
     "templates": {
       "title": "Start from a template",
-      "description": "Each template fills in the name and instructions. You can change everything before saving, then link the knowledge it should use.",
       "back": "Back",
       "blank": {
         "name": "Blank",

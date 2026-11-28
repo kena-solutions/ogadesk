@@ -12,7 +12,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { AiPlayground } from './ai-playground';
@@ -184,10 +184,17 @@ export function AgentEditor({
         )}
       </div>
 
-      <div>
-        <h2 className="text-lg font-semibold text-foreground">{agent ? agent.name : t('newAgent')}</h2>
-        {agent?.is_default && <p className="text-xs text-muted-foreground">{t('defaultHint')}</p>}
-      </div>
+      <h2 className="flex items-center gap-2 text-lg font-semibold text-foreground">
+        {agent ? agent.name : t('newAgent')}
+        {agent?.is_default && (
+          <span
+            className="rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-medium text-primary"
+            title={t('defaultHint')}
+          >
+            {t('default')}
+          </span>
+        )}
+      </h2>
 
       <Tabs value={tab} onValueChange={(v) => setTab(v as SubTab)}>
         <TabsList>
@@ -249,7 +256,6 @@ export function AgentEditor({
               <div className="flex items-center justify-between gap-4 rounded-md border border-border p-3">
                 <div>
                   <p className="text-sm font-medium text-foreground">{t('active')}</p>
-                  <p className="text-xs text-muted-foreground">{t('activeDesc')}</p>
                 </div>
                 <Switch checked={form.is_active} onCheckedChange={(v) => set('is_active', v)} disabled={disabled} />
               </div>
@@ -289,7 +295,6 @@ export function AgentEditor({
           <Card>
             <CardHeader>
               <CardTitle className="text-base">{t('routing')}</CardTitle>
-              <CardDescription>{t('routingDesc')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex flex-wrap gap-4">
@@ -322,20 +327,17 @@ export function AgentEditor({
           <Card>
             <CardHeader>
               <CardTitle className="text-base">{t('autoReplyTitle')}</CardTitle>
-              <CardDescription>{t('autoReplyDesc')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between gap-4 rounded-md border border-border p-3">
                 <div>
                   <p className="text-sm font-medium text-foreground">{t('autoReply')}</p>
-                  <p className="text-xs text-muted-foreground">{t('autoReplyHint')}</p>
                 </div>
                 <Switch checked={form.auto_reply_enabled} onCheckedChange={(v) => set('auto_reply_enabled', v)} disabled={disabled} />
               </div>
               <div className="flex items-center justify-between gap-4">
                 <div>
                   <Label htmlFor="ag-max">{t('maxReplies')}</Label>
-                  <p className="text-xs text-muted-foreground">{t('maxRepliesDesc')}</p>
                 </div>
                 <Input
                   id="ag-max"
@@ -350,7 +352,6 @@ export function AgentEditor({
               </div>
               <div className="space-y-1.5">
                 <Label htmlFor="ag-handoff">{t('handoffTo')}</Label>
-                <p className="text-xs text-muted-foreground">{t('handoffDesc')}</p>
                 <Select
                   value={form.handoff_agent_id || HANDOFF_QUEUE}
                   onValueChange={(v) => set('handoff_agent_id', !v || v === HANDOFF_QUEUE ? '' : v)}
@@ -489,7 +490,6 @@ function AgentKnowledge({
     <Card>
       <CardHeader>
         <CardTitle className="text-base">{t('knowledgeTitle')}</CardTitle>
-        <CardDescription>{t('knowledgeDesc')}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid gap-2 sm:grid-cols-2">

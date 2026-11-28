@@ -15,7 +15,6 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-  CardDescription,
 } from '@/components/ui/card';
 import {
   Select,
@@ -24,7 +23,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { SettingsPanelHead } from './settings-panel-head';
 import { AI_PROVIDER_DEFAULT_MODEL } from '@/lib/ai/defaults';
 import type { AiProvider } from '@/lib/ai/types';
 import { useTranslations } from 'next-intl';
@@ -284,11 +282,6 @@ export function AiConfig({ onSaved }: { onSaved?: () => void } = {}) {
 
   return (
     <div>
-      <SettingsPanelHead
-        title={t('title')}
-        description={t('description')}
-      />
-
       {!canEdit && (
         <p className="mb-4 rounded-md border border-border bg-muted/40 px-3 py-2 text-sm text-muted-foreground">
           {t('adminOnlyConfig')}
@@ -299,7 +292,6 @@ export function AiConfig({ onSaved }: { onSaved?: () => void } = {}) {
         <Card>
           <CardHeader>
             <CardTitle className="text-base">{t('sourceTitle')}</CardTitle>
-            <CardDescription>{t('sourceDesc')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div role="radiogroup" aria-label={t('sourceTitle')} className="grid gap-3 sm:grid-cols-2">
@@ -345,9 +337,6 @@ export function AiConfig({ onSaved }: { onSaved?: () => void } = {}) {
             <CardTitle className="flex items-center gap-2 text-base">
               <Sparkles className="h-4 w-4 text-primary" /> {t('providerAndKey')}
             </CardTitle>
-            <CardDescription>
-              {t('encryptionNotice')}
-            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4 sm:grid-cols-2">
@@ -488,18 +477,12 @@ export function AiConfig({ onSaved }: { onSaved?: () => void } = {}) {
         <Card>
           <CardHeader>
             <CardTitle className="text-base">{t('behaviour')}</CardTitle>
-            <CardDescription>
-              {t('behaviourDesc')}
-            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between gap-4 rounded-md border border-border p-3">
               <div>
                 <p className="text-sm font-medium text-foreground">
                   {t('enableAssistant')}
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  {t('enableAssistantDesc')}
                 </p>
               </div>
               <Switch
