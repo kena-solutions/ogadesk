@@ -2923,6 +2923,24 @@
         "default": "wakala chaguo-msingi",
         "none": "hakuna"
       }
+    },
+    "tabInsights": "Maarifa",
+    "insights": {
+      "lastDays": "Siku {days} zilizopita",
+      "empty": "Bado hakuna majibu ya AI. Hujazwa mawakala wanapojibu.",
+      "replied": "Yaliyojibiwa",
+      "handedOff": "Yaliyopelekwa",
+      "handoffRate": "Kiwango cha kupeleka",
+      "avgSources": "Vyanzo {avg} kwa kila jibu",
+      "skipped": "{count} zimeachiwa kwa mtiririko/otomatiki",
+      "gapsTitle": "Maswali bila jibu bado",
+      "noGaps": "Hakuna lisilojibiwa. Wakala akipeleka kwa ukosefu wa maarifa, swali litaonekana hapa.",
+      "askedTimes": "Liliulizwa mara {count}",
+      "addAnswer": "Ongeza jibu",
+      "topSources": "Maarifa yanayotumika zaidi",
+      "usedTimes": "majibu {count}",
+      "deletedAgent": "Wakala aliyefutwa",
+      "loadFailed": "Imeshindwa kupakia maarifa."
     }
   },
   "Settings": {
@@ -5529,7 +5547,8 @@
         "fileEmpty": "Hakuna maandishi yaliyopatikana kwenye faili",
         "queryRequired": "swali linahitajika"
       },
-      "platformNotInPlan": "AI ya OgaDesk haimo kwenye mpango wako. Pandisha mpango au tumia ufunguo wako wa API."
+      "platformNotInPlan": "AI ya OgaDesk haimo kwenye mpango wako. Pandisha mpango au tumia ufunguo wako wa API.",
+      "insightsFailed": "Imeshindwa kupakia maarifa ya AI"
     },
     "automations": {
       "copyName": "{name} (Nakala)",

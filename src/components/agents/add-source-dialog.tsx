@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { useTranslations } from 'next-intl';
 import { FileText, Globe, Link2, Loader2, MessagesSquare, Plus, Trash2, Upload } from 'lucide-react';
@@ -47,12 +47,15 @@ export function AddSourceDialog({
   onOpenChange,
   onCreated,
   linkAgentId,
+  initialQuestion,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onCreated: (source: SourceDto) => void;
   /** Link the new source to this agent (admins). */
   linkAgentId?: string;
+  /** Open on a Q&A source with this question already filled in (from a knowledge gap). */
+  initialQuestion?: string;
 }) {
   const t = useTranslations('Agents.library');
   const { accountId } = useAuth();
@@ -68,6 +71,15 @@ export function AddSourceDialog({
   const [sync, setSync] = useState<SyncInterval>('none');
   const [busy, setBusy] = useState<null | 'reading' | 'uploading' | 'indexing'>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+
+  // Opening with a question (a gap from Insights) starts a Q&A source with it filled in.
+  useEffect(() => {
+    if (open && initialQuestion) {
+      setType('qa');
+      setName(initialQuestion.slice(0, 80));
+      setPairs([{ question: initialQuestion, answer: '' }]);
+    }
+  }, [open, initialQuestion]);
 
   const reset = () => {
     setType('text');

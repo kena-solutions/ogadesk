@@ -3771,6 +3771,24 @@
         "default": "agent par défaut",
         "none": "aucun"
       }
+    },
+    "tabInsights": "Analyses",
+    "insights": {
+      "lastDays": "{days} derniers jours",
+      "empty": "Pas encore de réponses IA. Cela se remplit au fil des réponses.",
+      "replied": "Répondues",
+      "handedOff": "Transférées",
+      "handoffRate": "Taux de transfert",
+      "avgSources": "{avg} sources par réponse",
+      "skipped": "{count} laissées à un flux ou une automatisation",
+      "gapsTitle": "Questions sans réponse",
+      "noGaps": "Rien sans réponse. Quand un agent transfère faute de connaissances, la question apparaît ici.",
+      "askedTimes": "{count, plural, =1 {Posée 1 fois} other {Posée # fois}}",
+      "addAnswer": "Ajouter une réponse",
+      "topSources": "Connaissances les plus utilisées",
+      "usedTimes": "{count, plural, =1 {1 réponse} other {# réponses}}",
+      "deletedAgent": "Agent supprimé",
+      "loadFailed": "Impossible de charger les analyses."
     }
   },
   "Interactive": {
@@ -4300,7 +4318,8 @@
         "fileEmpty": "Aucun texte trouvé dans le fichier",
         "queryRequired": "la requête est obligatoire"
       },
-      "platformNotInPlan": "L'IA OgaDesk n'est pas incluse dans votre offre. Passez à une offre supérieure ou utilisez votre propre clé API."
+      "platformNotInPlan": "L'IA OgaDesk n'est pas incluse dans votre offre. Passez à une offre supérieure ou utilisez votre propre clé API.",
+      "insightsFailed": "Impossible de charger les analyses IA"
     },
     "automations": {
       "copyName": "{name} (Copie)",

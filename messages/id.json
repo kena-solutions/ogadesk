@@ -2923,6 +2923,24 @@
         "default": "agen default",
         "none": "tidak ada"
       }
+    },
+    "tabInsights": "Wawasan",
+    "insights": {
+      "lastDays": "{days} hari terakhir",
+      "empty": "Belum ada balasan AI. Terisi saat agen menjawab.",
+      "replied": "Dijawab",
+      "handedOff": "Diteruskan",
+      "handoffRate": "Rasio penerusan",
+      "avgSources": "{avg} sumber per balasan",
+      "skipped": "{count} diserahkan ke alur/otomasi",
+      "gapsTitle": "Pertanyaan belum terjawab",
+      "noGaps": "Tidak ada yang belum terjawab. Pertanyaan muncul di sini saat agen meneruskan karena kurang pengetahuan.",
+      "askedTimes": "Ditanyakan {count} kali",
+      "addAnswer": "Tambah jawaban",
+      "topSources": "Pengetahuan paling sering dipakai",
+      "usedTimes": "{count} balasan",
+      "deletedAgent": "Agen dihapus",
+      "loadFailed": "Gagal memuat wawasan."
     }
   },
   "Settings": {
@@ -5529,7 +5547,8 @@
         "fileEmpty": "Tidak ada teks di berkas",
         "queryRequired": "query wajib diisi"
       },
-      "platformNotInPlan": "AI OgaDesk tidak termasuk dalam paket Anda. Upgrade, atau gunakan kunci API Anda sendiri."
+      "platformNotInPlan": "AI OgaDesk tidak termasuk dalam paket Anda. Upgrade, atau gunakan kunci API Anda sendiri.",
+      "insightsFailed": "Gagal memuat wawasan AI"
     },
     "automations": {
       "copyName": "{name} (Salinan)",

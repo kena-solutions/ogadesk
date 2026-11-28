@@ -3771,6 +3771,24 @@
         "default": "default agent",
         "none": "none"
       }
+    },
+    "tabInsights": "Insights",
+    "insights": {
+      "lastDays": "Last {days} days",
+      "empty": "No AI replies yet. This fills in as agents answer customers.",
+      "replied": "Answered",
+      "handedOff": "Handed off",
+      "handoffRate": "Handoff rate",
+      "avgSources": "{avg} sources per reply",
+      "skipped": "{count} left to a flow or automation",
+      "gapsTitle": "Questions with no answer yet",
+      "noGaps": "Nothing unanswered. When an agent hands off for lack of knowledge, the question shows up here.",
+      "askedTimes": "{count, plural, =1 {Asked once} other {Asked # times}}",
+      "addAnswer": "Add answer",
+      "topSources": "Most used knowledge",
+      "usedTimes": "{count, plural, =1 {1 reply} other {# replies}}",
+      "deletedAgent": "Deleted agent",
+      "loadFailed": "Couldn't load insights."
     }
   },
   "Interactive": {
@@ -4315,7 +4333,8 @@
         "fileEmpty": "No text was found in the file",
         "queryRequired": "query is required"
       },
-      "platformNotInPlan": "OgaDesk AI isn't included in your plan. Upgrade, or use your own API key."
+      "platformNotInPlan": "OgaDesk AI isn't included in your plan. Upgrade, or use your own API key.",
+      "insightsFailed": "Failed to load AI insights"
     },
     "automations": {
       "copyName": "{name} (Copy)",

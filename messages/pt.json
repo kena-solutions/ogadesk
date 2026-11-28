@@ -3771,6 +3771,24 @@
         "default": "agente padrão",
         "none": "nenhum"
       }
+    },
+    "tabInsights": "Análises",
+    "insights": {
+      "lastDays": "Últimos {days} dias",
+      "empty": "Ainda não há respostas da IA. Isto se preenche conforme os agentes respondem.",
+      "replied": "Respondidas",
+      "handedOff": "Transferidas",
+      "handoffRate": "Taxa de transferência",
+      "avgSources": "{avg} fontes por resposta",
+      "skipped": "{count} deixadas a um fluxo ou automação",
+      "gapsTitle": "Perguntas ainda sem resposta",
+      "noGaps": "Nada sem resposta. Quando um agente transfere por falta de conhecimento, a pergunta aparece aqui.",
+      "askedTimes": "{count, plural, =1 {Perguntada 1 vez} other {Perguntada # vezes}}",
+      "addAnswer": "Adicionar resposta",
+      "topSources": "Conhecimento mais usado",
+      "usedTimes": "{count, plural, =1 {1 resposta} other {# respostas}}",
+      "deletedAgent": "Agente excluído",
+      "loadFailed": "Não foi possível carregar as análises."
     }
   },
   "Interactive": {
@@ -4315,7 +4333,8 @@
         "fileEmpty": "Nenhum texto foi encontrado no arquivo",
         "queryRequired": "a consulta é obrigatória"
       },
-      "platformNotInPlan": "A IA do OgaDesk não está incluída no seu plano. Faça upgrade ou use sua própria chave API."
+      "platformNotInPlan": "A IA do OgaDesk não está incluída no seu plano. Faça upgrade ou use sua própria chave API.",
+      "insightsFailed": "Não foi possível carregar as análises de IA"
     },
     "automations": {
       "copyName": "{name} (Cópia)",

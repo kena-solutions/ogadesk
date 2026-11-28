@@ -3771,6 +3771,24 @@
         "default": "기본 에이전트",
         "none": "없음"
       }
+    },
+    "tabInsights": "인사이트",
+    "insights": {
+      "lastDays": "최근 {days}일",
+      "empty": "아직 AI 응답이 없습니다. 에이전트가 답하면 채워집니다.",
+      "replied": "답변",
+      "handedOff": "넘김",
+      "handoffRate": "넘김 비율",
+      "avgSources": "응답당 출처 {avg}개",
+      "skipped": "{count}건은 플로우/자동화가 처리",
+      "gapsTitle": "아직 답이 없는 질문",
+      "noGaps": "답이 없는 질문이 없습니다. 지식이 부족해 넘기면 여기에 표시됩니다.",
+      "askedTimes": "{count}회 질문",
+      "addAnswer": "답변 추가",
+      "topSources": "가장 많이 쓰인 지식",
+      "usedTimes": "응답 {count}건",
+      "deletedAgent": "삭제된 에이전트",
+      "loadFailed": "인사이트를 불러오지 못했습니다."
     }
   },
   "Interactive": {
@@ -4315,7 +4333,8 @@
         "fileEmpty": "파일에서 텍스트를 찾지 못했습니다",
         "queryRequired": "검색어는 필수입니다"
       },
-      "platformNotInPlan": "OgaDesk AI는 현재 요금제에 포함되어 있지 않습니다. 업그레이드하거나 내 API 키를 사용하세요."
+      "platformNotInPlan": "OgaDesk AI는 현재 요금제에 포함되어 있지 않습니다. 업그레이드하거나 내 API 키를 사용하세요.",
+      "insightsFailed": "AI 인사이트를 불러오지 못했습니다"
     },
     "automations": {
       "copyName": "{name} (복사본)",

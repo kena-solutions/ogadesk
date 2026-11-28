@@ -24,7 +24,14 @@ export async function POST(request: Request) {
   }
 
   try {
-    const stats = await runKnowledgeQueue(supabaseAdmin(), { deadline: Date.now() + RUN_BUDGET_MS })
+    const admin = supabaseAdmin()
+    const stats = await runKnowledgeQueue(admin, { deadline: Date.now() + RUN_BUDGET_MS })
+    // Once a day (the 03:00 UTC tick), drop AI reply-log rows older than the Insights window.
+    const now = new Date()
+    if (now.getUTCHours() === 3 && now.getUTCMinutes() < 5) {
+      const { error } = await admin.rpc('prune_ai_reply_log')
+      if (error) console.error('[knowledge cron] prune_ai_reply_log failed:', error.message)
+    }
     return NextResponse.json(stats)
   } catch (err) {
     console.error('[knowledge cron] run failed:', err)

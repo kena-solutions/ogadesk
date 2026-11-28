@@ -2923,6 +2923,24 @@
         "default": "डिफ़ॉल्ट एजेंट",
         "none": "कोई नहीं"
       }
+    },
+    "tabInsights": "इनसाइट्स",
+    "insights": {
+      "lastDays": "पिछले {days} दिन",
+      "empty": "अभी कोई AI जवाब नहीं। एजेंट जवाब देंगे तो यह भरेगा।",
+      "replied": "जवाब दिए",
+      "handedOff": "सौंपे गए",
+      "handoffRate": "हैंडऑफ़ दर",
+      "avgSources": "प्रति जवाब {avg} स्रोत",
+      "skipped": "{count} फ़्लो/ऑटोमेशन के लिए छोड़े",
+      "gapsTitle": "जिनका जवाब अभी नहीं",
+      "noGaps": "कुछ भी अनुत्तरित नहीं। ज्ञान की कमी से हैंडऑफ़ होने पर सवाल यहाँ दिखेगा।",
+      "askedTimes": "{count} बार पूछा गया",
+      "addAnswer": "जवाब जोड़ें",
+      "topSources": "सबसे ज़्यादा उपयोग हुआ ज्ञान",
+      "usedTimes": "{count} जवाब",
+      "deletedAgent": "हटाया गया एजेंट",
+      "loadFailed": "इनसाइट्स लोड नहीं हो सकीं।"
     }
   },
   "Settings": {
@@ -5529,7 +5547,8 @@
         "fileEmpty": "फ़ाइल में कोई टेक्स्ट नहीं मिला",
         "queryRequired": "क्वेरी ज़रूरी है"
       },
-      "platformNotInPlan": "OgaDesk AI आपके प्लान में शामिल नहीं है। अपग्रेड करें या अपनी API कुंजी इस्तेमाल करें।"
+      "platformNotInPlan": "OgaDesk AI आपके प्लान में शामिल नहीं है। अपग्रेड करें या अपनी API कुंजी इस्तेमाल करें।",
+      "insightsFailed": "AI इनसाइट्स लोड नहीं हो सकीं"
     },
     "automations": {
       "copyName": "{name} (कॉपी)",

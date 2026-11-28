@@ -2923,6 +2923,24 @@
         "default": "الوكيل الافتراضي",
         "none": "لا أحد"
       }
+    },
+    "tabInsights": "التحليلات",
+    "insights": {
+      "lastDays": "آخر {days} يومًا",
+      "empty": "لا توجد ردود من الذكاء الاصطناعي بعد. تمتلئ مع ردود الوكلاء.",
+      "replied": "تمت الإجابة",
+      "handedOff": "تم تحويلها",
+      "handoffRate": "نسبة التحويل",
+      "avgSources": "{avg} مصادر لكل رد",
+      "skipped": "{count} تُركت لمسار أو أتمتة",
+      "gapsTitle": "أسئلة بلا إجابة بعد",
+      "noGaps": "لا شيء بلا إجابة. عندما يحوّل وكيل لنقص المعرفة يظهر السؤال هنا.",
+      "askedTimes": "سُئلت {count} مرة",
+      "addAnswer": "إضافة إجابة",
+      "topSources": "أكثر المعرفة استخدامًا",
+      "usedTimes": "{count} رد",
+      "deletedAgent": "وكيل محذوف",
+      "loadFailed": "تعذر تحميل التحليلات."
     }
   },
   "Settings": {
@@ -5529,7 +5547,8 @@
         "fileEmpty": "لم يُعثر على نص في الملف",
         "queryRequired": "الاستعلام مطلوب"
       },
-      "platformNotInPlan": "ذكاء OgaDesk الاصطناعي غير مشمول في خطتك. قم بالترقية أو استخدم مفتاح API الخاص بك."
+      "platformNotInPlan": "ذكاء OgaDesk الاصطناعي غير مشمول في خطتك. قم بالترقية أو استخدم مفتاح API الخاص بك.",
+      "insightsFailed": "تعذر تحميل تحليلات الذكاء الاصطناعي"
     },
     "automations": {
       "copyName": "{name} (نسخة)",
