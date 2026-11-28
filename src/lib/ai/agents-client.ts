@@ -3,7 +3,7 @@
 // (agent picker, message badges) doesn't refetch on every thread switch.
 // ============================================================
 
-import type { AgentChannel, KnowledgeMode } from './agents'
+import type { AgentChannel, KnowledgeMode, ReplyMode } from './agents'
 
 export interface AgentDto {
   id: string
@@ -19,6 +19,7 @@ export interface AgentDto {
   channels: AgentChannel[]
   priority: number
   knowledge_mode: KnowledgeMode
+  reply_mode?: ReplyMode
   persona_gender?: string | null
   persona_tone?: string | null
   persona_behaviour?: string | null

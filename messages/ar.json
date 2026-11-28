@@ -2699,7 +2699,12 @@
       "personaNever": "أمور يُمنع فعلها",
       "personaNeverPlaceholder": "مثال: وعد باسترداد الأموال، ذكر أسعار غير موجودة في قاعدة المعرفة",
       "personaInheritHint": "قواعد الأمان الخاصة بـ OgaDesk تُطبَّق دائمًا مهما كتبت هنا.",
-      "default": "افتراضي"
+      "default": "افتراضي",
+      "replyWhen": "الرد عندما",
+      "replyWhenOption": {
+        "fallback": "لم يرد أحد غيره",
+        "always": "دائمًا"
+      }
     },
     "tools": {
       "title": "التكاملات التي يمكن لهذا الوكيل استخدامها",

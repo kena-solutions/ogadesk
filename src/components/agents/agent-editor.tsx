@@ -38,6 +38,7 @@ interface Form {
   model: string;
   system_prompt: string;
   auto_reply_enabled: boolean;
+  reply_mode: 'fallback' | 'always';
   auto_reply_max_per_conversation: number;
   handoff_agent_id: string;
   channels: AgentChannel[];
@@ -69,6 +70,7 @@ function toForm(a: AgentDto | null, preset?: AgentPreset | null): Form {
     model: a?.model ?? '',
     system_prompt: a?.system_prompt ?? preset?.system_prompt ?? '',
     auto_reply_enabled: a?.auto_reply_enabled ?? false,
+    reply_mode: a?.reply_mode === 'always' ? 'always' : 'fallback',
     auto_reply_max_per_conversation:
       a?.auto_reply_max_per_conversation ?? preset?.auto_reply_max_per_conversation ?? 3,
     handoff_agent_id: a?.handoff_agent_id ?? '',
@@ -334,6 +336,22 @@ export function AgentEditor({
                   <p className="text-sm font-medium text-foreground">{t('autoReply')}</p>
                 </div>
                 <Switch checked={form.auto_reply_enabled} onCheckedChange={(v) => set('auto_reply_enabled', v)} disabled={disabled} />
+              </div>
+              <div className="flex items-center justify-between gap-4">
+                <Label htmlFor="ag-when">{t('replyWhen')}</Label>
+                <Select
+                  value={form.reply_mode}
+                  onValueChange={(v) => v && set('reply_mode', v as 'fallback' | 'always')}
+                  disabled={disabled || !form.auto_reply_enabled}
+                >
+                  <SelectTrigger id="ag-when" className="min-w-56">
+                    <SelectValue>{t(`replyWhenOption.${form.reply_mode}`)}</SelectValue>
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="fallback">{t('replyWhenOption.fallback')}</SelectItem>
+                    <SelectItem value="always">{t('replyWhenOption.always')}</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
               <div className="flex items-center justify-between gap-4">
                 <div>

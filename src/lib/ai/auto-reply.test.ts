@@ -4,6 +4,7 @@ import type { AiConfig } from './types'
 // Shared, hoisted mock state so the module mocks can close over it.
 const h = vi.hoisted(() => ({
   loadAgentConfig: vi.fn(),
+  logAiReply: vi.fn(),
   buildConversationContext: vi.fn(),
   retrieveKnowledge: vi.fn(),
   generateReply: vi.fn(),
@@ -15,6 +16,7 @@ const h = vi.hoisted(() => ({
   state: {
     conv: null as Record<string, unknown> | null,
     autoResponders: [] as { id: string }[],
+    replied: false as boolean,
     claim: true as boolean,
     updatePayload: null as Record<string, unknown> | null,
     updates: [] as { payload: Record<string, unknown>; isNull: string[] }[],
@@ -25,6 +27,11 @@ const h = vi.hoisted(() => ({
 }))
 
 vi.mock('./config', () => ({ loadAgentConfig: h.loadAgentConfig }))
+vi.mock('./reply-log', () => ({
+  inboundArrivedAt: async () => '2026-11-28T10:00:00Z',
+  hasReplySince: async () => h.state.replied,
+  logAiReply: h.logAiReply,
+}))
 vi.mock('./context', () => ({ buildConversationContext: h.buildConversationContext }))
 vi.mock('./knowledge', async (importOriginal) => ({
   ...(await importOriginal<typeof import('./knowledge')>()),
@@ -146,6 +153,8 @@ beforeEach(() => {
     ai_reply_count: 0,
   }
   h.state.autoResponders = []
+  h.state.replied = false
+  h.logAiReply.mockReset()
   h.state.claim = true
   h.state.blocked = false
   h.state.updatePayload = null
@@ -237,12 +246,35 @@ describe('dispatchInboundToAiReply, eligibility gates', () => {
     expect(h.engineSendText).not.toHaveBeenCalled()
   })
 
-  it('stands down when an active message-level automation exists', async () => {
-    h.state.autoResponders = [{ id: 'auto-1' }]
+  it('stays silent when a flow, automation or teammate already replied (fallback mode)', async () => {
+    h.state.replied = true
     await dispatchInboundToAiReply(ARGS)
     expect(h.generateReply).not.toHaveBeenCalled()
     expect(h.engineSendText).not.toHaveBeenCalled()
     expect(h.sendTypingIndicator).not.toHaveBeenCalled()
+    expect(h.logAiReply).toHaveBeenCalledWith(expect.anything(), expect.objectContaining({ outcome: 'skipped_fallback' }))
+  })
+
+  it('answers anyway when the agent is set to always reply', async () => {
+    h.state.replied = true
+    h.loadAgentConfig.mockResolvedValue(aiConfig({ replyMode: 'always' }))
+    await dispatchInboundToAiReply(ARGS)
+    expect(h.engineSendText).toHaveBeenCalled()
+  })
+
+  it('is not blocked by an active message automation that sent nothing', async () => {
+    h.state.autoResponders = [{ id: 'auto-1' }]
+    await dispatchInboundToAiReply(ARGS)
+    expect(h.engineSendText).toHaveBeenCalled()
+  })
+
+  it('logs a reply with its sources and question', async () => {
+    h.loadAgentConfig.mockResolvedValue(aiConfig({ agentId: 'agent-1' }))
+    await dispatchInboundToAiReply(ARGS)
+    expect(h.logAiReply).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({ outcome: 'replied', question: 'hi', agentId: 'agent-1' }),
+    )
   })
 
   it('does not send when the atomic slot claim loses the race', async () => {

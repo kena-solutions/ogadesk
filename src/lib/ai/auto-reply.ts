@@ -8,7 +8,8 @@ import { loadPlatformPrompt, personaPrompt } from './persona'
 import { buildSystemPrompt } from './defaults'
 import { buildHandoffSummary } from './handoff'
 import { loadToolRuntime } from './tools/registry'
-import { buildRetrievalQuery } from './query'
+import { buildRetrievalQuery, latestUserMessage } from './query'
+import { hasReplySince, inboundArrivedAt, logAiReply, type HandoffReason } from './reply-log'
 import {
   engineSendText,
   loadAccountMetaCredentials,
@@ -93,25 +94,22 @@ export async function dispatchInboundToAiReply(
       .maybeSingle()
     if (isBlocked(blockedRow) || isPlanArchived(blockedRow)) return
 
-    // Deterministic, user-configured responders win over the LLM - the
-    // caller already excludes messages a Flow consumed. Message-level
-    // automations (`new_message_received` / `keyword_match`) are
-    // dispatched independently for this same inbound and may send their
-    // own reply, so if the account has any active one we stand down to
-    // avoid double-texting the customer. (Relationship triggers like
-    // `first_inbound_message` don't count - they're not per-message
-    // auto-responders.)
-    const { data: autoResponders } = await db
-      .from('automations')
-      .select('id')
-      .eq('account_id', accountId)
-      .eq('is_active', true)
-      .in('trigger_type', ['new_message_received', 'keyword_match'])
-      .limit(1)
-    if (autoResponders && autoResponders.length > 0) return
+    // The AI is a fallback: flows, then automations, already ran for this
+    // message (the caller excludes ones a Flow consumed), so if any of them
+    // - or a teammate - already replied to it, stay silent rather than
+    // double-text the customer. Agents set to 'always' skip this check.
+    const fallbackOnly = config.replyMode !== 'always'
+    const inboundAt = fallbackOnly ? await inboundArrivedAt(db, conversationId, inboundMessageId) : null
+    const skipForFallback = async (): Promise<boolean> => {
+      if (!fallbackOnly || !(await hasReplySince(db, conversationId, inboundAt))) return false
+      await logAiReply(db, { accountId, agentId: config.agentId, conversationId, outcome: 'skipped_fallback' })
+      return true
+    }
+    if (await skipForFallback()) return
 
     const messages = await buildConversationContext(db, conversationId)
     if (messages.length === 0) return
+    const question = latestUserMessage(messages)
 
     // Account-wide throttle on the shared BYO key. The per-conversation
     // cap bounds one thread; this bounds a burst across many threads (a
@@ -174,7 +172,7 @@ export async function dispatchInboundToAiReply(
     // (b) route the conversation to the configured handoff agent - null leaves it in the shared queue - and (c) leave
     // a short internal note so whoever picks it up has context. Assigning fires the `on_conversation_assigned`
     // trigger, which notifies the agent.
-    const handOff = async (pendingAction: boolean) => {
+    const handOff = async (pendingAction: boolean, reason: HandoffReason = 'model') => {
       const summary = buildHandoffSummary({
         messages,
         replyCount: conv.ai_reply_count ?? 0,
@@ -193,11 +191,19 @@ export async function dispatchInboundToAiReply(
           .eq('id', conversationId)
           .is('assigned_agent_id', null)
       }
+      await logAiReply(db, {
+        accountId, agentId: config.agentId, conversationId, outcome: 'handoff', handoffReason: reason,
+        assignedTo: config.handoffAgentId ?? null, sourcesCount: knowledge.length,
+        topScore: knowledge[0]?.score ?? null, question,
+      })
     }
+
+    // Something else (a delayed automation, a teammate) may have replied while the model was thinking.
+    if (await skipForFallback()) return
 
     if (handoff || !text) {
       // The model can't (or shouldn't) answer.
-      await handOff(!!pendingApproval)
+      await handOff(!!pendingApproval, pendingApproval ? 'tool_approval' : 'model')
       return
     }
 
@@ -205,7 +211,7 @@ export async function dispatchInboundToAiReply(
       inboundMessageId &&
       (await hasNewerInbound(db, conversationId, inboundMessageId))
     ) {
-      if (pendingApproval) await handOff(true)
+      if (pendingApproval) await handOff(true, 'tool_approval')
       return
     }
 
@@ -230,7 +236,7 @@ export async function dispatchInboundToAiReply(
       return
     }
     if (claimed !== true) {
-      if (pendingApproval) await handOff(true)
+      if (pendingApproval) await handOff(true, 'tool_approval')
       return
     }
 
@@ -247,7 +253,11 @@ export async function dispatchInboundToAiReply(
 
     // The AI asked for an action a teammate must approve: it has told the customer the team will confirm; now a
     // human takes the thread (the approval banner is in the inbox).
-    if (pendingApproval) await handOff(true)
+    await logAiReply(db, {
+      accountId, agentId: config.agentId, conversationId, outcome: 'replied',
+      sourcesCount: knowledge.length, topScore: knowledge[0]?.score ?? null, question,
+    })
+    if (pendingApproval) await handOff(true, 'tool_approval')
   } catch (err) {
     console.error('[ai auto-reply] dispatch failed:', err)
   }

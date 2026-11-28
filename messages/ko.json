@@ -3547,7 +3547,12 @@
       "personaNever": "절대 하지 말아야 할 것",
       "personaNeverPlaceholder": "예: 환불 약속, 지식 베이스에 없는 가격 안내",
       "personaInheritHint": "여기에 무엇을 쓰더라도 OgaDesk의 안전 규칙은 항상 적용됩니다.",
-      "default": "기본"
+      "default": "기본",
+      "replyWhen": "답변 시점",
+      "replyWhenOption": {
+        "fallback": "다른 응답이 없을 때",
+        "always": "항상"
+      }
     },
     "tools": {
       "title": "이 에이전트가 사용할 수 있는 통합",

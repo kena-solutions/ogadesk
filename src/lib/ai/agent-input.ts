@@ -4,7 +4,7 @@
 // checked by the route (it needs the DB).
 // ============================================================
 
-import { normalizeChannels, type AgentChannel, type KnowledgeMode } from './agents'
+import { normalizeChannels, type AgentChannel, type KnowledgeMode, type ReplyMode } from './agents'
 
 export interface AgentWrite {
   name?: string
@@ -18,6 +18,7 @@ export interface AgentWrite {
   channels?: AgentChannel[]
   priority?: number
   knowledge_mode?: KnowledgeMode
+  reply_mode?: ReplyMode
   /** Optional persona overrides; null = inherit the platform default. */
   persona_gender?: string | null
   persona_tone?: string | null
@@ -94,6 +95,8 @@ export function parseAgentInput(
     if (mode !== 'all' && mode !== 'selected') return { error: 'knowledge_mode_invalid' }
     out.knowledge_mode = mode
   }
+  // 'always' = answer even when a flow/automation already replied; anything else = fallback (the default).
+  if (!partial || has('reply_mode')) out.reply_mode = b.reply_mode === 'always' ? 'always' : 'fallback'
   // Only when sent (null = every connected integration). Ids are scoped to the account when tools are loaded.
   if (has('tool_integrations')) {
     out.tool_integrations = b.tool_integrations === null ? null : parseIdList(b.tool_integrations, 50) ?? null

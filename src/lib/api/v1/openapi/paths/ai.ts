@@ -44,6 +44,7 @@ const agentProps: Record<string, OpenApiObject> = {
   channels: { type: 'array', items: { type: 'string', enum: ['whatsapp', 'web_chat'] } },
   priority: { type: 'integer' },
   knowledge_mode: { type: 'string', enum: ['all', 'selected'] },
+  reply_mode: { type: 'string', enum: ['fallback', 'always'], description: "'fallback' (default): answer only if no flow or automation already replied to the message." },
   tool_integrations: { type: ['array', 'null'], items: { type: 'string', format: 'uuid' } },
 }
 

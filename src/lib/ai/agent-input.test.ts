@@ -17,6 +17,7 @@ describe('parseAgentInput', () => {
         channels: ['whatsapp', 'web_chat'],
         priority: 0,
         knowledge_mode: 'selected',
+        reply_mode: 'fallback',
       persona_gender: null,
       persona_tone: null,
       persona_behaviour: null,

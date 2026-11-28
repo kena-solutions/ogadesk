@@ -3547,7 +3547,12 @@
       "personaNever": "Things never to do",
       "personaNeverPlaceholder": "e.g. promise refunds, share prices not in the knowledge base",
       "personaInheritHint": "OgaDesk's own safety rules always apply, whatever you write here.",
-      "default": "Default"
+      "default": "Default",
+      "replyWhen": "Reply when",
+      "replyWhenOption": {
+        "fallback": "Nothing else replied",
+        "always": "Always"
+      }
     },
     "tools": {
       "title": "Integrations this agent can use",

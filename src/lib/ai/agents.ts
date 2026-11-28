@@ -8,6 +8,8 @@
 
 export type AgentChannel = 'whatsapp' | 'web_chat'
 export type KnowledgeMode = 'all' | 'selected'
+/** 'fallback' = reply only when no flow or automation already replied; 'always' = reply regardless. */
+export type ReplyMode = 'fallback' | 'always'
 
 export interface AiAgentRow {
   id: string
@@ -22,6 +24,7 @@ export interface AiAgentRow {
   channels: string[] | null
   priority: number
   knowledge_mode: KnowledgeMode
+  reply_mode?: ReplyMode
   created_at: string
   /** Optional persona overrides; null = inherit the platform default. */
   persona_gender?: string | null
@@ -34,7 +37,7 @@ export interface AiAgentRow {
 }
 
 export const AGENT_COLUMNS =
-  'id, name, is_active, is_default, model, system_prompt, auto_reply_enabled, auto_reply_max_per_conversation, handoff_agent_id, channels, priority, knowledge_mode, created_at, persona_gender, persona_tone, persona_behaviour, persona_avoid, persona_never, tool_integrations'
+  'id, name, is_active, is_default, model, system_prompt, auto_reply_enabled, auto_reply_max_per_conversation, handoff_agent_id, channels, priority, knowledge_mode, reply_mode, created_at, persona_gender, persona_tone, persona_behaviour, persona_avoid, persona_never, tool_integrations'
 
 export const AGENT_CHANNELS: readonly AgentChannel[] = ['whatsapp', 'web_chat']
 

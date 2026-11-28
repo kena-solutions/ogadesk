@@ -2699,7 +2699,12 @@
       "personaNever": "Hal yang tidak boleh dilakukan",
       "personaNeverPlaceholder": "mis. menjanjikan pengembalian dana, menyebut harga yang tidak ada di basis pengetahuan",
       "personaInheritHint": "Aturan keamanan OgaDesk selalu berlaku, apa pun yang Anda tulis di sini.",
-      "default": "Default"
+      "default": "Default",
+      "replyWhen": "Balas saat",
+      "replyWhenOption": {
+        "fallback": "Belum ada balasan lain",
+        "always": "Selalu"
+      }
     },
     "tools": {
       "title": "Integrasi yang boleh dipakai agen ini",

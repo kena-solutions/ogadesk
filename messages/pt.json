@@ -3547,7 +3547,12 @@
       "personaNever": "O que nunca fazer",
       "personaNeverPlaceholder": "ex. prometer reembolsos, informar preços que não estão na base de conhecimento",
       "personaInheritHint": "As regras de segurança do OgaDesk sempre valem, seja o que for que você escrever aqui.",
-      "default": "Padrão"
+      "default": "Padrão",
+      "replyWhen": "Responder quando",
+      "replyWhenOption": {
+        "fallback": "Nada mais respondeu",
+        "always": "Sempre"
+      }
     },
     "tools": {
       "title": "Integrações que este agente pode usar",

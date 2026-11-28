@@ -22,6 +22,8 @@ export interface AiConfig {
   systemPrompt: string | null
   isActive: boolean
   autoReplyEnabled: boolean
+  /** 'fallback' (default) = stay silent when a flow/automation already replied. */
+  replyMode?: 'fallback' | 'always'
   autoReplyMaxPerConversation: number
   /** Where auto-reply hands a conversation off when the model bails: an
    *  agent's `auth.users.id`, or null to leave it unassigned (drop into

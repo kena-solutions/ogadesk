@@ -143,6 +143,7 @@ export async function loadAgentConfig(
     model: workspace.source === 'platform' ? workspace.model : agent.model?.trim() || workspace.model,
     systemPrompt: agent.system_prompt,
     autoReplyEnabled: agent.auto_reply_enabled,
+    replyMode: agent.reply_mode === 'always' ? 'always' : 'fallback',
     autoReplyMaxPerConversation: agent.auto_reply_max_per_conversation,
     handoffAgentId: agent.handoff_agent_id,
     agentId: agent.id,

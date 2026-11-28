@@ -2699,7 +2699,12 @@
       "personaNever": "Mambo ya kutofanya kamwe",
       "personaNeverPlaceholder": "mfano: kuahidi kurejeshewa pesa, kutaja bei zisizo kwenye msingi wa maarifa",
       "personaInheritHint": "Kanuni za usalama za OgaDesk hutumika kila wakati, chochote utakachoandika hapa.",
-      "default": "Chaguo-msingi"
+      "default": "Chaguo-msingi",
+      "replyWhen": "Jibu wakati",
+      "replyWhenOption": {
+        "fallback": "Hakuna aliyejibu mwingine",
+        "always": "Kila wakati"
+      }
     },
     "tools": {
       "title": "Miunganisho ambayo wakala huyu anaweza kutumia",

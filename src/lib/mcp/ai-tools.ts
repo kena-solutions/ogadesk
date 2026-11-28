@@ -23,6 +23,7 @@ const agentFields = {
   channels: z.array(z.enum(['whatsapp', 'web_chat'])).optional(),
   priority: z.number().int().optional().describe('Higher wins when several agents match a conversation.'),
   knowledge_mode: z.enum(['all', 'selected']).optional().describe("'all' = every library source; 'selected' = only linked ones (link_agent_knowledge)."),
+  reply_mode: z.enum(['fallback', 'always']).optional().describe("'fallback' (default) = answer only when no flow or automation already replied to the customer's message; 'always' = answer regardless (risks double replies)."),
   persona_tone: z.string().max(400).nullable().optional(),
   persona_behaviour: z.string().max(1500).nullable().optional(),
   persona_avoid: z.string().max(1500).nullable().optional(),
