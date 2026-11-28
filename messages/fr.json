@@ -1581,7 +1581,8 @@
         "send_webhook": "Envoyer un webhook",
         "close_conversation": "Clôturer la conversation",
         "block_contact": "Bloquer le contact",
-        "unblock_contact": "Débloquer le contact"
+        "unblock_contact": "Débloquer le contact",
+        "assign_ai_agent": "Assigner un agent IA"
       },
       "triggers": {
         "new_message_received": {
@@ -1744,7 +1745,9 @@
         "unblockContactHint": "Permet à ce contact de recevoir de nouveau des messages.",
         "placeholderReplyId": "ex. unsub_yes",
         "formLabel": "Formulaire",
-        "formAny": "N'importe quel formulaire"
+        "formAny": "N'importe quel formulaire",
+        "aiAgentLabel": "Agent IA",
+        "aiAgentSelect": "Choisir un agent…"
       },
       "preview": {
         "noText": "pas encore de texte",
@@ -1912,7 +1915,10 @@
         "uploadFailed": "Échec du téléversement.",
         "fileTooLarge": "Le fichier fait {size} Mo, la limite est de 16 Mo.",
         "defaultOptionTitle": "Option",
-        "optionN": "Option {n}"
+        "optionN": "Option {n}",
+        "aiAgentLabel": "Agent IA qui prend le relais",
+        "pickAiAgent": "Choisir un agent…",
+        "aiAgentOff": "Cet agent est désactivé."
       },
       "categories": {
         "messaging": "Messagerie",
@@ -1959,6 +1965,10 @@
         "end": {
           "label": "Fin",
           "blurb": "Termine le flux"
+        },
+        "ai_agent": {
+          "label": "Agent IA",
+          "blurb": "Passe la discussion à un agent IA"
         }
       }
     },
@@ -4047,7 +4057,8 @@
       "setTagNeedsTag": "Étiqueter nécessite une étiquette à appliquer.",
       "setTagNeedsNext": "Étiqueter doit pointer vers un nœud suivant.",
       "setTagMissingNext": "Étiqueter pointe vers un nœud inexistant « {key} ».",
-      "unknownNodeType": "Type de nœud « {type} » inconnu."
+      "unknownNodeType": "Type de nœud « {type} » inconnu.",
+      "aiAgentMissing": "Le nœud agent IA a besoin d'un agent."
     },
     "automations": {
       "needsStep": "les automatisations actives nécessitent au moins une étape",
@@ -4075,7 +4086,8 @@
       "matchTypeInvalid": "le type de correspondance doit être « exact », « contains » ou « word »",
       "scheduleRequired": "le calendrier est obligatoire",
       "replyIdRequired": "au moins un ID de réponse est obligatoire",
-      "replyIdsEmpty": "les ID de réponse ne peuvent pas être des chaînes vides"
+      "replyIdsEmpty": "les ID de réponse ne peuvent pas être des chaînes vides",
+      "aiAgentRequired": "Un agent IA est requis."
     },
     "templates": {
       "nameRequired": "Le nom du modèle est obligatoire.",

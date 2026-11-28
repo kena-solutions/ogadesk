@@ -1581,7 +1581,8 @@
         "send_webhook": "웹훅 보내기",
         "close_conversation": "대화 닫기",
         "block_contact": "연락처 차단",
-        "unblock_contact": "연락처 차단 해제"
+        "unblock_contact": "연락처 차단 해제",
+        "assign_ai_agent": "AI 에이전트 지정"
       },
       "triggers": {
         "new_message_received": {
@@ -1744,7 +1745,9 @@
         "unblockContactHint": "이 연락처가 다시 메시지를 받을 수 있게 합니다.",
         "placeholderReplyId": "예: unsub_yes",
         "formLabel": "양식",
-        "formAny": "모든 양식"
+        "formAny": "모든 양식",
+        "aiAgentLabel": "AI 에이전트",
+        "aiAgentSelect": "에이전트 선택…"
       },
       "preview": {
         "noText": "아직 텍스트 없음",
@@ -1912,7 +1915,10 @@
         "uploadFailed": "업로드에 실패했습니다.",
         "fileTooLarge": "파일이 {size}MB입니다, 제한은 16MB입니다.",
         "defaultOptionTitle": "옵션",
-        "optionN": "옵션 {n}"
+        "optionN": "옵션 {n}",
+        "aiAgentLabel": "이어받을 AI 에이전트",
+        "pickAiAgent": "에이전트 선택…",
+        "aiAgentOff": "이 에이전트는 꺼져 있습니다."
       },
       "categories": {
         "messaging": "메시징",
@@ -1959,6 +1965,10 @@
         "end": {
           "label": "종료",
           "blurb": "플로우를 종료합니다"
+        },
+        "ai_agent": {
+          "label": "AI 에이전트",
+          "blurb": "대화를 AI 에이전트에 넘깁니다"
         }
       }
     },
@@ -4062,7 +4072,8 @@
       "setTagNeedsTag": "연락처 태그 지정에는 적용할 태그가 필요합니다.",
       "setTagNeedsNext": "연락처 태그 지정 노드는 다음 노드를 가리켜야 합니다.",
       "setTagMissingNext": "연락처 태그 지정 노드가 존재하지 않는 노드 \"{key}\"을(를) 가리킵니다.",
-      "unknownNodeType": "알 수 없는 노드 유형 \"{type}\"."
+      "unknownNodeType": "알 수 없는 노드 유형 \"{type}\".",
+      "aiAgentMissing": "AI 에이전트 노드에는 에이전트가 필요합니다."
     },
     "automations": {
       "needsStep": "활성 자동화에는 단계가 하나 이상 필요합니다",
@@ -4090,7 +4101,8 @@
       "matchTypeInvalid": "일치 유형은 \"exact\", \"contains\" 또는 \"word\"여야 합니다",
       "scheduleRequired": "일정은 필수입니다",
       "replyIdRequired": "응답 ID가 하나 이상 필요합니다",
-      "replyIdsEmpty": "응답 ID는 빈 문자열일 수 없습니다"
+      "replyIdsEmpty": "응답 ID는 빈 문자열일 수 없습니다",
+      "aiAgentRequired": "AI 에이전트가 필요합니다."
     },
     "templates": {
       "nameRequired": "템플릿 이름은 필수입니다.",

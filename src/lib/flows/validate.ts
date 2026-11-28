@@ -823,6 +823,20 @@ function validateNode(
       break;
     }
 
+    case "ai_agent": {
+      const cfg = node.config as { agent_id?: unknown };
+      if (typeof cfg.agent_id !== "string" || !cfg.agent_id.trim()) {
+        issues.push({
+          severity: "error",
+          scope: "node",
+          node_key: node.node_key,
+          field: "agent_id",
+          message: t("aiAgentMissing"),
+        });
+      }
+      break;
+    }
+
     case "handoff":
     case "end":
       // Terminal nodes have no outgoing edges; nothing to validate
@@ -908,6 +922,7 @@ function outgoingEdges(node: NodeInput): string[] {
       return out;
     }
     case "handoff":
+    case "ai_agent":
     case "end":
     default:
       return [];

@@ -1581,7 +1581,8 @@
         "send_webhook": "Enviar webhook",
         "close_conversation": "Cerrar conversación",
         "block_contact": "Bloquear contacto",
-        "unblock_contact": "Desbloquear contacto"
+        "unblock_contact": "Desbloquear contacto",
+        "assign_ai_agent": "Asignar agente de IA"
       },
       "triggers": {
         "new_message_received": {
@@ -1744,7 +1745,9 @@
         "unblockContactHint": "Permite que este contacto reciba mensajes de nuevo.",
         "placeholderReplyId": "p. ej. unsub_yes",
         "formLabel": "Formulario",
-        "formAny": "Cualquier formulario"
+        "formAny": "Cualquier formulario",
+        "aiAgentLabel": "Agente de IA",
+        "aiAgentSelect": "Elige un agente…"
       },
       "preview": {
         "noText": "sin texto aún",
@@ -1912,7 +1915,10 @@
         "uploadFailed": "Error al subir.",
         "fileTooLarge": "El archivo pesa {size} MB; el límite es 16 MB.",
         "defaultOptionTitle": "Opción",
-        "optionN": "Opción {n}"
+        "optionN": "Opción {n}",
+        "aiAgentLabel": "Agente de IA que toma el relevo",
+        "pickAiAgent": "Elige un agente…",
+        "aiAgentOff": "Este agente está apagado."
       },
       "categories": {
         "messaging": "Mensajería",
@@ -1959,6 +1965,10 @@
         "end": {
           "label": "Fin",
           "blurb": "Termina el flujo"
+        },
+        "ai_agent": {
+          "label": "Agente de IA",
+          "blurb": "Pasa el chat a un agente de IA"
         }
       }
     },
@@ -4062,7 +4072,8 @@
       "setTagNeedsTag": "El nodo Etiquetar contacto necesita una etiqueta para aplicar.",
       "setTagNeedsNext": "El nodo Etiquetar contacto debe apuntar a un nodo siguiente.",
       "setTagMissingNext": "El nodo Etiquetar contacto apunta a un nodo inexistente: \"{key}\".",
-      "unknownNodeType": "Tipo de nodo desconocido: \"{type}\"."
+      "unknownNodeType": "Tipo de nodo desconocido: \"{type}\".",
+      "aiAgentMissing": "El nodo de agente de IA necesita un agente."
     },
     "automations": {
       "needsStep": "las automatizaciones activas necesitan al menos un paso",
@@ -4090,7 +4101,8 @@
       "matchTypeInvalid": "el tipo de coincidencia debe ser \"exact\", \"contains\" o \"word\"",
       "scheduleRequired": "la programación es obligatoria",
       "replyIdRequired": "se requiere al menos un ID de respuesta",
-      "replyIdsEmpty": "los IDs de respuesta no pueden estar vacíos"
+      "replyIdsEmpty": "los IDs de respuesta no pueden estar vacíos",
+      "aiAgentRequired": "Se requiere un agente de IA."
     },
     "templates": {
       "nameRequired": "El nombre de la plantilla es obligatorio.",

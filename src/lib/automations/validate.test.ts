@@ -109,6 +109,13 @@ describe("validateStepsForActivation", () => {
     ]);
   });
 
+  it("requires an agent for assign_ai_agent", () => {
+    expect(validateStepsForActivation([{ step_type: "assign_ai_agent", step_config: { agent_id: "a1" } }])).toEqual([]);
+    expect(
+      validateStepsForActivation([{ step_type: "assign_ai_agent", step_config: { agent_id: " " } }]).map((i) => i.path),
+    ).toEqual(["steps[0].agent_id"]);
+  });
+
   it("flags create_deal when required fields are missing", () => {
     const issues = validateStepsForActivation([
       { step_type: "create_deal", step_config: {} },

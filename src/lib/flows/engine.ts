@@ -181,7 +181,7 @@ export function isSuspending(node_type: string): boolean {
 
 /** Nodes that end the run. */
 export function isTerminal(node_type: string): boolean {
-  return node_type === "handoff" || node_type === "end";
+  return node_type === "handoff" || node_type === "ai_agent" || node_type === "end";
 }
 
 /**
@@ -501,6 +501,8 @@ async function executeHandoff(
   const convUpdate: Record<string, unknown> = {
     status: "pending",
     updated_at: new Date().toISOString(),
+    // A person takes over: the AI must not answer this chat unless someone turns it back on.
+    ai_autoreply_disabled: true,
   };
   if (cfg.assign_to) convUpdate.assigned_agent_id = cfg.assign_to;
   if (run.conversation_id) {
@@ -514,6 +516,46 @@ async function executeHandoff(
     assigned_to: cfg.assign_to ?? null,
   });
   await endRun(db, run.id, "handed_off", "handoff_node");
+}
+
+/**
+ * Hand the conversation to an AI agent: pin the agent, turn the AI on for this
+ * chat with a fresh reply budget, and end the run. The AI answers the customer's
+ * NEXT message; this one stays consumed by the flow, so nobody is double-texted.
+ */
+async function executeAiAgent(
+  db: AdminClient,
+  run: FlowRunRow,
+  node: FlowNodeRow,
+): Promise<void> {
+  const cfg = node.config as { agent_id?: string; note?: string };
+  let pinned: string | null = null;
+  if (run.conversation_id && cfg.agent_id) {
+    const { data: agent } = await db
+      .from("ai_agents")
+      .select("id")
+      .eq("id", cfg.agent_id)
+      .eq("account_id", run.account_id)
+      .maybeSingle();
+    if (agent) {
+      await db
+        .from("conversations")
+        .update({
+          ai_agent_id: agent.id,
+          ai_autoreply_disabled: false,
+          ai_reply_count: 0,
+          ai_handoff_summary: null,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", run.conversation_id);
+      pinned = agent.id as string;
+    }
+  }
+  if (!pinned) {
+    await logEvent(db, run.id, "error", node.node_key, { reason: "ai_agent_not_found", agent_id: cfg.agent_id ?? null });
+  }
+  await logEvent(db, run.id, "completed", node.node_key, { ai_agent_id: pinned, note: cfg.note ?? null });
+  await endRun(db, run.id, "completed", "ai_agent_node");
 }
 
 /**
@@ -873,6 +915,10 @@ async function advanceFromNodeKey(
     if (node.node_type === "handoff") {
       await executeHandoff(db, run, node);
       return { outcome: "handed_off" };
+    }
+    if (node.node_type === "ai_agent") {
+      await executeAiAgent(db, run, node);
+      return { outcome: "completed" };
     }
     if (node.node_type === "end") {
       await logEvent(db, run.id, "completed", node.node_key);

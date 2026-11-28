@@ -48,6 +48,8 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { uploadAccountMedia, MEDIA_MAX_BYTES } from "@/lib/storage/upload-media";
+import { useAuth } from "@/hooks/use-auth";
+import { fetchAgents, type AgentDto } from "@/lib/ai/agents-client";
 import { slugify, type BuilderNode } from "../shared";
 import { NextNodeRow, NodeKeySelect, TextRow } from "./fields";
 
@@ -197,6 +199,23 @@ export function NodeConfigForm({
         />
       );
 
+    case "ai_agent":
+      return (
+        <div className="space-y-3">
+          <AiAgentSelect
+            label={t("aiAgentLabel")}
+            value={(cfg as { agent_id?: string }).agent_id ?? ""}
+            onChange={(v) => onUpdateConfig({ agent_id: v })}
+          />
+          <TextRow
+            label={t("internalNote")}
+            value={(cfg as { note?: string }).note ?? ""}
+            onChange={(v) => onUpdateConfig({ note: v })}
+            rows={2}
+          />
+        </div>
+      );
+
     case "handoff":
       return (
         <TextRow
@@ -214,6 +233,38 @@ export function NodeConfigForm({
         </p>
       );
   }
+}
+
+// ============================================================
+// ai_agent
+// ============================================================
+
+function AiAgentSelect({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
+  const t = useTranslations("Flows.builder.form");
+  const { accountId } = useAuth();
+  const [agents, setAgents] = useState<AgentDto[]>([]);
+  useEffect(() => {
+    if (accountId) void fetchAgents(accountId).then(setAgents);
+  }, [accountId]);
+  const chosen = agents.find((a) => a.id === value);
+  return (
+    <div>
+      <label className="mb-1 block text-xs text-muted-foreground">{label}</label>
+      <Select value={value || undefined} onValueChange={(v) => v && onChange(v)}>
+        <SelectTrigger className="bg-muted">
+          <SelectValue placeholder={t("pickAiAgent")}>{chosen ? chosen.name : undefined}</SelectValue>
+        </SelectTrigger>
+        <SelectContent>
+          {agents.map((a) => (
+            <SelectItem key={a.id} value={a.id}>
+              {a.name}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      {chosen && !chosen.is_active && <p className="mt-1 text-xs text-amber-500">{t("aiAgentOff")}</p>}
+    </div>
+  );
 }
 
 // ============================================================

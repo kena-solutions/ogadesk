@@ -15,6 +15,7 @@ export const FLOW_NODE_TYPES = [
   'condition',
   'set_tag',
   'handoff',
+  'ai_agent',
   'end',
 ] as const
 

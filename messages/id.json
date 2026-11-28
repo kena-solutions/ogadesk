@@ -2137,7 +2137,8 @@
         "send_webhook": "Kirim webhook",
         "close_conversation": "Tutup percakapan",
         "block_contact": "Blokir kontak",
-        "unblock_contact": "Buka blokir kontak"
+        "unblock_contact": "Buka blokir kontak",
+        "assign_ai_agent": "Tetapkan Agen AI"
       },
       "triggers": {
         "new_message_received": {
@@ -2300,7 +2301,9 @@
         "formAny": "Formulir apa pun",
         "placeholderBody": "{\"id\": \"{{ contact.id }}\"}",
         "placeholderHeaders": "{\"Authorization\": \"Bearer ...\"}",
-        "placeholderValue": "Text or {{ vars.x }} / {{ message.text }}"
+        "placeholderValue": "Text or {{ vars.x }} / {{ message.text }}",
+        "aiAgentLabel": "Agen AI",
+        "aiAgentSelect": "Pilih agen…"
       },
       "preview": {
         "noText": "belum ada teks",
@@ -2468,7 +2471,10 @@
         "uploadFailed": "Unggahan gagal.",
         "fileTooLarge": "Berkas berukuran {size} MB, batasnya 16 MB.",
         "defaultOptionTitle": "Opsi",
-        "optionN": "Opsi {n}"
+        "optionN": "Opsi {n}",
+        "aiAgentLabel": "Agen AI yang mengambil alih",
+        "pickAiAgent": "Pilih agen…",
+        "aiAgentOff": "Agen ini dimatikan."
       },
       "categories": {
         "messaging": "Pesan",
@@ -2515,6 +2521,10 @@
         "end": {
           "label": "Selesai",
           "blurb": "Mengakhiri alur"
+        },
+        "ai_agent": {
+          "label": "Agen AI",
+          "blurb": "Menyerahkan chat ke agen AI"
         }
       }
     },
@@ -4262,7 +4272,8 @@
       "setTagNeedsTag": "Atur tag memerlukan tag untuk diterapkan.",
       "setTagNeedsNext": "Atur tag harus mengarah ke node berikutnya.",
       "setTagMissingNext": "Atur tag mengarah ke node yang tidak ada \"{key}\".",
-      "unknownNodeType": "Jenis node tidak dikenal \"{type}\"."
+      "unknownNodeType": "Jenis node tidak dikenal \"{type}\".",
+      "aiAgentMissing": "Node agen AI memerlukan agen."
     },
     "automations": {
       "needsStep": "otomatisasi aktif memerlukan setidaknya satu langkah",
@@ -4290,7 +4301,8 @@
       "matchTypeInvalid": "jenis kecocokan harus \"exact\", \"contains\", atau \"word\"",
       "scheduleRequired": "jadwal wajib diisi",
       "replyIdRequired": "setidaknya satu ID balasan wajib diisi",
-      "replyIdsEmpty": "ID balasan tidak boleh kosong"
+      "replyIdsEmpty": "ID balasan tidak boleh kosong",
+      "aiAgentRequired": "Agen AI wajib dipilih."
     },
     "templates": {
       "nameRequired": "Nama templat wajib diisi.",

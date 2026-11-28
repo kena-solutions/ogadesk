@@ -97,6 +97,13 @@ export interface SendMediaNodeConfig {
   next_node_key: string;
 }
 
+export interface AiAgentNodeConfig {
+  /** The AI agent that takes the conversation from here (ai_agents.id). */
+  agent_id: string;
+  /** Optional internal note written to flow_run_events.payload.note. */
+  note?: string;
+}
+
 export interface HandoffNodeConfig {
   /** Optional internal note written to flow_run_events.payload.note. */
   note?: string;
@@ -194,6 +201,7 @@ export type FlowNodeConfig =
   | { node_type: "condition"; config: ConditionNodeConfig }
   | { node_type: "set_tag"; config: SetTagNodeConfig }
   | { node_type: "handoff"; config: HandoffNodeConfig }
+  | { node_type: "ai_agent"; config: AiAgentNodeConfig }
   | { node_type: "end"; config: EndNodeConfig };
 
 export type FlowNodeType = FlowNodeConfig["node_type"];

@@ -668,3 +668,28 @@ describe("auto-advancing chain length", () => {
     ]);
   });
 });
+
+describe("validateFlowForActivation, ai_agent node", () => {
+  const withAi = (config: Record<string, unknown>) => [
+    { node_key: "start", node_type: "start", config: { next_node_key: "menu" } },
+    {
+      node_key: "menu",
+      node_type: "send_buttons",
+      config: {
+        text: "How can we help?",
+        buttons: [
+          { reply_id: "a", title: "A", next_node_key: "ai" },
+          { reply_id: "b", title: "B", next_node_key: "ai" },
+        ],
+      },
+    },
+    { node_key: "ai", node_type: "ai_agent", config },
+  ];
+
+  it("is a terminal node that needs an agent", () => {
+    expect(validateFlowForActivation(validFlow, withAi({ agent_id: "agent-1" }) as never)).toEqual([]);
+    expect(validateFlowForActivation(validFlow, withAi({ agent_id: "" }) as never)).toEqual(
+      expect.arrayContaining([expect.objectContaining({ scope: "node", node_key: "ai", field: "agent_id" })]),
+    );
+  });
+});

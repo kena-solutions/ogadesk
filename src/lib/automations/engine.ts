@@ -20,6 +20,7 @@ import type {
   WaitStepConfig,
   CreateDealStepConfig,
   AssignConversationStepConfig,
+  AssignAiAgentStepConfig,
 } from '@/types'
 import { supabaseAdmin } from './admin-client'
 import { addContactTagIfAbsent } from '@/lib/contacts/tag-write'
@@ -884,6 +885,26 @@ async function runStep(step: AutomationStep, args: ExecuteArgs): Promise<string>
         .eq('account_id', args.automation.account_id)
         .eq('contact_id', args.contactId)
       return `assigned to ${agentId}`
+    }
+
+    case 'assign_ai_agent': {
+      const cfg = step.step_config as AssignAiAgentStepConfig
+      const conversationId = await resolveConversationId(args)
+      const { data: agent } = await db
+        .from('ai_agents')
+        .select('id')
+        .eq('id', cfg.agent_id)
+        .eq('account_id', args.automation.account_id)
+        .maybeSingle()
+      if (!agent) return 'ai agent not found'
+      // Pin the agent and turn the AI on for this chat with a fresh reply budget. A human assignee still wins
+      // (the AI never answers a chat a person owns), so this leaves assignment alone.
+      await db
+        .from('conversations')
+        .update({ ai_agent_id: agent.id, ai_autoreply_disabled: false, ai_reply_count: 0, ai_handoff_summary: null })
+        .eq('id', conversationId)
+        .eq('account_id', args.automation.account_id)
+      return `ai agent ${agent.id} on this chat`
     }
 
     case 'update_contact_field': {

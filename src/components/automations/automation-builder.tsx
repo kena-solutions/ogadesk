@@ -21,6 +21,7 @@ import {
   Tag,
   TagIcon,
   UserCheck,
+  Bot,
   PencilLine,
   Briefcase,
   Hourglass,
@@ -62,6 +63,8 @@ import {
   blankButtonsPayload,
   blankListPayload,
 } from "@/components/interactive/interactive-builder"
+import { useAuth } from "@/hooks/use-auth"
+import { fetchAgents, type AgentDto } from "@/lib/ai/agents-client"
 import { interactivePayloadPreviewText } from "@/lib/whatsapp/interactive"
 import { createClient } from "@/lib/supabase/client"
 import {
@@ -130,6 +133,7 @@ const STEP_META: Record<AutomationStepType, StepMeta> = {
   add_tag: { label: "add_tag", icon: Tag, border: "border-l-primary" },
   remove_tag: { label: "remove_tag", icon: TagIcon, border: "border-l-primary" },
   assign_conversation: { label: "assign_conversation", icon: UserCheck, border: "border-l-primary" },
+  assign_ai_agent: { label: "assign_ai_agent", icon: Bot, border: "border-l-primary" },
   update_contact_field: { label: "update_contact_field", icon: PencilLine, border: "border-l-primary" },
   create_deal: { label: "create_deal", icon: Briefcase, border: "border-l-primary" },
   wait: { label: "wait", icon: Hourglass, border: "border-l-border" },
@@ -148,6 +152,7 @@ const ADDABLE_STEPS: AutomationStepType[] = [
   "add_tag",
   "remove_tag",
   "assign_conversation",
+  "assign_ai_agent",
   "update_contact_field",
   "create_deal",
   "wait",
@@ -212,6 +217,8 @@ function blankConfig(type: AutomationStepType): Record<string, unknown> {
       return { tag_id: "" }
     case "assign_conversation":
       return { mode: "round_robin" }
+    case "assign_ai_agent":
+      return { agent_id: "" }
     case "update_contact_field":
       return { field: "name", value: "" }
     case "create_deal":
@@ -513,6 +520,33 @@ function AgentSelect({
       {value && !selected && (
         <option value={value}>{t("agents.unknown", { id: value })}</option>
       )}
+    </select>
+  )
+}
+
+/** The AI agents of the workspace, for the Assign AI agent step. */
+function AiAgentPicker({
+  value,
+  onChange,
+  t,
+}: {
+  value: string
+  onChange: (v: string) => void
+  t: ReturnType<typeof useTranslations>
+}) {
+  const { accountId } = useAuth()
+  const [agents, setAgents] = useState<AgentDto[]>([])
+  useEffect(() => {
+    if (accountId) void fetchAgents(accountId).then(setAgents)
+  }, [accountId])
+  return (
+    <select value={value} onChange={(e) => onChange(e.target.value)} className={SELECT_CLASS}>
+      <option value="">{t("config.aiAgentSelect")}</option>
+      {agents.map((a) => (
+        <option key={a.id} value={a.id}>
+          {a.name}
+        </option>
+      ))}
     </select>
   )
 }
@@ -1580,6 +1614,12 @@ function StepEditor({
             </FieldBlock>
           )}
         </>
+      )
+    case "assign_ai_agent":
+      return (
+        <FieldBlock label={t("config.aiAgentLabel")}>
+          <AiAgentPicker value={(cfg.agent_id as string) ?? ""} onChange={(v) => set({ agent_id: v })} t={t} />
+        </FieldBlock>
       )
     case "update_contact_field":
       return (

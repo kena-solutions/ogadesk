@@ -2137,7 +2137,8 @@
         "send_webhook": "वेबहुक भेजें",
         "close_conversation": "बातचीत बंद करें",
         "block_contact": "संपर्क ब्लॉक करें",
-        "unblock_contact": "संपर्क अनब्लॉक करें"
+        "unblock_contact": "संपर्क अनब्लॉक करें",
+        "assign_ai_agent": "AI एजेंट असाइन करें"
       },
       "triggers": {
         "new_message_received": {
@@ -2300,7 +2301,9 @@
         "formAny": "कोई भी फ़ॉर्म",
         "placeholderBody": "{\"id\": \"{{ contact.id }}\"}",
         "placeholderHeaders": "{\"Authorization\": \"Bearer ...\"}",
-        "placeholderValue": "Text or {{ vars.x }} / {{ message.text }}"
+        "placeholderValue": "Text or {{ vars.x }} / {{ message.text }}",
+        "aiAgentLabel": "AI एजेंट",
+        "aiAgentSelect": "एजेंट चुनें…"
       },
       "preview": {
         "noText": "अभी कोई टेक्स्ट नहीं",
@@ -2468,7 +2471,10 @@
         "uploadFailed": "अपलोड विफल।",
         "fileTooLarge": "फ़ाइल {size} MB की है, सीमा 16 MB है।",
         "defaultOptionTitle": "विकल्प",
-        "optionN": "विकल्प {n}"
+        "optionN": "विकल्प {n}",
+        "aiAgentLabel": "जो AI एजेंट संभालेगा",
+        "pickAiAgent": "एजेंट चुनें…",
+        "aiAgentOff": "यह एजेंट बंद है।"
       },
       "categories": {
         "messaging": "संदेश",
@@ -2515,6 +2521,10 @@
         "end": {
           "label": "समाप्त",
           "blurb": "फ़्लो ख़त्म करता है"
+        },
+        "ai_agent": {
+          "label": "AI एजेंट",
+          "blurb": "चैट को AI एजेंट को सौंपता है"
         }
       }
     },
@@ -4262,7 +4272,8 @@
       "setTagNeedsTag": "टैग सेट करें को लगाने के लिए टैग चाहिए।",
       "setTagNeedsNext": "टैग सेट करें को अगले नोड की ओर इशारा करना चाहिए।",
       "setTagMissingNext": "टैग सेट करें ऐसे नोड की ओर इशारा करता है जो मौजूद नहीं: \"{key}\"।",
-      "unknownNodeType": "अज्ञात नोड प्रकार \"{type}\"।"
+      "unknownNodeType": "अज्ञात नोड प्रकार \"{type}\"।",
+      "aiAgentMissing": "AI एजेंट नोड को एक एजेंट चाहिए।"
     },
     "automations": {
       "needsStep": "सक्रिय ऑटोमेशन में कम से कम एक चरण चाहिए",
@@ -4290,7 +4301,8 @@
       "matchTypeInvalid": "मिलान प्रकार \"exact\", \"contains\" या \"word\" होना चाहिए",
       "scheduleRequired": "शेड्यूल ज़रूरी है",
       "replyIdRequired": "कम से कम एक जवाब id ज़रूरी है",
-      "replyIdsEmpty": "जवाब id ख़ाली नहीं हो सकते"
+      "replyIdsEmpty": "जवाब id ख़ाली नहीं हो सकते",
+      "aiAgentRequired": "AI एजेंट ज़रूरी है।"
     },
     "templates": {
       "nameRequired": "टेम्पलेट का नाम ज़रूरी है।",

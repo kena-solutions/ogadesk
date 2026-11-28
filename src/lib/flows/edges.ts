@@ -227,6 +227,7 @@ export function outgoingSlots(node: BuilderNode): OutgoingSlot[] {
     }
 
     case "handoff":
+    case "ai_agent":
     case "end":
       return [];
   }
@@ -311,6 +312,7 @@ export function applyEdgeConnection(
     }
 
     case "handoff":
+    case "ai_agent":
     case "end":
       return null;
   }
@@ -405,6 +407,7 @@ function patchedConfigWithoutKey(
     }
 
     case "handoff":
+    case "ai_agent":
     case "end":
       return null;
   }

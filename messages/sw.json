@@ -2137,7 +2137,8 @@
         "send_webhook": "Tuma webhook",
         "close_conversation": "Funga mazungumzo",
         "block_contact": "Zuia anwani",
-        "unblock_contact": "Ondoa kizuizi cha anwani"
+        "unblock_contact": "Ondoa kizuizi cha anwani",
+        "assign_ai_agent": "Mpe Wakala wa AI"
       },
       "triggers": {
         "new_message_received": {
@@ -2300,7 +2301,9 @@
         "formAny": "Fomu yoyote",
         "placeholderBody": "{\"id\": \"{{ contact.id }}\"}",
         "placeholderHeaders": "{\"Authorization\": \"Bearer ...\"}",
-        "placeholderValue": "Text or {{ vars.x }} / {{ message.text }}"
+        "placeholderValue": "Text or {{ vars.x }} / {{ message.text }}",
+        "aiAgentLabel": "Wakala wa AI",
+        "aiAgentSelect": "Chagua wakala…"
       },
       "preview": {
         "noText": "bado hakuna maandishi",
@@ -2468,7 +2471,10 @@
         "uploadFailed": "Upakiaji umeshindwa.",
         "fileTooLarge": "Faili ni MB {size}, kikomo ni MB 16.",
         "defaultOptionTitle": "Chaguo",
-        "optionN": "Chaguo {n}"
+        "optionN": "Chaguo {n}",
+        "aiAgentLabel": "Wakala wa AI atakayechukua",
+        "pickAiAgent": "Chagua wakala…",
+        "aiAgentOff": "Wakala huyu amezimwa."
       },
       "categories": {
         "messaging": "Ujumbe",
@@ -2515,6 +2521,10 @@
         "end": {
           "label": "Mwisho",
           "blurb": "Humaliza mtiririko"
+        },
+        "ai_agent": {
+          "label": "Wakala wa AI",
+          "blurb": "Anampa mazungumzo wakala wa AI"
         }
       }
     },
@@ -4262,7 +4272,8 @@
       "setTagNeedsTag": "Kuweka lebo kunahitaji lebo ya kutumia.",
       "setTagNeedsNext": "Kuweka lebo lazima kuelekeze kwenye nodi inayofuata.",
       "setTagMissingNext": "Kuweka lebo kunaelekeza kwenye nodi isiyokuwepo \"{key}\".",
-      "unknownNodeType": "Aina ya nodi isiyojulikana \"{type}\"."
+      "unknownNodeType": "Aina ya nodi isiyojulikana \"{type}\".",
+      "aiAgentMissing": "Nodi ya wakala wa AI inahitaji wakala."
     },
     "automations": {
       "needsStep": "otomatiki zinazofanya kazi zinahitaji angalau hatua moja",
@@ -4290,7 +4301,8 @@
       "matchTypeInvalid": "aina ya ulinganisho lazima iwe \"exact\", \"contains\" au \"word\"",
       "scheduleRequired": "ratiba inahitajika",
       "replyIdRequired": "angalau kitambulisho kimoja cha jibu kinahitajika",
-      "replyIdsEmpty": "vitambulisho vya jibu haviwezi kuwa tupu"
+      "replyIdsEmpty": "vitambulisho vya jibu haviwezi kuwa tupu",
+      "aiAgentRequired": "Wakala wa AI anahitajika."
     },
     "templates": {
       "nameRequired": "Jina la kiolezo linahitajika.",

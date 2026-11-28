@@ -2137,7 +2137,8 @@
         "send_webhook": "إرسال خطاف ويب",
         "close_conversation": "إغلاق المحادثة",
         "block_contact": "حظر جهة الاتصال",
-        "unblock_contact": "إلغاء حظر جهة الاتصال"
+        "unblock_contact": "إلغاء حظر جهة الاتصال",
+        "assign_ai_agent": "تعيين وكيل ذكاء اصطناعي"
       },
       "triggers": {
         "new_message_received": {
@@ -2300,7 +2301,9 @@
         "formAny": "أي نموذج",
         "placeholderBody": "{\"id\": \"{{ contact.id }}\"}",
         "placeholderHeaders": "{\"Authorization\": \"Bearer ...\"}",
-        "placeholderValue": "Text or {{ vars.x }} / {{ message.text }}"
+        "placeholderValue": "Text or {{ vars.x }} / {{ message.text }}",
+        "aiAgentLabel": "وكيل الذكاء الاصطناعي",
+        "aiAgentSelect": "اختر وكيلًا…"
       },
       "preview": {
         "noText": "لا نص بعد",
@@ -2468,7 +2471,10 @@
         "uploadFailed": "فشل الرفع.",
         "fileTooLarge": "حجم الملف {size} ميغابايت، والحد 16 ميغابايت.",
         "defaultOptionTitle": "خيار",
-        "optionN": "الخيار {n}"
+        "optionN": "الخيار {n}",
+        "aiAgentLabel": "وكيل الذكاء الاصطناعي الذي يتولى",
+        "pickAiAgent": "اختر وكيلًا…",
+        "aiAgentOff": "هذا الوكيل متوقف."
       },
       "categories": {
         "messaging": "المراسلة",
@@ -2515,6 +2521,10 @@
         "end": {
           "label": "النهاية",
           "blurb": "ينهي المسار"
+        },
+        "ai_agent": {
+          "label": "وكيل ذكاء اصطناعي",
+          "blurb": "يحوّل المحادثة إلى وكيل ذكاء اصطناعي"
         }
       }
     },
@@ -4262,7 +4272,8 @@
       "setTagNeedsTag": "تعيين الوسم يحتاج إلى وسم لتطبيقه.",
       "setTagNeedsNext": "يجب أن يشير تعيين الوسم إلى عقدة تالية.",
       "setTagMissingNext": "يشير تعيين الوسم إلى عقدة غير موجودة \"{key}\".",
-      "unknownNodeType": "نوع عقدة غير معروف \"{type}\"."
+      "unknownNodeType": "نوع عقدة غير معروف \"{type}\".",
+      "aiAgentMissing": "تحتاج عقدة وكيل الذكاء الاصطناعي إلى وكيل."
     },
     "automations": {
       "needsStep": "الأتمتة النشطة تحتاج إلى خطوة واحدة على الأقل",
@@ -4290,7 +4301,8 @@
       "matchTypeInvalid": "يجب أن يكون نوع المطابقة \"exact\" أو \"contains\" أو \"word\"",
       "scheduleRequired": "الجدول مطلوب",
       "replyIdRequired": "معرّف رد واحد على الأقل مطلوب",
-      "replyIdsEmpty": "لا يمكن أن تكون معرّفات الرد فارغة"
+      "replyIdsEmpty": "لا يمكن أن تكون معرّفات الرد فارغة",
+      "aiAgentRequired": "مطلوب وكيل ذكاء اصطناعي."
     },
     "templates": {
       "nameRequired": "اسم القالب مطلوب.",

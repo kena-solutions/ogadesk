@@ -1581,7 +1581,8 @@
         "send_webhook": "Send Webhook",
         "close_conversation": "Close Conversation",
         "block_contact": "Block Contact",
-        "unblock_contact": "Unblock Contact"
+        "unblock_contact": "Unblock Contact",
+        "assign_ai_agent": "Assign AI Agent"
       },
       "triggers": {
         "new_message_received": {
@@ -1744,7 +1745,9 @@
         "unblockContactHint": "Lets this contact receive messages again.",
         "placeholderReplyId": "e.g. unsub_yes",
         "formLabel": "Form",
-        "formAny": "Any form"
+        "formAny": "Any form",
+        "aiAgentLabel": "AI agent",
+        "aiAgentSelect": "Pick an agent…"
       },
       "preview": {
         "noText": "no text yet",
@@ -1912,7 +1915,10 @@
         "uploadFailed": "Upload failed.",
         "fileTooLarge": "File is {size} MB, limit is 16 MB.",
         "defaultOptionTitle": "Option",
-        "optionN": "Option {n}"
+        "optionN": "Option {n}",
+        "aiAgentLabel": "AI agent that takes over",
+        "pickAiAgent": "Pick an agent…",
+        "aiAgentOff": "This agent is switched off."
       },
       "categories": {
         "messaging": "Messaging",
@@ -1959,6 +1965,10 @@
         "end": {
           "label": "End",
           "blurb": "Ends the flow"
+        },
+        "ai_agent": {
+          "label": "AI agent",
+          "blurb": "Hands the chat to an AI agent"
         }
       }
     },
@@ -4062,7 +4072,8 @@
       "setTagNeedsTag": "Set-tag needs a tag to apply.",
       "setTagNeedsNext": "Set-tag must point to a next node.",
       "setTagMissingNext": "Set-tag points to non-existent node \"{key}\".",
-      "unknownNodeType": "Unknown node type \"{type}\"."
+      "unknownNodeType": "Unknown node type \"{type}\".",
+      "aiAgentMissing": "The AI agent node needs an agent."
     },
     "automations": {
       "needsStep": "active automations need at least one step",
@@ -4090,7 +4101,8 @@
       "matchTypeInvalid": "match type must be \"exact\", \"contains\" or \"word\"",
       "scheduleRequired": "schedule is required",
       "replyIdRequired": "at least one reply id is required",
-      "replyIdsEmpty": "reply ids cannot be empty strings"
+      "replyIdsEmpty": "reply ids cannot be empty strings",
+      "aiAgentRequired": "An AI agent is required."
     },
     "templates": {
       "nameRequired": "Template name is required.",

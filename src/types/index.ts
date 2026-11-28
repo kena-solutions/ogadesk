@@ -591,6 +591,7 @@ export type AutomationStepType =
   | 'add_tag'
   | 'remove_tag'
   | 'assign_conversation'
+  | 'assign_ai_agent'
   | 'update_contact_field'
   | 'create_deal'
   | 'wait'
@@ -681,6 +682,11 @@ export interface AssignConversationStepConfig {
   agent_id?: string;
 }
 
+/** Hand the conversation to an AI agent: pins it and turns the AI on for the chat. */
+export interface AssignAiAgentStepConfig {
+  agent_id: string;
+}
+
 export interface UpdateContactFieldStepConfig {
   /**
    * Either a built-in contact column (`name` | `email` | `company`) or a
@@ -738,6 +744,7 @@ export type AutomationStepConfig =
   | SendTemplateStepConfig
   | TagStepConfig
   | AssignConversationStepConfig
+  | AssignAiAgentStepConfig
   | UpdateContactFieldStepConfig
   | CreateDealStepConfig
   | WaitStepConfig
